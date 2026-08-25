@@ -1,0 +1,79 @@
+{
+  "camera": {
+    "width": 640,
+    "height": 512,
+    "intrinsics": "scared",
+    "fov_deg": 90.0,
+    "jitter": 0.02
+  },
+  "tissue": {
+    "kind": "mixed",
+    "organ_prob": 0.4,
+    "organ_decimate": 40000,
+    "organ_tex_scale_mm": [35.0, 90.0],
+    "length_mm": [350.0, 650.0],
+    "radius_base_mm": [28.0, 48.0],
+    "fold_amplitude": [0.1, 0.28],
+    "fold_count": [4, 9],
+    "n_rings": 140,
+    "n_sector": 56,
+    "cap_end": true
+  },
+  "trajectory": {
+    "motion_types": ["insertion", "insertion", "insertion", "orbital", "free", "retrace"],
+    "n_frames": [40, 90],
+    "step_mm": [0.8, 5.0],
+    "rot_deg": [0.5, 4.0],
+    "tremor_prob": 0.35,
+    "tremor_mm": [0.05, 0.4],
+    "tremor_deg": [0.05, 0.4],
+    "keyframe_hop_mm": [25.0, 160.0]
+  },
+  "objects": {
+    "n_objects_range": [0, 2],
+    "use_bop_prob": 0.5,
+    "bop_scale": [0.15, 0.55],
+    "motion_models": ["insertion", "manipulation", "free", "static"],
+    "marker_prob": 0.35
+  },
+  "deformation": {
+    "prob": 0.85,
+    "strength": [0.15, 1.0]
+  },
+  "appearance": {
+    "texture_source": "real",
+    "real_texture_prob": 0.85,
+    "hsv_jitter": 0.06,
+    "tissue_material_jitter": 0.3,
+    "color_transfer_prob": 0.45,
+    "color_transfer_strength": [0.25, 0.7],
+    "vignette_prob": 0.8,
+    "vignette_strength": [0.15, 0.45],
+    "barrel_prob": 0.3,
+    "barrel_k1": [-0.12, -0.02]
+  },
+  "sensor": {
+    "shot_noise": [0.2, 0.8],
+    "read_noise": [0.002, 0.006],
+    "blur_px": [0.0, 1.5],
+    "exposure_jitter": [0.05, 0.2],
+    "wb_jitter": 0.04,
+    "haze_prob": 0.15,
+    "haze_strength": [0.05, 0.25]
+  },
+  "output": {
+    "save_color": true,
+    "save_depth": true,
+    "save_mask": true,
+    "save_object_poses": true,
+    "save_motion_gt": true,
+    "save_flow": true,
+    "save_motion_mask": true,
+    "save_normals": false,
+    "stereo_baseline_mm": 0.0,
+    "depth_format": "png16"
+  },
+  "fps": 10.0,
+  "near_mm": 2.0,
+  "motion_eps_mm": 0.2
+}
