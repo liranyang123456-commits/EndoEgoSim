@@ -242,9 +242,13 @@ def pairwise_essential(img0, img1, K, return_inliers=False):
     if E is None:
         return (None, 0) if return_inliers else None
     _, R, t, _ = cv2.recoverPose(E, p0, p1, K, mask=mask)
-    T = np.eye(4, dtype=np.float64)
-    T[:3, :3] = R
-    T[:3, 3] = t.reshape(3)
+    # OpenCV returns the previous-camera -> current-camera transform.
+    # Mesh-RTS composes camera-to-world poses and therefore requires the
+    # opposite edge, current-camera -> previous-camera.
+    T_cur_from_prev = np.eye(4, dtype=np.float64)
+    T_cur_from_prev[:3, :3] = R
+    T_cur_from_prev[:3, 3] = t.reshape(3)
+    T = np.linalg.inv(T_cur_from_prev)
     n_inl = int(mask.sum()) if mask is not None else 0
     return (T, n_inl) if return_inliers else T
 
@@ -341,10 +345,14 @@ def mesh_pnp(src_cam, dst_uv, K):
     if not ok:
         return None
     R, _ = cv2.Rodrigues(rvec)
-    T_cw = np.eye(4, dtype=np.float64)
-    T_cw[:3, :3] = R
-    T_cw[:3, 3] = tvec.reshape(3)
-    return np.linalg.inv(T_cw)
+    # solvePnP maps the supplied object points to the observing camera.
+    # Here object points are expressed in the current-camera pseudo-3D frame
+    # and image points belong to the previous frame, so the returned transform
+    # is already current-camera -> previous-camera: the c2w compositional edge.
+    T_prev_from_cur = np.eye(4, dtype=np.float64)
+    T_prev_from_cur[:3, :3] = R
+    T_prev_from_cur[:3, 3] = tvec.reshape(3)
+    return T_prev_from_cur
 
 
 def pairwise_T_v3(img0, img1, K, max_side=384):
@@ -518,7 +526,7 @@ def run_eight_on(frame_paths, K):
                 p0, p1, K, method=cv2.RANSAC, prob=0.999, threshold=1.0)
             if E is not None:
                 _, R, t, _ = cv2.recoverPose(E, p0, p1, K, mask=mask)
-                T = rot_trans(R, t.reshape(3))
+                T = np.linalg.inv(rot_trans(R, t.reshape(3)))
         poses.append(poses[-1] @ T)
         gray0 = gray1
     return np.stack(poses)
