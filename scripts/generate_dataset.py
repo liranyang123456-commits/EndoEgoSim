@@ -90,11 +90,25 @@ def main():
         cfg = GenConfig.load(args.config)
     else:
         cfg = GenConfig()
+    dense_outputs = (
+        cfg.output.save_depth
+        or cfg.output.save_flow
+        or cfg.output.save_motion_mask
+    )
+    if cfg.appearance.barrel_prob > 0 and dense_outputs:
+        raise ValueError(
+            "barrel_prob > 0 is incompatible with the current pinhole dense-label "
+            "writer: RGB would be warped without depth/flow/motion-mask. Set "
+            "barrel_prob=0, or implement a shared geometric warp for every target."
+        )
     os.makedirs(args.out, exist_ok=True)
     cfg.save(os.path.join(args.out, "gen_config.json"))
 
     seeds = list(range(args.seed_start, args.seed_start + args.n_seq))
-    use_bank = not args.no_bank
+    use_bank = (
+        (not args.no_bank)
+        and getattr(cfg.appearance, "texture_source", "real") == "real"
+    )
     t0 = time.time()
     print(f"生成 {len(seeds)} 条序列 -> {args.out} (workers={args.workers}, "
           f"纹理库={'启用' if use_bank else '禁用'})")

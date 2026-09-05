@@ -1,0 +1,39 @@
+{
+  "frozen_on": "2026-08-31",
+  "purpose": "Independent confirmatory evaluation after simtest92 development",
+  "cohorts": [
+    {
+      "name": "core-complement",
+      "dataset": "EndoEgoSim core",
+      "selection": "test split, seeds <= 2400, excluding simtest92",
+      "excluded_list": "lists\\simtest92.txt",
+      "n_sequences": 265,
+      "list": "lists\\sim_confirmatory265.txt",
+      "sha256_utf8_list": "860ad257d99866896d045ff7951edbd2c2fffdc11a3369e9614d25346a6190a8"
+    },
+    {
+      "name": "development-extension-test",
+      "dataset": "EndoEgoSim development extension",
+      "selection": "all test-split sequences with seeds > 2400",
+      "n_sequences": 93,
+      "list": "lists\\sim_confirmatory_extension93.txt",
+      "sha256_utf8_list": "55090b9714d9144f8141b31b9dc5fe73ced4234c297b391685dd18f5c3e8f821"
+    }
+  ],
+  "selection_uses_images_or_metadata": false,
+  "selection_uses_predictions_or_metrics": false,
+  "locked_configuration": {
+    "primary_method": "MD-VGGT-R",
+    "checkpoint": "results/finetune/ours_vggt_v7/vggt_endo_ft.pth",
+    "frame_protocol": "uniform, max 64",
+    "route_hop_cut": 0.12,
+    "primary_metric": "sequence-macro mean Sim(3) ATE RMSE (mm)",
+    "comparators": [
+      "MD-VGGT Stage 6 (global)",
+      "DROID-SLAM",
+      "pi3",
+      "Reloc3r-512",
+      "ORB-E"
+    ]
+  }
+}

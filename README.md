@@ -1,74 +1,74 @@
-# EndoEgoSim
+# EndoEgoSim / MD-VGGT
 
-Code for **monocular endoscopic camera egomotion**: a controllable simulation factory (EndoEgoSim), a geometric pose proxy (Mesh-RTS), and motion-decomposition fine-tuning of VGGT (MD-VGGT).
+Code and frozen evaluation ledgers for the Medical Image Analysis manuscript:
 
-Paper: *Differentiable Pseudo-3D Mesh Alignment for Endoscopic Camera Pose under Deformable Tissue* (submitted to Medical Image Analysis).
+**Disentangling Camera and Scene Motion in Monocular Endoscopy: EndoEgoSim and Motion-Decomposed VGGT**
 
-**This repository does not claim a real-domain SOTA.** On the official simulation list `lists/simtest92.txt` ($n=92$), the single learned model **MD-VGGT-v3** reaches **5.74 mm** mean Sim(3) ATE, below the VGGT / MASt3R / DUSt3R / Endo3R / $\pi^3$ checkpoints we ran. Mesh-RTS-v3 is **10.47 mm** (single pairwise path, slightly below 8-point at 10.52 mm). Official SCARED left-camera videos remain metres-scale because native hops are already 12–40 cm.
+Repository: https://github.com/liranyang123456-commits/EndoEgoSim
 
-## What is included
+> **Claim boundary.** We do **not** claim a universal real-domain SOTA.
+> Primary simulation evidence is protocol-matched Sim(3) ATE. The development
+> route threshold is post hoc; frozen confirmatory sets are mixed (core mean
+> favourable; extension mean trails Reloc3r-512). StereoMIS (64-frame) is the
+> independent external real protocol.
+
+## Headline numbers (sequence-macro Sim(3) ATE, mm)
+
+| Protocol | Method | Mean | Notes |
+|----------|--------|------|-------|
+| `lists/simtest92.txt` (n=92) | **MD-VGGT-R** (τ=0.12) | **3.49** | post-hoc τ on this list |
+| same | DROID-SLAM | 6.04 | full coverage |
+| frozen core (n=265) | MD-VGGT-R | 2.70 | vs DROID 3.26; Holm n.s. |
+| frozen extension (n=93) | MD-VGGT-R | 23.15 | Reloc3r-512 mean **22.77** |
+| StereoMIS 64-frame | MD-VGGT-G | 13.44 | vs DROID 27.68 |
+| StereoMIS full-rate sliding | MD-VGGT-G | 29.93 | composition + denser frames |
+
+Ledgers: `results/sota/*/summary.json`, `results/sota/confirmatory_analysis.json`.
+
+## For reviewers
+
+| Item | Location |
+|------|----------|
+| Frozen eval lists | `lists/simtest92.txt`, `sim_confirmatory265.txt`, `sim_confirmatory_extension93.txt` |
+| Procedural-only config | `configs/procedural_review.json` (`texture_source=procedural`, `barrel_prob=0`) |
+| Build reviewer pack | `python scripts/build_reviewer_procedural_pack.py --generate-demo 8` |
+| Paper package (local) | `submission_archive/MIA_submission_*_candidate.zip` |
+
+Private hospital textures and third-party appearance banks are **not** redistributed.
+Procedural generation does not require those assets.
+
+```bash
+# Small procedural demo (no real texture bank)
+python scripts/generate_dataset.py \
+  --config configs/procedural_review.json \
+  --n-seq 8 --seed-start 900001 --workers 4 --no-bank \
+  --out review_demo_data
+```
+
+## Repository layout
 
 | Path | Contents |
-|---|---|
-| `endosim/` | Dataset generator, rasterizer, Umeyama ATE/RPE, real-data indexers |
-| `scripts/` | Generation, SOTA eval, Mesh-RTS, $\pi^3$, fusion gates |
-| `configs/` | Default / hard / keyframe generation configs |
-| `lists/` | `simtest92.txt` and reference-fraction splits |
-| `docs/` | Design notes and the performance table used in the paper |
-| `results/sota/*/summary.json` | Per-run macros that match the paper tables |
+|------|----------|
+| `endosim/` | Generator, rasterizer, metrics |
+| `scripts/` | Generation, MD-VGGT eval, confirmatory analysis, packaging |
+| `configs/` | Default / hard / keyframe / **procedural_review** |
+| `lists/` | Frozen identities used in the paper |
+| `results/sota/` | Summary JSON ledgers (not full RGB) |
+| `mia_paper/` | Manuscript sources (local workspace; may not be on GitHub) |
 
-Not included (too large or third-party): rendered `sim_data/`, C3VD/SCARED pixels, VGGT/$\pi^3$ weights.
+## Naming
 
-## Metrics
+- **MD-VGGT**: trained adaptation of VGGT-1B
+- **MD-VGGT-G**: same checkpoint, global window only
+- **MD-VGGT-R**: same checkpoint + collapse-aware local route
+- Internal dirs `ours_v7_*` are ledger tags only, not paper method names
 
-`endosim/eval/metrics.py` reports:
+## License / third-party data
 
-- **ATE Sim(3)**: RMSE of translation (mm) after Umeyama 7-DoF alignment (headline, monocular / SCARED convention).
-- **ATE SE(3)**: same with scale fixed.
-- **RPE$_1$**: mean translational relative pose error (mm), **not** RMSE.
+Code is for research reproduction.
+Obtain C3VD, SCARED, CholecSeg8k, and HyperKvasir from their providers.
+Public model weights remain under their original licenses.
 
-Degenerate Sim(3) solutions with vanishing scale variance are forced to scale 1.
+## Contact
 
-## Reproduce the 92-sequence table
-
-```bash
-# Identity / 8-point / RGB-D PnP
-python scripts/baseline_classical.py --method eight --seq-list lists/simtest92.txt --out results/sota
-
-# Published feed-forward checkpoints (needs local weights)
-python scripts/baseline_sota.py --method vggt --seq-list lists/simtest92.txt --out results/sota
-python scripts/eval_slam.py --method pi3 --seq-list lists/simtest92.txt --out results/sota
-
-# Mesh-RTS v3 (single path)
-python scripts/eval_meshrts.py --variant v3 --seq-list lists/simtest92.txt --out results/sota
-
-# Rebuild the markdown table from summary.json files
-python scripts/compare_sota.py
-```
-
-C3VD and SCARED: index official videos with `scripts/index_real_datasets.py` (paths stay local; pixels are not copied), then run the same evaluators with `--protocol` as in `docs/06_改进方案.md`.
-
-## Generate EndoEgoSim
-
-```bash
-python scripts/generate_dataset.py --config configs/default.json --n-seq 100 --out sim_data
-python scripts/verify_gt.py --seq sim_data/train/seq_00000101
-```
-
-GPU rasterization (`--gpu`, nvdiffrast) is optional. The released 2,400-sequence set is about 115 GB and is not uploaded here.
-
-## Citation
-
-```bibtex
-@article{li2026endoegosim,
-  title={Differentiable Pseudo-3D Mesh Alignment for Endoscopic Camera Pose under Deformable Tissue},
-  author={Li, Ranyang and Zhu, Ziyu and Guo, Xiaodong and Wei, Nan and Liu, Wufeng and Fan, Chao and Pan, Junjun},
-  journal={Medical Image Analysis},
-  note={under review},
-  year={2026}
-}
-```
-
-## Licence
-
-MIT for this repository's original code. VGGT, DUSt3R, MASt3R, Endo3R, and $\pi^3$ remain under their own licences. C3VD and SCARED remain under their original data agreements.
+Corresponding authors listed in the manuscript (Henan University of Technology / Beihang University).

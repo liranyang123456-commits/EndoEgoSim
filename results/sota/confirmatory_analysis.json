@@ -1,0 +1,590 @@
+{
+  "primary_endpoint": "sequence-macro mean Sim(3) ATE RMSE (mm)",
+  "test": "two-sided paired Wilcoxon; Holm adjustment within cohort",
+  "confidence_intervals": "percentile paired/non-paired bootstrap, 20000 draws",
+  "bootstrap_seed": 20260901,
+  "cohorts": [
+    {
+      "cohort": "core-complement",
+      "primary_tag": "ours_v7_confirmatory265",
+      "n": 265,
+      "primary_route_counts": {
+        "global": 206,
+        "pairwise": 59
+      },
+      "methods": [
+        {
+          "method": "MD-VGGT-R",
+          "n": 265,
+          "mean_ate_mm": 2.6953123490352775,
+          "mean_ate_95ci_mm": [
+            2.0469151180808804,
+            3.44740357565323
+          ],
+          "median_ate_mm": 0.7534979461732009,
+          "rpe1_trans_mean_mm": 0.6896038532811947,
+          "stratified": [
+            {
+              "bucket": "中参照(0.3-0.7)",
+              "n": 44,
+              "ate_se3_mean": 23.638203651641597,
+              "ate_sim3_mean": 6.4166015739716356,
+              "rpe1_t_mean": 1.4088273946087995,
+              "rpe1_r_mean": 0.6669794698497489
+            },
+            {
+              "bucket": "高参照(>0.7)",
+              "n": 221,
+              "ate_se3_mean": 23.97915139182306,
+              "ate_sim3_mean": 1.9544221866045095,
+              "rpe1_t_mean": 0.5464100260485494,
+              "rpe1_r_mean": 0.3771494078585374
+            }
+          ]
+        },
+        {
+          "method": "MD-VGGT Stage 6",
+          "n": 265,
+          "mean_ate_mm": 4.4275956750494325,
+          "mean_ate_95ci_mm": [
+            3.4265473494447924,
+            5.543993835516464
+          ],
+          "median_ate_mm": 0.890170210458805,
+          "rpe1_trans_mean_mm": 1.074106902646907,
+          "stratified": [
+            {
+              "bucket": "中参照(0.3-0.7)",
+              "n": 44,
+              "ate_se3_mean": 23.69078358730241,
+              "ate_sim3_mean": 8.272847706764171,
+              "rpe1_t_mean": 1.8585613408831598,
+              "rpe1_r_mean": 0.9378117298607583
+            },
+            {
+              "bucket": "高参照(>0.7)",
+              "n": 221,
+              "ate_se3_mean": 24.046213454131816,
+              "ate_sim3_mean": 3.6620251347985335,
+              "rpe1_t_mean": 0.9179259285184221,
+              "rpe1_r_mean": 0.6252001802080316
+            }
+          ]
+        },
+        {
+          "method": "DROID-SLAM",
+          "n": 265,
+          "mean_ate_mm": 3.261791646848303,
+          "mean_ate_95ci_mm": [
+            2.574741689493092,
+            4.0201110745651345
+          ],
+          "median_ate_mm": 0.5106985217267878,
+          "rpe1_trans_mean_mm": 1.9793222102649701,
+          "stratified": [
+            {
+              "bucket": "中参照(0.3-0.7)",
+              "n": 44,
+              "ate_se3_mean": 23.33839676529345,
+              "ate_sim3_mean": 7.1452597853510005,
+              "rpe1_t_mean": 3.0497046257810734,
+              "rpe1_r_mean": 3.4733952912029364
+            },
+            {
+              "bucket": "高参照(>0.7)",
+              "n": 221,
+              "ate_se3_mean": 23.72583933170857,
+              "ate_sim3_mean": 2.488612469951838,
+              "rpe1_t_mean": 1.7662143990309946,
+              "rpe1_r_mean": 2.2530202341193792
+            }
+          ]
+        },
+        {
+          "method": "pi3",
+          "n": 265,
+          "mean_ate_mm": 4.648185684766766,
+          "mean_ate_95ci_mm": [
+            3.662103165511348,
+            5.767046644275249
+          ],
+          "median_ate_mm": 1.4964149263392557,
+          "rpe1_trans_mean_mm": 1.2288452270899326,
+          "stratified": [
+            {
+              "bucket": "中参照(0.3-0.7)",
+              "n": 44,
+              "ate_se3_mean": 23.6543550988769,
+              "ate_sim3_mean": 7.90498244890457,
+              "rpe1_t_mean": 2.10485911465852,
+              "rpe1_r_mean": 1.1075575102078554
+            },
+            {
+              "bucket": "高参照(>0.7)",
+              "n": 221,
+              "ate_se3_mean": 24.00946775016085,
+              "ate_sim3_mean": 3.999773659327564,
+              "rpe1_t_mean": 1.054435222325146,
+              "rpe1_r_mean": 0.6314594637890788
+            }
+          ]
+        },
+        {
+          "method": "Reloc3r-512",
+          "n": 265,
+          "mean_ate_mm": 5.974434288098853,
+          "mean_ate_95ci_mm": [
+            5.140986150180774,
+            6.8569070292247405
+          ],
+          "median_ate_mm": 3.3963318293403097,
+          "rpe1_trans_mean_mm": 1.161005710368085,
+          "stratified": [
+            {
+              "bucket": "中参照(0.3-0.7)",
+              "n": 44,
+              "ate_se3_mean": 21.59952993793236,
+              "ate_sim3_mean": 9.40012612343492,
+              "rpe1_t_mean": 1.7585460009157516,
+              "rpe1_r_mean": 1.3731641530862329
+            },
+            {
+              "bucket": "高参照(>0.7)",
+              "n": 221,
+              "ate_se3_mean": 21.112744233648748,
+              "ate_sim3_mean": 5.292396094638279,
+              "rpe1_t_mean": 1.0420384127024862,
+              "rpe1_r_mean": 0.8497878120785521
+            }
+          ]
+        },
+        {
+          "method": "ORB-E",
+          "n": 265,
+          "mean_ate_mm": 9.862678999394817,
+          "mean_ate_95ci_mm": [
+            8.81083782461368,
+            10.98913000445598
+          ],
+          "median_ate_mm": 7.298056329908012,
+          "rpe1_trans_mean_mm": 2.2197074443729234,
+          "stratified": [
+            {
+              "bucket": "中参照(0.3-0.7)",
+              "n": 44,
+              "ate_se3_mean": 21.089582926106882,
+              "ate_sim3_mean": 13.156841272883277,
+              "rpe1_t_mean": 3.102854739465005,
+              "rpe1_r_mean": 11.85324831412236
+            },
+            {
+              "bucket": "高参照(>0.7)",
+              "n": 221,
+              "ate_se3_mean": 19.374267212606107,
+              "ate_sim3_mean": 9.206827687026072,
+              "rpe1_t_mean": 2.0438772136758576,
+              "rpe1_r_mean": 7.987056845577027
+            }
+          ]
+        }
+      ],
+      "paired_comparisons": [
+        {
+          "comparator": "MD-VGGT Stage 6",
+          "n": 265,
+          "mdvggt_r_lower_count": 191,
+          "ties": 0,
+          "mean_difference_mm": -1.7322833260141544,
+          "mean_difference_95ci_mm": [
+            -2.4588097975980654,
+            -1.077555507647633
+          ],
+          "median_difference_mm": -0.04798439682257172,
+          "relative_mean_reduction_pct": 39.12469550406304,
+          "wilcoxon_p_raw": 2.479401990967372e-13,
+          "sign_p_raw": 4.2949179933724233e-13,
+          "wilcoxon_p_holm": 4.958803981934744e-13
+        },
+        {
+          "comparator": "DROID-SLAM",
+          "n": 265,
+          "mdvggt_r_lower_count": 128,
+          "ties": 0,
+          "mean_difference_mm": -0.5664792978130253,
+          "mean_difference_95ci_mm": [
+            -1.1233106835141895,
+            -0.03975270105292868
+          ],
+          "median_difference_mm": 0.0012699814829179564,
+          "relative_mean_reduction_pct": 17.36712086930459,
+          "wilcoxon_p_raw": 0.3691662070579832,
+          "sign_p_raw": 0.6232015327058867,
+          "wilcoxon_p_holm": 0.3691662070579832
+        },
+        {
+          "comparator": "pi3",
+          "n": 265,
+          "mdvggt_r_lower_count": 229,
+          "ties": 0,
+          "mean_difference_mm": -1.9528733357314878,
+          "mean_difference_95ci_mm": [
+            -2.6820733344970953,
+            -1.3061501791615284
+          ],
+          "median_difference_mm": -0.5337353153571792,
+          "relative_mean_reduction_pct": 42.01366873383584,
+          "wilcoxon_p_raw": 2.934152234850617e-24,
+          "sign_p_raw": 1.5343159172392602e-35,
+          "wilcoxon_p_holm": 8.802456704551852e-24
+        },
+        {
+          "comparator": "Reloc3r-512",
+          "n": 265,
+          "mdvggt_r_lower_count": 239,
+          "ties": 0,
+          "mean_difference_mm": -3.279121939063575,
+          "mean_difference_95ci_mm": [
+            -3.9284928030061184,
+            -2.666592950165839
+          ],
+          "median_difference_mm": -1.744169250022669,
+          "relative_mean_reduction_pct": 54.88589849578941,
+          "wilcoxon_p_raw": 1.8152530615179222e-32,
+          "sign_p_raw": 2.665641458186931e-44,
+          "wilcoxon_p_holm": 7.261012246071689e-32
+        },
+        {
+          "comparator": "ORB-E",
+          "n": 265,
+          "mdvggt_r_lower_count": 259,
+          "ties": 0,
+          "mean_difference_mm": -7.167366650359538,
+          "mean_difference_95ci_mm": [
+            -7.928232633906556,
+            -6.426245172040513
+          ],
+          "median_difference_mm": -5.387383583094036,
+          "relative_mean_reduction_pct": 72.671600188948,
+          "wilcoxon_p_raw": 3.612445034525206e-43,
+          "sign_p_raw": 1.5688020717005037e-68,
+          "wilcoxon_p_holm": 1.806222517262603e-42
+        }
+      ]
+    },
+    {
+      "cohort": "development-extension-test",
+      "primary_tag": "ours_v7_confirmatory_extension93",
+      "n": 93,
+      "primary_route_counts": {
+        "global": 44,
+        "pairwise": 49
+      },
+      "methods": [
+        {
+          "method": "MD-VGGT-R",
+          "n": 93,
+          "mean_ate_mm": 23.150864380287896,
+          "mean_ate_95ci_mm": [
+            16.481718179738202,
+            30.582214264360275
+          ],
+          "median_ate_mm": 7.34515688182221,
+          "rpe1_trans_mean_mm": 5.015043012185053,
+          "stratified": [
+            {
+              "bucket": "低参照(<0.3)",
+              "n": 21,
+              "ate_se3_mean": 73.65827114778108,
+              "ate_sim3_mean": 39.3594793825958,
+              "rpe1_t_mean": 8.170609011650969,
+              "rpe1_r_mean": 1.969522407982569
+            },
+            {
+              "bucket": "中参照(0.3-0.7)",
+              "n": 41,
+              "ate_se3_mean": 40.48394609105066,
+              "ate_sim3_mean": 16.125614437371286,
+              "rpe1_t_mean": 3.3875294968923266,
+              "rpe1_r_mean": 1.4737024947792703
+            },
+            {
+              "bucket": "高参照(>0.7)",
+              "n": 31,
+              "ate_se3_mean": 40.158298125879796,
+              "ate_sim3_mean": 21.462294464517402,
+              "rpe1_t_mean": 5.02991940374046,
+              "rpe1_r_mean": 0.9849780757077597
+            }
+          ]
+        },
+        {
+          "method": "MD-VGGT Stage 6",
+          "n": 93,
+          "mean_ate_mm": 30.250380398302138,
+          "mean_ate_95ci_mm": [
+            22.375367899385488,
+            38.847641016138326
+          ],
+          "median_ate_mm": 10.925525401479689,
+          "rpe1_trans_mean_mm": 6.829417618061775,
+          "stratified": [
+            {
+              "bucket": "低参照(<0.3)",
+              "n": 21,
+              "ate_se3_mean": 73.7202888263346,
+              "ate_sim3_mean": 50.871510040737654,
+              "rpe1_t_mean": 9.922223689137954,
+              "rpe1_r_mean": 2.411506606171114
+            },
+            {
+              "bucket": "中参照(0.3-0.7)",
+              "n": 41,
+              "ate_se3_mean": 40.64180574021638,
+              "ate_sim3_mean": 25.113609284242123,
+              "rpe1_t_mean": 5.798305243287363,
+              "rpe1_r_mean": 2.4040250187058496
+            },
+            {
+              "bucket": "高参照(>0.7)",
+              "n": 31,
+              "ate_se3_mean": 40.198755214664274,
+              "ate_sim3_mean": 23.075022113957438,
+              "rpe1_t_mean": 6.0980201946150325,
+              "rpe1_r_mean": 1.3614610039307613
+            }
+          ]
+        },
+        {
+          "method": "DROID-SLAM",
+          "n": 93,
+          "mean_ate_mm": 24.661521647044655,
+          "mean_ate_95ci_mm": [
+            18.254008175558422,
+            31.683402395880194
+          ],
+          "median_ate_mm": 10.890558942388587,
+          "rpe1_trans_mean_mm": 9.053397439588506,
+          "stratified": [
+            {
+              "bucket": "低参照(<0.3)",
+              "n": 21,
+              "ate_se3_mean": 73.29673070687593,
+              "ate_sim3_mean": 47.135390504701526,
+              "rpe1_t_mean": 14.019418534706382,
+              "rpe1_r_mean": 5.006414360530287
+            },
+            {
+              "bucket": "中参照(0.3-0.7)",
+              "n": 41,
+              "ate_se3_mean": 40.17305019538823,
+              "ate_sim3_mean": 19.21200854311857,
+              "rpe1_t_mean": 6.155088374906799,
+              "rpe1_r_mean": 5.590621148434424
+            },
+            {
+              "bucket": "高参照(>0.7)",
+              "n": 31,
+              "ate_se3_mean": 39.79923346757628,
+              "ate_sim3_mean": 16.64470846156645,
+              "rpe1_t_mean": 9.52256610586188,
+              "rpe1_r_mean": 3.696096137516476
+            }
+          ]
+        },
+        {
+          "method": "pi3",
+          "n": 93,
+          "mean_ate_mm": 28.255063798346,
+          "mean_ate_95ci_mm": [
+            21.355239497423234,
+            35.70661188572269
+          ],
+          "median_ate_mm": 10.316541769180539,
+          "rpe1_trans_mean_mm": 7.242079403720788,
+          "stratified": [
+            {
+              "bucket": "低参照(<0.3)",
+              "n": 21,
+              "ate_se3_mean": 73.70739174822505,
+              "ate_sim3_mean": 51.173115547934266,
+              "rpe1_t_mean": 10.690191141276767,
+              "rpe1_r_mean": 2.5182556827416027
+            },
+            {
+              "bucket": "中参照(0.3-0.7)",
+              "n": 41,
+              "ate_se3_mean": 40.594031021811965,
+              "ate_sim3_mean": 22.908090953783464,
+              "rpe1_t_mean": 5.252355114519974,
+              "rpe1_r_mean": 2.0773679024291773
+            },
+            {
+              "bucket": "高参照(>0.7)",
+              "n": 31,
+              "ate_se3_mean": 40.177959642144664,
+              "ate_sim3_mean": 19.801734762401164,
+              "rpe1_t_mean": 7.53783260915814,
+              "rpe1_r_mean": 1.3189672503451757
+            }
+          ]
+        },
+        {
+          "method": "Reloc3r-512",
+          "n": 93,
+          "mean_ate_mm": 22.765366967352747,
+          "mean_ate_95ci_mm": [
+            17.684338351429545,
+            28.328587094920604
+          ],
+          "median_ate_mm": 11.924768126986967,
+          "rpe1_trans_mean_mm": 6.167443884273938,
+          "stratified": [
+            {
+              "bucket": "低参照(<0.3)",
+              "n": 21,
+              "ate_se3_mean": 71.32911084502166,
+              "ate_sim3_mean": 39.53323631663131,
+              "rpe1_t_mean": 9.061084834533382,
+              "rpe1_r_mean": 3.646218558464374
+            },
+            {
+              "bucket": "中参照(0.3-0.7)",
+              "n": 41,
+              "ate_se3_mean": 38.73048587165622,
+              "ate_sim3_mean": 19.77870361145859,
+              "rpe1_t_mean": 3.698352848410926,
+              "rpe1_r_mean": 3.5218245427957817
+            },
+            {
+              "bucket": "高参照(>0.7)",
+              "n": 31,
+              "ate_se3_mean": 38.06701710309628,
+              "ate_sim3_mean": 15.356590878862772,
+              "rpe1_t_mean": 7.472807513787975,
+              "rpe1_r_mean": 1.827364588791268
+            }
+          ]
+        },
+        {
+          "method": "ORB-E",
+          "n": 93,
+          "mean_ate_mm": 29.892297499274306,
+          "mean_ate_95ci_mm": [
+            23.686419815863047,
+            36.693719500882075
+          ],
+          "median_ate_mm": 20.890901428852967,
+          "rpe1_trans_mean_mm": 7.790519531149962,
+          "stratified": [
+            {
+              "bucket": "低参照(<0.3)",
+              "n": 21,
+              "ate_se3_mean": 71.0351204188425,
+              "ate_sim3_mean": 47.52599365173712,
+              "rpe1_t_mean": 11.545940518396172,
+              "rpe1_r_mean": 14.37919137535418
+            },
+            {
+              "bucket": "中参照(0.3-0.7)",
+              "n": 41,
+              "ate_se3_mean": 38.89237954185556,
+              "ate_sim3_mean": 24.069518836601812,
+              "rpe1_t_mean": 5.788207665011934,
+              "rpe1_r_mean": 12.592691807928626
+            },
+            {
+              "bucket": "高参照(>0.7)",
+              "n": 31,
+              "ate_se3_mean": 37.821693540451676,
+              "ate_sim3_mean": 25.647984788559896,
+              "rpe1_t_mean": 7.894743588552827,
+              "rpe1_r_mean": 14.84914748232076
+            }
+          ]
+        }
+      ],
+      "paired_comparisons": [
+        {
+          "comparator": "MD-VGGT Stage 6",
+          "n": 93,
+          "mdvggt_r_lower_count": 67,
+          "ties": 0,
+          "mean_difference_mm": -7.099516018014239,
+          "mean_difference_95ci_mm": [
+            -10.440593560081776,
+            -4.094477885444789
+          ],
+          "median_difference_mm": -0.6725048749044329,
+          "relative_mean_reduction_pct": 23.46917931125493,
+          "wilcoxon_p_raw": 1.5638217909532177e-06,
+          "sign_p_raw": 2.5258189217190576e-05,
+          "wilcoxon_p_holm": 6.255287163812871e-06
+        },
+        {
+          "comparator": "DROID-SLAM",
+          "n": 93,
+          "mdvggt_r_lower_count": 56,
+          "ties": 0,
+          "mean_difference_mm": -1.5106572667567668,
+          "mean_difference_95ci_mm": [
+            -4.921449886596004,
+            1.9177743705298695
+          ],
+          "median_difference_mm": -0.08421284046726273,
+          "relative_mean_reduction_pct": 6.125563898194378,
+          "wilcoxon_p_raw": 0.08711684793056344,
+          "sign_p_raw": 0.06138589870445953,
+          "wilcoxon_p_holm": 0.08711684793056344
+        },
+        {
+          "comparator": "pi3",
+          "n": 93,
+          "mdvggt_r_lower_count": 65,
+          "ties": 0,
+          "mean_difference_mm": -5.104199418058102,
+          "mean_difference_95ci_mm": [
+            -8.930393664062942,
+            -1.4541190362771919
+          ],
+          "median_difference_mm": -0.5099070861551536,
+          "relative_mean_reduction_pct": 18.064724448992024,
+          "wilcoxon_p_raw": 0.0008172161751149382,
+          "sign_p_raw": 0.0001575707877910854,
+          "wilcoxon_p_holm": 0.002451648525344815
+        },
+        {
+          "comparator": "Reloc3r-512",
+          "n": 93,
+          "mdvggt_r_lower_count": 68,
+          "ties": 0,
+          "mean_difference_mm": 0.38549741293514833,
+          "mean_difference_95ci_mm": [
+            -2.483939020831265,
+            3.8261894664007703
+          ],
+          "median_difference_mm": -1.6932614701205633,
+          "relative_mean_reduction_pct": -1.6933503136056653,
+          "wilcoxon_p_raw": 0.008338378089278812,
+          "sign_p_raw": 9.375635307717017e-06,
+          "wilcoxon_p_holm": 0.016676756178557624
+        },
+        {
+          "comparator": "ORB-E",
+          "n": 93,
+          "mdvggt_r_lower_count": 78,
+          "ties": 0,
+          "mean_difference_mm": -6.741433118986412,
+          "mean_difference_95ci_mm": [
+            -9.573986287483253,
+            -3.784772347446953
+          ],
+          "median_difference_mm": -5.8574316906707296,
+          "relative_mean_reduction_pct": 22.552408757306367,
+          "wilcoxon_p_raw": 1.856901917670025e-09,
+          "sign_p_raw": 1.9393097995260696e-11,
+          "wilcoxon_p_holm": 9.284509588350125e-09
+        }
+      ]
+    }
+  ]
+}
