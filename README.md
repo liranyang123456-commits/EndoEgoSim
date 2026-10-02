@@ -1,16 +1,17 @@
 # EndoEgoSim / MD-VGGT
 
-Code and frozen evaluation ledgers for the Medical Image Analysis manuscript:
+Code and frozen evaluation ledgers for the manuscript:
 
-**Disentangling Camera and Scene Motion in Monocular Endoscopy: EndoEgoSim and Motion-Decomposed VGGT**
+**Disentangling Camera and Scene Motion for Ego-Motion Estimation in Monocular Endoscopy**
 
 Repository: https://github.com/liranyang123456-commits/EndoEgoSim
 
 > **Claim boundary.** We do **not** claim a universal real-domain SOTA.
 > Primary simulation evidence is protocol-matched Sim(3) ATE. The development
 > route threshold is post hoc; frozen confirmatory sets are mixed (core mean
-> favourable; extension mean trails Reloc3r-512). StereoMIS (64-frame) is the
-> independent external real protocol.
+> favourable; extension mean trails Reloc3r-512 on the mean but favours
+> MD-VGGT-R on the median and on the task-level reconstruction metric).
+> StereoMIS (64-frame) is the independent external real protocol.
 
 ## Headline numbers (sequence-macro Sim(3) ATE, mm)
 
@@ -21,7 +22,11 @@ Repository: https://github.com/liranyang123456-commits/EndoEgoSim
 | frozen core (n=265) | MD-VGGT-R | 2.70 | vs DROID 3.26; Holm n.s. |
 | frozen extension (n=93) | MD-VGGT-R | 23.15 | Reloc3r-512 mean **22.77** |
 | StereoMIS 64-frame | MD-VGGT-G | 13.44 | vs DROID 27.68 |
-| StereoMIS full-rate sliding | MD-VGGT-G | 29.93 | composition + denser frames |
+| EGO-Mo gtraj (n=18, global-GT) | MD-VGGT-R | **13.54** | lowest; vs VGGT p=0.0028 |
+
+**Task-level reconstruction (Chamfer, mm)**: MD-VGGT-R 11.46 (simtest92) / 6.51 (frozen core) / 29.96 (extension) — lowest on every cohort; on the extension it reverses the ATE-mean ordering (Reloc3r-512 44.32, p=5.8e-06).
+
+**Ablations** (simtest92, v7 baseline 3.495): +pseudo-height head 3.39 (frozen core 2.49, p=0.027; extension 20.91 surpasses Reloc3r, p=4.9e-06); +motion-layer head 3.39 (instrument/static IoU 0.50/0.65); +input channel 4.07 (harmful); +GN pose graph 3.51 (neutral).
 
 Ledgers: `results/sota/*/summary.json`, `results/sota/confirmatory_analysis.json`.
 
@@ -49,12 +54,16 @@ python scripts/generate_dataset.py \
 
 | Path | Contents |
 |------|----------|
-| `endosim/` | Generator, rasterizer, metrics |
-| `scripts/` | Generation, MD-VGGT eval, confirmatory analysis, packaging |
-| `configs/` | Default / hard / keyframe / **procedural_review** |
-| `lists/` | Frozen identities used in the paper |
+| `endosim/` | Generator, rasterizer, metrics, `geometry/pose_graph.py`, `pseudoheight.py`, `eval/` (MD-VGGT infer, decouple, static support) |
+| `scripts/` | Generation, MD-VGGT eval, reconstruction/motion-layer/board-pose eval, EGO-Mo converters, leaderboard/trajectory plots, packaging |
+| `configs/` | Default / hard / keyframe / lowref / href / disaster / ego_protocol / **procedural_review** |
+| `lists/` | Frozen identities used in the paper + EGO-Mo real-capture lists |
 | `results/sota/` | Summary JSON ledgers (not full RGB) |
 | `mia_paper/` | Manuscript sources (local workspace; may not be on GitHub) |
+
+## Real-capture evaluation (EGO-Mo)
+
+A global-reference rig (fixed 4K global camera + checkerboard on the stereo endoscope + scene checkerboard + dual IMU) gives absolute 6-DoF ground truth. Converters: `scripts/convert_egomo_to_eval.py`, `scripts/convert_gtraj_to_eval.py`. Evaluation: `scripts/eval_mdvggt_infer.py`, `scripts/eval_slam.py`, `scripts/eval_board_pose.py` (dual-rigid-body: camera + scene-board trajectories).
 
 ## Naming
 

@@ -27,6 +27,8 @@ RUNS = [
     ("meshrts_v3f_simtest", "Mesh-RTS v3 (单路径, essential+rot-gate)", "classical"),
     ("meshrts_v2_hybrid", "Mesh-RTS v2 ⊕ 8-point (jerk)", "classical"),
     ("pi3_simtest", "π³ zero-shot", "zero"),
+    ("reloc3r_simtest", "Reloc3r-512 zero-shot", "zero"),
+    ("cut3r_simtest", "CUT3R zero-shot", "zero"),
     ("droid_simtest", "DROID-SLAM", "zero"),
     ("orbslam3_simtest", "ORB-SLAM3", "zero"),
     ("vggt_simtest", "VGGT zero-shot", "zero"),
@@ -42,7 +44,12 @@ RUNS = [
     ("ours_v3_hybrid", "Ours-Hybrid (v3 tuned jerk ⊕ 8-point)", "ours"),
     ("ours_hybrid2_simtest", "Ours-Hybrid2 (v2 tuned jerk ⊕ 8-point)", "ours"),
     ("ours_hybrid_simtest", "Ours-Hybrid (v2 jerk ⊕ 8-point)", "ours"),
+    ("ours_v6_infer_simtest", "Ours-Single v6-infer (同权重推理路由)", "ours"),
+    ("ours_v6_simtest", "Ours-Single v6 (低参照过采样续训)", "ours"),
+    ("ours_v5_simtest", "Ours-Single v5 (强相对SE3+低参照新数据)", "ours"),
+    ("ours_v4_simtest", "Ours-Single v4 (高参照+真实域+相对SE3)", "ours"),
     ("ours_v3_simtest", "Ours-Single v3 (灾难过采样续训)", "ours"),
+    ("pi3_ft_simtest", "MD-Pi3 (camera-head 微调)", "ours"),
     ("ours_v2_simtest", "Ours-Single v2 (失败模式续训)", "ours"),
     ("ours_simtest", "Ours-Single v1 (运动分解微调)", "ours"),
 ]
@@ -84,9 +91,16 @@ def main():
         rows.append({"tag": tag, "name": name, "group": group, "metrics": r})
 
     present = [r for r in rows if r["metrics"] is not None]
+    fusion = {
+        "fuse_learned_median", "ours_v3_consensus", "ours_consensus_simtest",
+        "ours_v3_hybrid", "ours_hybrid2_simtest", "ours_hybrid_simtest",
+        "meshrts_v2_hybrid",
+    }
     finite_ates = [r["metrics"]["ate"] for r in present
                    if r["metrics"]["ate"] is not None
-                   and np.isfinite(r["metrics"]["ate"])]
+                   and np.isfinite(r["metrics"]["ate"])
+                   and r["metrics"]["n"] == 92
+                   and r["tag"] not in fusion]
     best_ate = min(finite_ates) if finite_ates else None
 
     md = []
@@ -125,6 +139,9 @@ def main():
                             ("endo3r_simtest", "Endo3R"),
                             ("vggt_ft2_simtest", "VGGT-v2 单模型"),
                             ("eight_simtest", "8-point"),
+                            ("droid_simtest", "DROID-SLAM"),
+                            ("reloc3r_simtest", "Reloc3r-512"),
+                            ("pi3_simtest", "π³ zero-shot"),
                             ("identity_simtest", "Identity")):
             b = load(other)
             if not b:
@@ -135,7 +152,12 @@ def main():
             a(f"- vs {name}: {x:.2f} → {o:.2f} mm ({(o/x-1)*100:+.1f}%)\n")
 
     a("\n## 相对增益\n")
+    _gain("ours_v6_infer_simtest", "Ours-Single v6-infer")
+    _gain("ours_v6_simtest", "Ours-Single v6")
+    _gain("ours_v5_simtest", "Ours-Single v5")
+    _gain("ours_v4_simtest", "Ours-Single v4")
     _gain("ours_v3_simtest", "Ours-Single v3")
+    _gain("pi3_ft_simtest", "MD-Pi3")
     _gain("ours_v2_simtest", "Ours-Single v2")
     _gain("ours_simtest", "Ours-Single v1")
     _gain("ours_v3_consensus", "Ours-Consensus v3")
@@ -151,9 +173,13 @@ def main():
     a("- 单目方法一律 Sim3 对齐, 与 SCARED / SurgCUT3R 口径一致。\n")
     a("- Identity / 8-point 证明任务非平凡; PnP 用了深度 GT, 只作 RGB-D 参考上界。\n")
     a("- 8-point 旧数字 9.98 含退化 Sim3 零误差; 修复后诚实均值为 10.52。\n")
+    a("- DROID-SLAM 已在同一 92 条跑通 (6.04 mm mean / 1.28 mm median)，不当负结果。\n")
+    a("- ORB-SLAM3 已跑: 38/92 出关键帧 (这 38 条 1.40 mm)，54 条跟丢；1.40 不是 92 条均值。\n")
+    a("- StereoMIS 官方 11 条 64 帧均匀: MD-VGGT-v3 14.10 / DROID 27.68 / 8-point 30.40 mm（hop 8.50）。Hayoz 全帧 8-point：29.96 / median 27.83 / RPE1 0.24（hop 0.11，n=11/11）。MD-VGGT-v5 全帧 4/11 非有限 Sim(3)，7 条有限均值 38.50，不是 11 条记录。DROID 全帧未出。EndoMapper 未评。\n")
     a("- Ours-Ensemble: 各方法轨迹 Sim3 对齐后对平移取中位数, **不看 GT** (含 Ours-Single)。\n")
     a("- Ours-Single: 运动分解掩码去掉器械像素的深度监督 + 混合大基线窗 + 低参照过采样 + cam_weight=8。\n")
-    a("- 单模型已低于所有外部 SOTA 与本仓库 v2; 融合再压低均值 (灾难序列)。\n")
+    a("- 单模型主结论：同权重推理路由 MD-VGGT-v6-infer **3.81** mm（13/92 条走多跨度相对链，其余复用 v6 全局窗）。v6 全局窗头条仍是 5.49。Reloc3r 低参照地板已被 infer 低参照 4.96 压过；RPE1 1.22 低于 Reloc3r 1.42。DROID 中位数 1.28 仍优于 infer 1.34。Consensus / Ensemble 只作消融。\n")
+    a("- 融合再压低均值 (灾难序列)，不能当单网络 SOTA。\n")
 
     text = "\n".join(md) + "\n"
     out_md = os.path.join(ROOT, "docs", "05_SOTA对比.md")
@@ -162,7 +188,6 @@ def main():
     out_j = os.path.join(SOTA, "compare.json")
     with open(out_j, "w", encoding="utf-8") as f:
         json.dump(rows, f, ensure_ascii=False, indent=2)
-    print(text)
     print(f"wrote {out_md}")
 
 

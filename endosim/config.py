@@ -57,6 +57,7 @@ class TrajectoryConfig:
     tremor_mm: tuple = (0.05, 0.4)
     tremor_deg: tuple = (0.05, 0.4)
     keyframe_hop_mm: tuple = (25.0, 160.0)  # keyframe 轨迹相邻关键帧平移 (对齐 SCARED 稀疏关键帧)
+    warmup_frames: tuple = (0, 0)         # 开局静止帧数（EGO_Mo 采集规程：初始化参考段）
 
 
 @dataclass
@@ -84,10 +85,11 @@ class AppearanceConfig:
     # 外观级 sim-to-real: 序列级 Reinhard 色彩迁移(同一参照图, 保时序一致)
     color_transfer_prob: float = 0.45
     color_transfer_strength: tuple = (0.25, 0.70)
-    # 内窥镜光学: 圆形渐晕 + 轻度桶形畸变(仅作用于 RGB, 深度/位姿仍为针孔 GT)
+    # 内窥镜光学: 圆形渐晕。桶形畸变默认关闭，因为旧实现只 warp RGB，
+    # 会破坏 RGB 与 depth/flow/motion-mask 的逐像素对齐。
     vignette_prob: float = 0.80
     vignette_strength: tuple = (0.15, 0.45)
-    barrel_prob: float = 0.30
+    barrel_prob: float = 0.0
     barrel_k1: tuple = (-0.12, -0.02)
 
 

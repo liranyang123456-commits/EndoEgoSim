@@ -80,7 +80,7 @@ def write_sequence(seq: SequenceData, out_dir: str) -> dict:
             cv2.imwrite(os.path.join(depth_r_dir, f"{i:06d}.png"),
                         np.clip(np.round(dr), 0, 65535).astype(np.uint16))
 
-    # ---- 运动分解 + 光流 (帧对 t-1 -> t, 存于t) ----
+    # ---- 运动分解 + 光流（源帧 t -> t+1，文件索引为 t）----
     for t, m in enumerate(seq.motion):
         if cfg_out["save_flow"] and m["flow"] is not None:
             np.savez_compressed(os.path.join(flow_dir, f"{t:06d}.npz"),

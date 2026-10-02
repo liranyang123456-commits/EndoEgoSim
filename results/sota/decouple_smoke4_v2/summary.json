@@ -1,0 +1,310 @@
+{
+ "summary": {
+  "method": "mdvggt_infer",
+  "n_seq": 4,
+  "n_failed": 0,
+  "n_finite": 4,
+  "protocol": {
+   "name": "clip",
+   "max_frames": 64,
+   "window": 16,
+   "window_stride": 8,
+   "pair_window": 8,
+   "pair_stride": 4
+  },
+  "ate_sim3_rmse_mean": 30.437012156823805,
+  "ate_sim3_rmse_median": 29.151288573231042,
+  "rpe1_trans_mean": 7.877887033400503,
+  "total_time_sec": 73.6,
+  "stratified": [
+   {
+    "bucket": "低参照(<0.3)",
+    "n": 1,
+    "ate_se3_mean": 75.75426502062764,
+    "ate_sim3_mean": 44.19445354194833,
+    "rpe1_t_mean": 8.84507739304274,
+    "rpe1_r_mean": 3.1398858909139187
+   },
+   {
+    "bucket": "中参照(0.3-0.7)",
+    "n": 3,
+    "ate_se3_mean": 58.94723769114595,
+    "ate_sim3_mean": 25.851198361782295,
+    "rpe1_t_mean": 7.5554902468530925,
+    "rpe1_r_mean": 2.6750127824961933
+   }
+  ],
+  "n_pairwise": 4,
+  "n_global": 0
+ },
+ "records": [
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 75.75426502062764,
+    "mean": 73.84133129439164,
+    "max": 108.96833638754052,
+    "std": 16.91645534641897,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 44.19445354194833,
+    "mean": 42.18673144835073,
+    "max": 75.69487272893448,
+    "std": 13.169260175733669,
+    "scale": 87.08287124039936
+   },
+   "rpe_1": {
+    "trans_mm_mean": 8.84507739304274,
+    "trans_mm_max": 46.615025424813176,
+    "trans_mm_rmse": 11.522473739680386,
+    "rot_deg_mean": 3.1398858909139187,
+    "rot_deg_max": 15.687327378775295
+   },
+   "rpe_5": {
+    "trans_mm_mean": 35.25721331433352,
+    "trans_mm_max": 92.38909988640924,
+    "trans_mm_rmse": 38.84525188135549,
+    "rot_deg_mean": 11.690521982626043,
+    "rot_deg_max": 22.71007523811222
+   },
+   "rpe_10": {
+    "trans_mm_mean": 59.133164414502076,
+    "trans_mm_max": 133.21820735386194,
+    "trans_mm_rmse": 64.40164517102791,
+    "rot_deg_mean": 20.65288880147232,
+    "rot_deg_max": 30.022805254169207
+   },
+   "protocol_hop": {
+    "step_mm_mean": 7.482018691806705,
+    "step_mm_max": 21.149000897225346,
+    "rot_deg_mean": 2.2974004051145185,
+    "rot_deg_max": 4.95601524144392,
+    "n": 64
+   },
+   "reference_fraction": 0.19444444444444445,
+   "motion_type": "free",
+   "scene_kind": "organ",
+   "seq_id": "seq_00001305",
+   "n_frames_used": 64,
+   "time_sec": 17.4,
+   "infer": {
+    "mode": "pairwise",
+    "reasons": [
+     "global_large_hop"
+    ],
+    "ref_proxy": 0.002683699131011963,
+    "radial_frac": 0.6321171226699064,
+    "flow_mag": 0.004632910713553429,
+    "n_pairs": 5,
+    "global_hop_max": 0.4912311522308006,
+    "n_windows": 15,
+    "usable": true,
+    "reused_global": true,
+    "n_edges": 185,
+    "seg": true
+   }
+  },
+  {
+   "n_frames": 50,
+   "ate_se3": {
+    "rmse": 75.77307960762383,
+    "mean": 70.3204215444125,
+    "max": 133.09561107695885,
+    "std": 28.224066096851228,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 32.70245528597182,
+    "mean": 28.652623048515867,
+    "max": 66.48780347058349,
+    "std": 15.763177794170952,
+    "scale": 106.77550097364843
+   },
+   "rpe_1": {
+    "trans_mm_mean": 12.57550066169309,
+    "trans_mm_max": 59.96287876689806,
+    "trans_mm_rmse": 17.548781198475144,
+    "rot_deg_mean": 3.3947189618320146,
+    "rot_deg_max": 16.393369801436055
+   },
+   "rpe_5": {
+    "trans_mm_mean": 30.23833097802928,
+    "trans_mm_max": 65.21467977914115,
+    "trans_mm_rmse": 34.144427521514444,
+    "rot_deg_mean": 10.930285148130345,
+    "rot_deg_max": 28.782256487363117
+   },
+   "rpe_10": {
+    "trans_mm_mean": 43.1930674095933,
+    "trans_mm_max": 80.87793431876841,
+    "trans_mm_rmse": 46.406555474550636,
+    "rot_deg_mean": 21.341764221640922,
+    "rot_deg_max": 39.396701118980566
+   },
+   "protocol_hop": {
+    "step_mm_mean": 7.388139068992775,
+    "step_mm_max": 10.07021366324418,
+    "rot_deg_mean": 2.0236355054346586,
+    "rot_deg_max": 2.727213492316433,
+    "n": 50
+   },
+   "reference_fraction": 0.6150135439366492,
+   "motion_type": "free",
+   "scene_kind": "organ",
+   "seq_id": "seq_00002168",
+   "n_frames_used": 50,
+   "time_sec": 14.4,
+   "infer": {
+    "mode": "pairwise",
+    "reasons": [
+     "global_large_hop"
+    ],
+    "ref_proxy": 0.005436301231384277,
+    "radial_frac": 0.6227874550664485,
+    "flow_mag": 0.0005993747618049383,
+    "n_pairs": 5,
+    "global_hop_max": 0.43701655548846197,
+    "n_windows": 12,
+    "usable": true,
+    "reused_global": true,
+    "n_edges": 143,
+    "seg": true
+   }
+  },
+  {
+   "n_frames": 55,
+   "ate_se3": {
+    "rmse": 71.40733690883447,
+    "mean": 62.515395513781115,
+    "max": 128.67770683441734,
+    "std": 34.50844951844855,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 25.60012186049026,
+    "mean": 22.394505768873064,
+    "max": 65.87037569242823,
+    "std": 12.403723257145904,
+    "scale": 273.6234232690947
+   },
+   "rpe_1": {
+    "trans_mm_mean": 4.560806695571345,
+    "trans_mm_max": 19.862912261094365,
+    "trans_mm_rmse": 5.985641144706561,
+    "rot_deg_mean": 0.6660212159276917,
+    "rot_deg_max": 1.9836441289756817
+   },
+   "rpe_5": {
+    "trans_mm_mean": 16.333874634893654,
+    "trans_mm_max": 40.888527508647336,
+    "trans_mm_rmse": 20.316346338866005,
+    "rot_deg_mean": 2.1623516461363828,
+    "rot_deg_max": 5.856711976875658
+   },
+   "rpe_10": {
+    "trans_mm_mean": 27.172781194115892,
+    "trans_mm_max": 62.829158152440996,
+    "trans_mm_rmse": 33.424612376502544,
+    "rot_deg_mean": 4.152140011153735,
+    "rot_deg_max": 9.06862758645407
+   },
+   "protocol_hop": {
+    "step_mm_mean": 4.839574470235239,
+    "step_mm_max": 5.6421486055424825,
+    "rot_deg_mean": 0.8226368641094344,
+    "rot_deg_max": 1.3988865945256117,
+    "n": 55
+   },
+   "reference_fraction": 0.6763553688441893,
+   "motion_type": "free",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00001088",
+   "n_frames_used": 55,
+   "time_sec": 14.3,
+   "infer": {
+    "mode": "pairwise",
+    "reasons": [
+     "global_large_hop"
+    ],
+    "ref_proxy": 0.0009423494338989258,
+    "radial_frac": 0.6503129531822907,
+    "flow_mag": 0.021751079708337784,
+    "n_pairs": 5,
+    "global_hop_max": 0.5878112525836845,
+    "n_windows": 13,
+    "usable": true,
+    "reused_global": true,
+    "n_edges": 158,
+    "seg": true
+   }
+  },
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 29.661296556979547,
+    "mean": 29.218568574936267,
+    "max": 37.49912363157476,
+    "std": 5.105659984060182,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 19.251017938884804,
+    "mean": 17.49556031353114,
+    "max": 35.458105462708176,
+    "std": 8.03162878866165,
+    "scale": 55.569812081161025
+   },
+   "rpe_1": {
+    "trans_mm_mean": 5.530163383294841,
+    "trans_mm_max": 19.82197011256854,
+    "trans_mm_rmse": 6.895346499732577,
+    "rot_deg_mean": 3.964298169728874,
+    "rot_deg_max": 13.523640865579232
+   },
+   "rpe_5": {
+    "trans_mm_mean": 15.803945060626976,
+    "trans_mm_max": 31.729810265839777,
+    "trans_mm_rmse": 17.07202738308749,
+    "rot_deg_mean": 16.00832659747612,
+    "rot_deg_max": 43.32196823030468
+   },
+   "rpe_10": {
+    "trans_mm_mean": 25.38011650632149,
+    "trans_mm_max": 40.37443098406089,
+    "trans_mm_rmse": 26.31908386191442,
+    "rot_deg_mean": 28.54023111857579,
+    "rot_deg_max": 74.53821719881694
+   },
+   "protocol_hop": {
+    "step_mm_mean": 2.6573982895990613,
+    "step_mm_max": 6.283491045122107,
+    "rot_deg_mean": 3.7360827320072283,
+    "rot_deg_max": 10.720805276879885,
+    "n": 64
+   },
+   "reference_fraction": 0.692867975113736,
+   "motion_type": "free",
+   "scene_kind": "organ",
+   "seq_id": "seq_00002091",
+   "n_frames_used": 64,
+   "time_sec": 18.3,
+   "infer": {
+    "mode": "pairwise",
+    "reasons": [
+     "global_large_hop"
+    ],
+    "ref_proxy": 0.0007551908493041992,
+    "radial_frac": 0.5127250225592779,
+    "flow_mag": 0.0013457227032631636,
+    "n_pairs": 5,
+    "global_hop_max": 0.8406792890383348,
+    "n_windows": 15,
+    "usable": true,
+    "reused_global": true,
+    "n_edges": 185,
+    "seg": true
+   }
+  }
+ ]
+}

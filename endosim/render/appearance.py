@@ -1,7 +1,8 @@
 """外观级域随机化: 色彩迁移 / 圆形渐晕 / 桶形畸变。
 
-色彩迁移与光学退化只作用于 RGB, 深度/位姿/光流 GT 仍按针孔模型计算
-——这是有意的 sim-to-real 外观扰动, 与传感器噪声同层。
+色彩迁移和渐晕可只作用于 RGB。桶形畸变会改变像素坐标；若启用，就必须同步
+warp depth、flow 和 motion mask，或把该序列限制为 camera-only 监督。数据生成
+默认关闭桶形畸变，以保持针孔 RGB 与稠密标签对齐。
 真实参照图通过 TextureBank 路径访问, 不拷贝像素到本仓库。
 """
 from __future__ import annotations

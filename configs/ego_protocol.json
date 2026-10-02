@@ -1,0 +1,24 @@
+{
+  "trajectory": {
+    "motion_types": ["insertion", "orbital", "insertion", "retrace", "free"],
+    "n_frames": [60, 150],
+    "step_mm": [1.0, 4.0],
+    "rot_deg": [0.8, 4.0],
+    "tremor_prob": 0.3,
+    "tremor_mm": [0.05, 0.4],
+    "tremor_deg": [0.05, 0.4],
+    "warmup_frames": [5, 15]
+  },
+  "objects": {
+    "n_objects_range": [0, 2],
+    "marker_prob": 0.8,
+    "motion_models": ["static", "insertion", "manipulation"]
+  },
+  "deformation": {
+    "prob": 0.85,
+    "strength": [0.15, 1.0]
+  },
+  "sensor": {
+    "haze_prob": 0.15
+  }
+}

@@ -24,9 +24,31 @@ from endosim.eval.protocol import list_color_frames, motion_stats_of_indices, se
 
 PI3_ROOT = r"D:\Pi3"
 PI3_CKPT = r"D:\Pi3_checkpoints"
-DROID_ROOT = r"D:\DROID-SLAM"
-DROID_CKPT = r"D:\DROID-SLAM\droid.pth"
-ORB_ROOT = r"D:\ORB_SLAM3"
+
+
+def _first_dir(*cands):
+    for c in cands:
+        if c and os.path.isdir(c):
+            return c
+    return cands[-1]
+
+
+def _first_file(*cands):
+    for c in cands:
+        if c and os.path.isfile(c):
+            return c
+    return cands[-1]
+
+
+RELOC3R_ROOT = os.environ.get("RELOC3R_ROOT") or _first_dir(
+    r"E:\SOTA_Methods\Reloc3r", r"D:\reloc3r_src", r"D:\Reloc3r_src")
+DROID_ROOT = os.environ.get("DROID_ROOT") or _first_dir(
+    "/root/DROID-SLAM", r"D:\DROID-SLAM")
+DROID_CKPT = os.environ.get("DROID_CKPT") or _first_file(
+    os.path.join(DROID_ROOT, "droid.pth"),
+    "/root/DROID-SLAM/droid.pth", r"D:\DROID-SLAM\droid.pth")
+ORB_ROOT = os.environ.get("ORB_ROOT") or _first_dir(
+    "/root/ORB_SLAM3", r"D:\ORB_SLAM3")
 
 
 def _finite_mean(xs):
@@ -70,10 +92,13 @@ def load_K(seq_dir, img):
 
 
 _PI3_MODEL = None
+_PI3_CKPT_OVERRIDE = None
 
 
-def _load_pi3(device):
-    global _PI3_MODEL
+def _load_pi3(device, ckpt_path=None):
+    global _PI3_MODEL, _PI3_CKPT_OVERRIDE
+    if ckpt_path:
+        _PI3_CKPT_OVERRIDE = ckpt_path
     if _PI3_MODEL is not None:
         return _PI3_MODEL
     if PI3_ROOT not in sys.path:
@@ -81,11 +106,14 @@ def _load_pi3(device):
     import torch
     from pi3.models.pi3 import Pi3
     ckpt = None
-    for cand in (os.path.join(PI3_CKPT, "model.safetensors"),
-                 os.path.join(PI3_ROOT, "ckpts", "model.safetensors")):
-        if os.path.isfile(cand):
-            ckpt = cand
-            break
+    if _PI3_CKPT_OVERRIDE and os.path.isfile(_PI3_CKPT_OVERRIDE):
+        ckpt = _PI3_CKPT_OVERRIDE
+    else:
+        for cand in (os.path.join(PI3_CKPT, "model.safetensors"),
+                     os.path.join(PI3_ROOT, "ckpts", "model.safetensors")):
+            if os.path.isfile(cand):
+                ckpt = cand
+                break
     if ckpt is None:
         model = Pi3.from_pretrained("yyfz233/Pi3")
     else:
@@ -140,46 +168,262 @@ def run_pi3(frame_paths):
     return poses.astype(np.float64)
 
 
+_RELOC3R_MODEL = None
+
+
+def _load_reloc3r(device):
+    global _RELOC3R_MODEL
+    if _RELOC3R_MODEL is not None:
+        return _RELOC3R_MODEL
+    if not os.path.isdir(RELOC3R_ROOT):
+        raise FileNotFoundError(
+            f"Reloc3r code not found at {RELOC3R_ROOT}. "
+            "Clone https://github.com/ffrivera0/reloc3r")
+    if RELOC3R_ROOT not in sys.path:
+        sys.path.insert(0, RELOC3R_ROOT)
+    from reloc3r.reloc3r_relpose import setup_reloc3r_relpose_model
+    _RELOC3R_MODEL = setup_reloc3r_relpose_model(model_args="512", device=device)
+    return _RELOC3R_MODEL
+
+
+def run_reloc3r(frame_paths):
+    """Chain consecutive Reloc3r-512 relative poses. Keep raw translation
+    (do not unit-normalize per pair) so Sim(3) can recover a global scale.
+    pose2to1 maps camera-2 points into camera-1: c2w_{i+1} = c2w_i @ T_{1<-2}.
+    """
+    import torch
+    if RELOC3R_ROOT not in sys.path:
+        sys.path.insert(0, RELOC3R_ROOT)
+    from reloc3r.utils.image import load_images, check_images_shape_format
+    from reloc3r.reloc3r_relpose import inference_relpose
+    from reloc3r.utils.device import to_numpy
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    model = _load_reloc3r(device)
+    n = len(frame_paths)
+    traj = np.repeat(np.eye(4)[None], n, 0)
+    for i in range(n - 1):
+        images = load_images([frame_paths[i], frame_paths[i + 1]], size=512)
+        images = check_images_shape_format(images, device)
+        pose2to1 = to_numpy(inference_relpose([images[0], images[1]], model, device)[0])
+        T = np.asarray(pose2to1, dtype=np.float64)
+        if T.shape == (3, 4):
+            T4 = np.eye(4, dtype=np.float64)
+            T4[:3, :4] = T
+            T = T4
+        traj[i + 1] = traj[i] @ T
+    return traj
+
+
+def _droid_stream(frame_paths, K):
+    """Official DROID image stream: BGR CHW tensor, size ~384x512, multiple of 8."""
+    import torch
+    stream = []
+    h0 = w0 = None
+    for t, p in enumerate(frame_paths):
+        image = cv2.imread(p)
+        if image is None:
+            raise FileNotFoundError(p)
+        if h0 is None:
+            h0, w0 = image.shape[:2]
+            h1 = int(h0 * np.sqrt((384 * 512) / (h0 * w0)))
+            w1 = int(w0 * np.sqrt((384 * 512) / (h0 * w0)))
+            h1, w1 = h1 - h1 % 8, w1 - w1 % 8
+            sx, sy = w1 / float(w0), h1 / float(h0)
+            fx = float(K[0, 0]) * sx
+            fy = float(K[1, 1]) * sy
+            cx = float(K[0, 2]) * sx
+            cy = float(K[1, 2]) * sy
+        image = cv2.resize(image, (w1, h1))
+        image = torch.as_tensor(image).permute(2, 0, 1)
+        intr = torch.as_tensor([fx, fy, cx, cy], dtype=torch.float32)
+        stream.append((t, image[None], intr))
+    return stream, [h1, w1]
+
+
 def run_droid(frame_paths, K):
     if not os.path.isfile(DROID_CKPT):
         raise FileNotFoundError(f"DROID weights missing: {DROID_CKPT}")
-    sys.path.insert(0, DROID_ROOT)
-    from droid_slam.droid import Droid
+    import torch
+    if DROID_ROOT not in sys.path:
+        sys.path.insert(0, DROID_ROOT)
+    slam_dir = os.path.join(DROID_ROOT, "droid_slam")
+    if slam_dir not in sys.path:
+        sys.path.insert(0, slam_dir)
+    from droid import Droid
+    stream, image_size = _droid_stream(frame_paths, K)
     args = argparse.Namespace(
-        weights=DROID_CKPT, image_size=[240, 320], buffer=512,
+        weights=DROID_CKPT, image_size=image_size, buffer=512,
         stereo=False, disable_vis=True, upsample=False,
         beta=0.3, filter_thresh=2.4, warmup=8, keyframe_thresh=4.0,
         frontend_thresh=16.0, frontend_window=25, frontend_radius=2,
         frontend_nms=1, backend_thresh=22.0, backend_radius=2, backend_nms=3,
     )
+    torch.multiprocessing.set_start_method("spawn", force=True)
     droid = Droid(args)
-    for t, p in enumerate(frame_paths):
-        im = cv2.imread(p)
-        im = cv2.resize(im, (args.image_size[1], args.image_size[0]))
-        droid.track(t, im, intrinsics=np.array(
-            [K[0, 0], K[1, 1], K[0, 2], K[1, 2]], np.float32))
-    traj = droid.terminate(frame_paths)
+    for t, image, intrinsics in stream:
+        droid.track(t, image, intrinsics=intrinsics)
+    traj = droid.terminate(stream)
     poses = np.repeat(np.eye(4)[None], len(frame_paths), 0)
-    # DROID returns (t,q) or 4x4 depending on version
     T = np.asarray(traj)
-    if T.ndim == 2 and T.shape[1] == 7:
+    if T.ndim == 2 and T.shape[1] >= 7:
         from scipy.spatial.transform import Rotation
-        for i, row in enumerate(T):
-            poses[i, :3, 3] = row[:3]
-            poses[i, :3, :3] = Rotation.from_quat(row[3:]).as_matrix()
+        n = min(len(T), len(poses))
+        for i in range(n):
+            poses[i, :3, 3] = T[i, :3]
+            qw, qx, qy, qz = T[i, 3:7]
+            poses[i, :3, :3] = Rotation.from_quat([qx, qy, qz, qw]).as_matrix()
     elif T.ndim == 3:
         poses[:len(T)] = T
     return poses
 
 
+def _write_orb_yaml(path, K, width, height, fps=30.0):
+    fx, fy, cx, cy = float(K[0, 0]), float(K[1, 1]), float(K[0, 2]), float(K[1, 2])
+    path.write_text(
+        "%YAML:1.0\n"
+        'File.version: "1.0"\n'
+        'Camera.type: "PinHole"\n'
+        f"Camera1.fx: {fx:.6f}\n"
+        f"Camera1.fy: {fy:.6f}\n"
+        f"Camera1.cx: {cx:.6f}\n"
+        f"Camera1.cy: {cy:.6f}\n"
+        "Camera1.k1: 0.0\nCamera1.k2: 0.0\nCamera1.p1: 0.0\n"
+        "Camera1.p2: 0.0\nCamera1.k3: 0.0\n"
+        f"Camera.width: {int(width)}\n"
+        f"Camera.height: {int(height)}\n"
+        f"Camera.fps: {int(round(fps))}\n"
+        "Camera.RGB: 1\n"
+        "ORBextractor.nFeatures: 1000\n"
+        "ORBextractor.scaleFactor: 1.2\n"
+        "ORBextractor.nLevels: 8\n"
+        "ORBextractor.iniThFAST: 20\n"
+        "ORBextractor.minThFAST: 7\n"
+        "Viewer.KeyFrameSize: 0.05\n"
+        "Viewer.KeyFrameLineWidth: 1.0\n"
+        "Viewer.GraphLineWidth: 0.9\n"
+        "Viewer.PointSize: 2.0\n"
+        "Viewer.CameraSize: 0.08\n"
+        "Viewer.CameraLineWidth: 3.0\n"
+        "Viewer.ViewpointX: 0.0\n"
+        "Viewer.ViewpointY: -0.7\n"
+        "Viewer.ViewpointZ: -1.8\n"
+        "Viewer.ViewpointF: 500.0\n",
+        encoding="utf-8",
+    )
+
+
+def _parse_tum_traj(path):
+    from scipy.spatial.transform import Rotation
+    rows = []
+    with open(path, encoding="utf-8", errors="replace") as f:
+        for line in f:
+            line = line.strip()
+            if not line or line.startswith("#"):
+                continue
+            vals = [float(x) for x in line.split()]
+            if len(vals) < 8:
+                continue
+            ts, tx, ty, tz, qx, qy, qz, qw = vals[:8]
+            T = np.eye(4, dtype=np.float64)
+            T[:3, :3] = Rotation.from_quat([qx, qy, qz, qw]).as_matrix()
+            T[:3, 3] = (tx, ty, tz)
+            rows.append((ts, T))
+    return rows
+
+
 def run_orbslam3(frame_paths, K, seq_dir):
-    exe = os.path.join(ORB_ROOT, "Examples", "Monocular", "mono_euroc.exe")
+    """Official monocular ORB-SLAM3. Returns (poses[M], gt_index[M]).
+
+    Missing frames are dropped (TUM associate), not interpolated. Too few
+    tracked poses raises, so the sequence is counted failed — not a fake ATE.
+    """
+    import shutil
+    import subprocess
+    import tempfile
+    from pathlib import Path
+
+    exe = os.path.join(ORB_ROOT, "Examples", "Monocular", "mono_tum")
+    if os.name == "nt":
+        exe_win = exe + ".exe"
+        if os.path.isfile(exe_win):
+            exe = exe_win
+    voc = os.path.join(ORB_ROOT, "Vocabulary", "ORBvoc.txt")
     if not os.path.isfile(exe):
-        exe = os.path.join(ORB_ROOT, "Examples", "Monocular", "mono_tum")
-    if not os.path.isfile(exe):
-        raise FileNotFoundError(f"ORB-SLAM3 binary missing under {ORB_ROOT}")
-    raise RuntimeError("ORB-SLAM3 binary found but EndoEgoSim runner not wired "
-                       "until Vocabulary/ORBvoc.txt and a working mono exe exist")
+        raise FileNotFoundError(f"ORB-SLAM3 binary missing: {exe}")
+    if not os.path.isfile(voc):
+        raise FileNotFoundError(f"ORBvoc.txt missing: {voc}")
+
+    im0 = cv2.imread(frame_paths[0])
+    if im0 is None:
+        raise FileNotFoundError(frame_paths[0])
+    h, w = im0.shape[:2]
+    tmp = tempfile.mkdtemp(prefix="orb3_")
+    try:
+        rgb_dir = os.path.join(tmp, "rgb")
+        os.makedirs(rgb_dir)
+        rgb_txt = os.path.join(tmp, "rgb.txt")
+        with open(rgb_txt, "w", encoding="utf-8") as f:
+            f.write("# timestamp filename\n")
+            for i, src in enumerate(frame_paths):
+                ext = os.path.splitext(src)[1] or ".png"
+                dst = os.path.join(rgb_dir, f"{i:06d}{ext}")
+                try:
+                    os.symlink(os.path.abspath(src), dst)
+                except OSError:
+                    shutil.copy2(src, dst)
+                f.write(f"{i:.6f} rgb/{i:06d}{ext}\n")
+        yaml_path = os.path.join(tmp, "camera.yaml")
+        _write_orb_yaml(Path(yaml_path), K, w, h)
+        env = os.environ.copy()
+        log_p = os.path.join(tmp, "orb.log")
+        persist = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                               "..", "results", "sota", "orbslam3_last.log")
+        os.makedirs(os.path.dirname(persist), exist_ok=True)
+        cmd = [exe, voc, yaml_path, tmp]
+        xvfb = shutil.which("xvfb-run")
+        if xvfb:
+            cmd = [xvfb, "-a", "-s", "-screen 0 640x480x24"] + cmd
+        elif not env.get("DISPLAY"):
+            env["DISPLAY"] = ":0"
+        with open(log_p, "w", encoding="utf-8") as log:
+            proc = subprocess.run(
+                cmd, cwd=tmp, env=env, timeout=600,
+                stdout=log, stderr=subprocess.STDOUT,
+            )
+        shutil.copy2(log_p, persist)
+        if proc.returncode != 0:
+            raise RuntimeError(
+                f"ORB-SLAM3 exit {proc.returncode}; see {persist}")
+        cand = [
+            os.path.join(tmp, "CameraTrajectory.txt"),
+            os.path.join(tmp, "KeyFrameTrajectory.txt"),
+            os.path.join(os.getcwd(), "CameraTrajectory.txt"),
+            os.path.join(os.getcwd(), "KeyFrameTrajectory.txt"),
+        ]
+        traj = []
+        used = None
+        for p in cand:
+            if os.path.isfile(p):
+                rows = _parse_tum_traj(p)
+                if len(rows) > len(traj):
+                    traj, used = rows, p
+        if len(traj) < 5:
+            raise RuntimeError(
+                f"ORB-SLAM3 produced {len(traj)} poses ({used}); tracking lost")
+        n = len(frame_paths)
+        sel, poses, seen = [], [], set()
+        for ts, T in traj:
+            i = int(round(ts))
+            if 0 <= i < n and i not in seen:
+                seen.add(i)
+                sel.append(i)
+                poses.append(T)
+        if len(poses) < 5:
+            raise RuntimeError(
+                f"ORB-SLAM3 associated {len(poses)}/{n} frames from {used}")
+        return np.stack(poses), np.asarray(sel, dtype=np.int64)
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
 
 
 def stratified_summary(records):
@@ -207,17 +451,32 @@ def stratified_summary(records):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--method", required=True, choices=["pi3", "droid", "orbslam3"])
+    ap.add_argument("--method", required=True,
+                    choices=["pi3", "droid", "orbslam3", "reloc3r"])
     ap.add_argument("--list", default="lists/simtest92.txt")
     ap.add_argument("--out", default="results/sota")
     ap.add_argument("--tag", default=None)
     ap.add_argument("--max-frames", type=int, default=64)
     ap.add_argument("--skip-existing", action="store_true")
+    ap.add_argument("--ckpt", default=None,
+                    help="Optional π³ checkpoint (MD-Pi3 .pth or official .safetensors)")
     args = ap.parse_args()
     tag = args.tag or f"{args.method}_simtest"
+    if args.method == "pi3" and args.ckpt:
+        import torch
+        _load_pi3("cuda" if torch.cuda.is_available() else "cpu", args.ckpt)
+    def _resolve_seq(s):
+        if os.path.isdir(s):
+            return s
+        if len(s) >= 3 and s[1] == ":":
+            wsl = f"/mnt/{s[0].lower()}{s[2:].replace(chr(92), '/')}"
+            if os.path.isdir(wsl):
+                return wsl
+        return s
+
     seqs = [ln.strip() for ln in open(args.list, encoding="utf-8")
             if ln.strip() and not ln.startswith("#")]
-    seqs = [s for s in seqs if os.path.isdir(s)]
+    seqs = [p for s in seqs if os.path.isdir(p := _resolve_seq(s))]
     out_dir = os.path.join(args.out, tag)
     os.makedirs(out_dir, exist_ok=True)
     print(f"[{args.method}] {len(seqs)} sequences", flush=True)
@@ -231,21 +490,27 @@ def main():
             continue
         t_seq = time.time()
         try:
-            frames = list_color_frames(seq_dir)
             gt_all = load_pose_txt(os.path.join(seq_dir, "pose_c2w.txt"))
-            n = min(len(frames), len(gt_all))
-            frames, gt_all = frames[:n], gt_all[:n]
             idx = select_frame_indices(gt_all, "uniform", max_frames=args.max_frames)
-            frame_paths = [frames[k] for k in idx]
+            frame_paths = list_color_frames(seq_dir, indices=idx)
+            n = min(len(frame_paths), len(idx))
+            frame_paths, idx = frame_paths[:n], idx[:n]
             gt = gt_all[idx]
+            if not frame_paths:
+                raise FileNotFoundError(f"no frames materialized for {sid}")
             im0 = cv2.imread(frame_paths[0])
+            if im0 is None:
+                raise FileNotFoundError(frame_paths[0])
             K = load_K(seq_dir, im0)
             if args.method == "pi3":
                 est = run_pi3(frame_paths)
+            elif args.method == "reloc3r":
+                est = run_reloc3r(frame_paths)
             elif args.method == "droid":
                 est = run_droid(frame_paths, K)
             else:
-                est = run_orbslam3(frame_paths, K, seq_dir)
+                est, sel = run_orbslam3(frame_paths, K, seq_dir)
+                gt = gt[sel]
             if len(est) != len(gt):
                 n2 = min(len(est), len(gt))
                 est, gt = est[:n2], gt[:n2]
@@ -263,11 +528,11 @@ def main():
                        est.reshape(len(est), 16), fmt="%.6f")
             print(f"[{i+1}/{len(seqs)}] {sid}: ATE(Sim3)={res['ate_sim3']['rmse']:.3f}mm",
                   flush=True)
-        except Exception:
+        except Exception as e:
             print(f"[{i+1}/{len(seqs)}] {sid}: FAILED", flush=True)
             traceback.print_exc()
             records.append({"seq_id": sid, "error": traceback.format_exc()[-400:]})
-            if i == 0:
+            if i == 0 and isinstance(e, (FileNotFoundError, ImportError)):
                 break
 
     ok = [r for r in records if "error" not in r]

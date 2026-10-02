@@ -1,0 +1,110 @@
+{
+ "summary": {
+  "method": "mdvggt_infer",
+  "n_seq": 1,
+  "n_failed": 2,
+  "n_finite": 1,
+  "protocol": {
+   "name": "clip",
+   "max_frames": 64,
+   "window": 16,
+   "window_stride": 8,
+   "pair_window": 8,
+   "pair_stride": 4
+  },
+  "ate_sim3_rmse_mean": 39.47705481778767,
+  "ate_sim3_rmse_median": 39.47705481778767,
+  "rpe1_trans_mean": 4.233643443919565,
+  "total_time_sec": 2923.5,
+  "stratified": [
+   {
+    "bucket": "低参照(<0.3)",
+    "n": 1,
+    "ate_se3_mean": 46.318222069169956,
+    "ate_sim3_mean": 39.47705481778767,
+    "rpe1_t_mean": 4.233643443919565,
+    "rpe1_r_mean": 0.7489245122320092
+   }
+  ],
+  "n_pairwise": 1,
+  "n_global": 0
+ },
+ "records": [
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 46.318222069169956,
+    "mean": 41.53550556457112,
+    "max": 79.47549677017822,
+    "std": 20.49827976061465,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 39.47705481778767,
+    "mean": 34.67503486229326,
+    "max": 77.80665111319904,
+    "std": 18.87007722255952,
+    "scale": 1097.6243204646307
+   },
+   "rpe_1": {
+    "trans_mm_mean": 4.233643443919565,
+    "trans_mm_max": 26.511432873929806,
+    "trans_mm_rmse": 6.436389617547472,
+    "rot_deg_mean": 0.7489245122320092,
+    "rot_deg_max": 2.6780822727007396
+   },
+   "rpe_5": {
+    "trans_mm_mean": 19.470855303436277,
+    "trans_mm_max": 95.34607809617448,
+    "trans_mm_rmse": 25.878975845216335,
+    "rot_deg_mean": 3.7359167498114854,
+    "rot_deg_max": 11.708766597278043
+   },
+   "rpe_10": {
+    "trans_mm_mean": 32.16914125949928,
+    "trans_mm_max": 88.17018505434802,
+    "trans_mm_rmse": 36.442860533296624,
+    "rot_deg_mean": 7.516335001144578,
+    "rot_deg_max": 20.56093033551408
+   },
+   "protocol_hop": {
+    "step_mm_mean": 2.709095257022632,
+    "step_mm_max": 6.634986311519479,
+    "rot_deg_mean": 0.7109134303999327,
+    "rot_deg_max": 2.678082272764138,
+    "n": 64
+   },
+   "reference_fraction": 0.1286236572265625,
+   "motion_type": "insertion",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00002141",
+   "n_frames_used": 64,
+   "time_sec": 2902.1,
+   "infer": {
+    "mode": "pairwise",
+    "reasons": [
+     "global_large_hop"
+    ],
+    "ref_proxy": 0.010925054550170898,
+    "radial_frac": 0.6589008456894881,
+    "flow_mag": 0.3166293501853943,
+    "n_pairs": 5,
+    "global_hop_max": 0.3599768886698154,
+    "n_windows": 1,
+    "usable": true,
+    "n_edges": 17,
+    "seg": true,
+    "n_supp_used": 0,
+    "n_refined": 0
+   }
+  },
+  {
+   "seq_id": "seq_00001305",
+   "error": "or: CUDA error: unknown error\nSearch for `cudaErrorUnknown' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.\nCUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.\nFor debugging consider passing CUDA_LAUNCH_BLOCKING=1\nCompile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.\n\n"
+  },
+  {
+   "seq_id": "seq_00002077",
+   "error": "or: CUDA error: unknown error\nSearch for `cudaErrorUnknown' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.\nCUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.\nFor debugging consider passing CUDA_LAUNCH_BLOCKING=1\nCompile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.\n\n"
+  }
+ ]
+}

@@ -19,24 +19,35 @@ from ..geometry.se3 import relative, so3_log
 from .align import umeyama_alignment
 
 
-def list_color_frames(seq_dir: str) -> list[str]:
-    """列出序列帧路径: 优先本地 color/, 否则读 color_index.json (原始路径引用)。"""
+def list_color_frames(seq_dir: str, indices=None) -> list[str]:
+    """列出序列帧路径: 优先本地 color/, 否则读 color_index.json (原始路径引用)。
+
+    indices: 若给定且源是视频, 只解码这些下标, 返回与 indices 对齐的路径。
+    """
     color_dir = os.path.join(seq_dir, "color")
     frames = sorted(glob.glob(os.path.join(color_dir, "*.png")))
     if not frames:
         frames = sorted(glob.glob(os.path.join(color_dir, "*.jpg")))
     if frames:
-        return frames
+        if indices is None:
+            return frames
+        return [frames[int(i)] for i in indices if 0 <= int(i) < len(frames)]
     idx_p = os.path.join(seq_dir, "color_index.json")
     if not os.path.exists(idx_p):
         return []
     with open(idx_p, encoding="utf-8") as f:
         idx = json.load(f)
     if isinstance(idx, dict) and idx.get("type") == "video":
-        from ..dataset.real_access import materialize_video_frames
+        from ..dataset.real_access import (
+            materialize_video_frames, materialize_video_indices)
+        if indices is not None:
+            return materialize_video_indices(seq_dir, idx, indices)
         return materialize_video_frames(seq_dir, idx)
     if isinstance(idx, list):
-        return [p for p in idx if isinstance(p, str) and os.path.exists(p)]
+        paths = [p for p in idx if isinstance(p, str) and os.path.exists(p)]
+        if indices is None:
+            return paths
+        return [paths[int(i)] for i in indices if 0 <= int(i) < len(paths)]
     keys = sorted(idx, key=lambda k: int(k) if str(k).isdigit() else str(k))
     return [idx[k] for k in keys if os.path.exists(idx[k])]
 
@@ -186,6 +197,136 @@ def chain_window_poses(windows: list[tuple[np.ndarray, np.ndarray]],
     used = np.array(sorted(acc), dtype=int)
     out = np.stack([acc[i] for i in used])
     return out, used
+
+
+SCALE_LO = 1e-3
+SCALE_HI = 1e3
+HOP_CAP_MM = 1.0e4
+
+
+def sanitize_poses(est: np.ndarray, hop_cap_mm: float = HOP_CAP_MM) -> np.ndarray:
+    """把非有限 / 单步爆炸的 c2w 收成可用轨迹。爆炸步改复制上一帧（零运动）。"""
+    est = np.asarray(est, dtype=np.float64).copy()
+    if len(est) == 0:
+        return est
+    if not np.isfinite(est[0]).all():
+        est[0] = np.eye(4)
+    for i in range(1, len(est)):
+        if not np.isfinite(est[i]).all():
+            est[i] = est[i - 1].copy()
+            continue
+        hop = float(np.linalg.norm(est[i, :3, 3] - est[i - 1, :3, 3]))
+        if not np.isfinite(hop) or hop > hop_cap_mm:
+            est[i] = est[i - 1].copy()
+    return est
+
+
+def window_is_usable(est: np.ndarray, hop_cap_mm: float = HOP_CAP_MM) -> bool:
+    est = np.asarray(est, dtype=np.float64)
+    if est.ndim != 3 or est.shape[-2:] != (4, 4) or len(est) < 2:
+        return False
+    if not np.isfinite(est).all():
+        return False
+    hops = np.linalg.norm(np.diff(est[:, :3, 3], axis=0), axis=1)
+    if not np.isfinite(hops).all():
+        return False
+    if float(hops.max()) > hop_cap_mm:
+        return False
+    return True
+
+
+def chain_window_poses_gated(
+    windows: list[tuple[np.ndarray, np.ndarray]],
+    with_scale: bool = True,
+    scale_lo: float = SCALE_LO,
+    scale_hi: float = SCALE_HI,
+    hop_cap_mm: float = HOP_CAP_MM,
+) -> tuple[np.ndarray, np.ndarray, dict]:
+    """滑窗拼接，带尺度门与重置。爆炸窗不写入全局轨迹。
+
+    返回 (est_global, used_idx, stats)。
+    """
+    stats = {"n_windows": len(windows), "n_used": 0, "n_scale_clamp": 0,
+             "n_reset": 0, "n_dropped": 0}
+    if not windows:
+        return np.zeros((0, 4, 4)), np.zeros((0,), dtype=int), stats
+    acc: dict[int, np.ndarray] = {}
+    for k, (idx, est) in enumerate(windows):
+        idx = np.asarray(idx, dtype=int)
+        est = sanitize_poses(np.asarray(est, dtype=np.float64), hop_cap_mm)
+        if not window_is_usable(est, hop_cap_mm):
+            stats["n_dropped"] += 1
+            continue
+        if not acc:
+            for j, fi in enumerate(idx):
+                acc[int(fi)] = est[j].copy()
+            stats["n_used"] += 1
+            continue
+        overlap = [int(fi) for fi in idx if int(fi) in acc]
+        reset = False
+        if len(overlap) >= 2:
+            src = np.stack([est[int(np.where(idx == fi)[0][0]), :3, 3] for fi in overlap])
+            dst = np.stack([acc[fi][:3, 3] for fi in overlap])
+            s, R, t = umeyama_alignment(src, dst, with_scale=with_scale)
+            if (not np.isfinite(s)) or s < scale_lo or s > scale_hi:
+                s, R, t = umeyama_alignment(src, dst, with_scale=False)
+                stats["n_scale_clamp"] += 1
+            aligned = s * (src @ R.T) + t
+            resid = float(np.sqrt(np.mean(np.sum((aligned - dst) ** 2, axis=1))))
+            if not np.isfinite(resid) or resid > hop_cap_mm:
+                reset = True
+        elif len(overlap) == 1:
+            fi = overlap[0]
+            j = int(np.where(idx == fi)[0][0])
+            T_align = acc[fi] @ np.linalg.inv(est[j])
+            s, R, t = 1.0, T_align[:3, :3], T_align[:3, 3]
+            if not (np.isfinite(R).all() and np.isfinite(t).all()):
+                reset = True
+        else:
+            nearest = min(acc, key=lambda f: abs(f - int(idx[0])))
+            T_align = acc[nearest] @ np.linalg.inv(est[0])
+            s, R, t = 1.0, T_align[:3, :3], T_align[:3, 3]
+            if not (np.isfinite(R).all() and np.isfinite(t).all()):
+                reset = True
+        if reset:
+            stats["n_reset"] += 1
+            fi = int(idx[0]) if int(idx[0]) in acc else (
+                overlap[0] if overlap else min(acc, key=lambda f: abs(f - int(idx[0]))))
+            j = int(np.where(idx == fi)[0][0]) if fi in set(int(x) for x in idx) else 0
+            if fi not in acc:
+                fi = min(acc, key=lambda f: abs(f - int(idx[0])))
+                j = 0
+            T_align = acc[fi] @ np.linalg.inv(est[j])
+            s, R, t = 1.0, T_align[:3, :3], T_align[:3, 3]
+            if not (np.isfinite(R).all() and np.isfinite(t).all()):
+                stats["n_dropped"] += 1
+                continue
+        wrote = False
+        for j, fi in enumerate(idx):
+            fi = int(fi)
+            if fi in acc:
+                continue
+            T = np.eye(4)
+            T[:3, :3] = R @ est[j, :3, :3]
+            T[:3, 3] = s * (R @ est[j, :3, 3]) + t
+            if not np.isfinite(T).all():
+                continue
+            if acc:
+                prev = acc[max(i for i in acc if i <= fi)] if any(i <= fi for i in acc) else acc[min(acc)]
+                hop = float(np.linalg.norm(T[:3, 3] - prev[:3, 3]))
+                if not np.isfinite(hop) or hop > hop_cap_mm:
+                    continue
+            acc[fi] = T
+            wrote = True
+        if wrote:
+            stats["n_used"] += 1
+        else:
+            stats["n_dropped"] += 1
+    if not acc:
+        return np.zeros((0, 4, 4)), np.zeros((0,), dtype=int), stats
+    used = np.array(sorted(acc), dtype=int)
+    out = sanitize_poses(np.stack([acc[i] for i in used]), hop_cap_mm)
+    return out, used, stats
 
 
 def motion_stats_of_indices(poses: np.ndarray, idx: np.ndarray) -> dict:

@@ -168,6 +168,13 @@ def generate_sequence(seq_id: str, seed: int, cfg: GenConfig,
         normalize_first=False,
         keyframe_hop_mm=cfg.trajectory.keyframe_hop_mm,
     )
+    # EGO_Mo 采集规程：开局静止 warmup 帧（重复首帧位姿，全静态参照段）
+    _wu = getattr(cfg.trajectory, "warmup_frames", (0, 0))
+    n_warmup = sample_int(rng, _wu) if _wu and _wu[1] > 0 else 0
+    if 0 < n_warmup < len(poses_wc):
+        poses_wc = np.concatenate(
+            [np.repeat(poses_wc[:1], n_warmup, axis=0), poses_wc[n_warmup:]],
+            axis=0)
     # free轨迹的世界系路标默认在原点附近 —— 器官场景需平移进器官内
     if scene_kind == "organ" and motion_type == "free":
         anchor = tunnel.sample_axis_point(0.5 * tunnel.arc[-1])
@@ -441,7 +448,7 @@ def generate_sequence(seq_id: str, seed: int, cfg: GenConfig,
         "fps": cfg.fps,
         "n_objects": len([o for o in scene_objects if not o.is_marker]),
         "has_marker": has_marker,
-        "reference_fraction": ref_fracs,   # 帧 t-1->t 的参照物像素占比
+        "reference_fraction": ref_fracs,   # 源帧 t -> t+1 的参照物像素占比
         "appearance": {
             "color_transfer": color_ref is not None,
             "color_transfer_strength": ct_strength,
@@ -535,7 +542,9 @@ def _project_into_tunnel(tunnel, p: np.ndarray) -> np.ndarray:
 
 def _compute_motion_gt(frames, poses_wc, cam, base_verts, base_faces,
                        tissue_disp, scene_objects, cfg):
-    """对每对相邻帧 (t-1, t) 计算: 光流 / 运动分解掩码 / 参照物比例。
+    """对每对相邻帧计算光流、运动分解掩码和参照物比例。
+
+    返回列表索引 ``k`` 对应源帧 ``k`` 到目标帧 ``k+1``。
 
     材料点演化:
     - 组织: X(τ) = v_base + Σ b_i d_i(τ)   (三角形重心插值)

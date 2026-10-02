@@ -1,0 +1,314 @@
+{
+ "summary": {
+  "method": "mdvggt_infer",
+  "n_seq": 4,
+  "n_failed": 0,
+  "n_finite": 4,
+  "protocol": {
+   "name": "clip",
+   "max_frames": 64,
+   "window": 16,
+   "window_stride": 8,
+   "pair_window": 8,
+   "pair_stride": 4
+  },
+  "ate_sim3_rmse_mean": 29.99130380704953,
+  "ate_sim3_rmse_median": 27.64209767506126,
+  "rpe1_trans_mean": 6.898791856751463,
+  "total_time_sec": 122.8,
+  "stratified": [
+   {
+    "bucket": "低参照(<0.3)",
+    "n": 1,
+    "ate_se3_mean": 75.75944088525053,
+    "ate_sim3_mean": 43.948129182309025,
+    "rpe1_t_mean": 8.815551806817323,
+    "rpe1_r_mean": 3.1507896368271253
+   },
+   {
+    "bucket": "中参照(0.3-0.7)",
+    "n": 3,
+    "ate_se3_mean": 58.91956037570008,
+    "ate_sim3_mean": 25.339028681963033,
+    "rpe1_t_mean": 6.259871873396175,
+    "rpe1_r_mean": 2.490953784713913
+   }
+  ],
+  "n_pairwise": 4,
+  "n_global": 0
+ },
+ "records": [
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 75.75944088525053,
+    "mean": 73.84663685718972,
+    "max": 108.9749078496061,
+    "std": 16.916474459180794,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 43.948129182309025,
+    "mean": 41.9611660716994,
+    "max": 76.66419443782472,
+    "std": 13.065167451211062,
+    "scale": 88.36155972643517
+   },
+   "rpe_1": {
+    "trans_mm_mean": 8.815551806817323,
+    "trans_mm_max": 47.13622185239577,
+    "trans_mm_rmse": 11.44731637746006,
+    "rot_deg_mean": 3.1507896368271253,
+    "rot_deg_max": 16.020157894642985
+   },
+   "rpe_5": {
+    "trans_mm_mean": 35.332483684042174,
+    "trans_mm_max": 93.00234683714861,
+    "trans_mm_rmse": 38.888211247120324,
+    "rot_deg_mean": 11.666672812680076,
+    "rot_deg_max": 22.341902856962566
+   },
+   "rpe_10": {
+    "trans_mm_mean": 59.15982557649717,
+    "trans_mm_max": 133.63894563237514,
+    "trans_mm_rmse": 64.37480149892961,
+    "rot_deg_mean": 20.609058715712635,
+    "rot_deg_max": 30.02818151604564
+   },
+   "protocol_hop": {
+    "step_mm_mean": 7.482018691806705,
+    "step_mm_max": 21.149000897225346,
+    "rot_deg_mean": 2.2974004051145185,
+    "rot_deg_max": 4.95601524144392,
+    "n": 64
+   },
+   "reference_fraction": 0.19444444444444445,
+   "motion_type": "free",
+   "scene_kind": "organ",
+   "seq_id": "seq_00001305",
+   "n_frames_used": 64,
+   "time_sec": 30.8,
+   "infer": {
+    "mode": "pairwise",
+    "reasons": [
+     "global_large_hop"
+    ],
+    "ref_proxy": 0.002683699131011963,
+    "radial_frac": 0.6321171226699064,
+    "flow_mag": 0.004632910713553429,
+    "n_pairs": 5,
+    "global_hop_max": 0.4912311522308006,
+    "n_windows": 15,
+    "usable": true,
+    "reused_global": true,
+    "n_edges": 185,
+    "seg": true,
+    "n_supp_used": 0
+   }
+  },
+  {
+   "n_frames": 50,
+   "ate_se3": {
+    "rmse": 75.65660819739331,
+    "mean": 70.20255202549066,
+    "max": 132.95008427119848,
+    "std": 28.20503595179694,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 29.997848371766327,
+    "mean": 26.569842119895434,
+    "max": 62.018069185504224,
+    "std": 13.92531495727527,
+    "scale": 92.1792707164246
+   },
+   "rpe_1": {
+    "trans_mm_mean": 9.402032442424412,
+    "trans_mm_max": 44.27987366364856,
+    "trans_mm_rmse": 12.519075824123288,
+    "rot_deg_mean": 3.0671035898757104,
+    "rot_deg_max": 17.68529901016347
+   },
+   "rpe_5": {
+    "trans_mm_mean": 25.85408587459433,
+    "trans_mm_max": 48.36146234056517,
+    "trans_mm_rmse": 27.917830610849375,
+    "rot_deg_mean": 10.99836254983701,
+    "rot_deg_max": 30.044351629611725
+   },
+   "rpe_10": {
+    "trans_mm_mean": 41.878094160639556,
+    "trans_mm_max": 79.51032449372796,
+    "trans_mm_rmse": 45.06640321191896,
+    "rot_deg_mean": 21.594191411173846,
+    "rot_deg_max": 40.416256155169535
+   },
+   "protocol_hop": {
+    "step_mm_mean": 7.388139068992775,
+    "step_mm_max": 10.07021366324418,
+    "rot_deg_mean": 2.0236355054346586,
+    "rot_deg_max": 2.727213492316433,
+    "n": 50
+   },
+   "reference_fraction": 0.6150135439366492,
+   "motion_type": "free",
+   "scene_kind": "organ",
+   "seq_id": "seq_00002168",
+   "n_frames_used": 50,
+   "time_sec": 25.2,
+   "infer": {
+    "mode": "pairwise",
+    "reasons": [
+     "global_large_hop"
+    ],
+    "ref_proxy": 0.005436301231384277,
+    "radial_frac": 0.6227874550664485,
+    "flow_mag": 0.0005993747618049383,
+    "n_pairs": 5,
+    "global_hop_max": 0.43701655548846197,
+    "n_windows": 12,
+    "usable": true,
+    "reused_global": true,
+    "n_edges": 143,
+    "seg": true,
+    "n_supp_used": 2
+   }
+  },
+  {
+   "n_frames": 55,
+   "ate_se3": {
+    "rmse": 71.4007558545873,
+    "mean": 62.50946877076961,
+    "max": 128.67033545892704,
+    "std": 34.505568399934546,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 25.286346978356196,
+    "mean": 22.042939739852454,
+    "max": 65.43170269014591,
+    "std": 12.389840642036386,
+    "scale": 266.9060075361362
+   },
+   "rpe_1": {
+    "trans_mm_mean": 4.596168160747026,
+    "trans_mm_max": 19.60021167207528,
+    "trans_mm_rmse": 5.953700075357623,
+    "rot_deg_mean": 0.6383084185720905,
+    "rot_deg_max": 1.832956002399178
+   },
+   "rpe_5": {
+    "trans_mm_mean": 16.24147857192012,
+    "trans_mm_max": 40.67719526696075,
+    "trans_mm_rmse": 20.192844933766796,
+    "rot_deg_mean": 2.1743954627435507,
+    "rot_deg_max": 5.910271965787706
+   },
+   "rpe_10": {
+    "trans_mm_mean": 26.8749280651513,
+    "trans_mm_max": 62.67240946205736,
+    "trans_mm_rmse": 33.14820284688334,
+    "rot_deg_mean": 4.175595788317482,
+    "rot_deg_max": 9.06346507591805
+   },
+   "protocol_hop": {
+    "step_mm_mean": 4.839574470235239,
+    "step_mm_max": 5.6421486055424825,
+    "rot_deg_mean": 0.8226368641094344,
+    "rot_deg_max": 1.3988865945256117,
+    "n": 55
+   },
+   "reference_fraction": 0.6763553688441893,
+   "motion_type": "free",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00001088",
+   "n_frames_used": 55,
+   "time_sec": 26.1,
+   "infer": {
+    "mode": "pairwise",
+    "reasons": [
+     "global_large_hop"
+    ],
+    "ref_proxy": 0.0009423494338989258,
+    "radial_frac": 0.6503129531822907,
+    "flow_mag": 0.021751079708337784,
+    "n_pairs": 5,
+    "global_hop_max": 0.5878112525836845,
+    "n_windows": 13,
+    "usable": true,
+    "reused_global": true,
+    "n_edges": 158,
+    "seg": true,
+    "n_supp_used": 0
+   }
+  },
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 29.70131707511963,
+    "mean": 29.255662758420648,
+    "max": 37.5778920500005,
+    "std": 5.125859202353515,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 20.732890695766574,
+    "mean": 19.324077372787166,
+    "max": 34.267649248683334,
+    "std": 7.5121761356573185,
+    "scale": 56.464016883390734
+   },
+   "rpe_1": {
+    "trans_mm_mean": 4.781415017017089,
+    "trans_mm_max": 16.819247735019893,
+    "trans_mm_rmse": 5.80513719289308,
+    "rot_deg_mean": 3.767449345693939,
+    "rot_deg_max": 12.922975195987336
+   },
+   "rpe_5": {
+    "trans_mm_mean": 14.34182983530393,
+    "trans_mm_max": 28.27572610507835,
+    "trans_mm_rmse": 15.485395922735728,
+    "rot_deg_mean": 15.098800106893503,
+    "rot_deg_max": 40.22652297178613
+   },
+   "rpe_10": {
+    "trans_mm_mean": 23.012360748588303,
+    "trans_mm_max": 44.91904037304114,
+    "trans_mm_rmse": 24.247188014152243,
+    "rot_deg_mean": 27.05533892476521,
+    "rot_deg_max": 69.20675493831037
+   },
+   "protocol_hop": {
+    "step_mm_mean": 2.6573982895990613,
+    "step_mm_max": 6.283491045122107,
+    "rot_deg_mean": 3.7360827320072283,
+    "rot_deg_max": 10.720805276879885,
+    "n": 64
+   },
+   "reference_fraction": 0.692867975113736,
+   "motion_type": "free",
+   "scene_kind": "organ",
+   "seq_id": "seq_00002091",
+   "n_frames_used": 64,
+   "time_sec": 31.9,
+   "infer": {
+    "mode": "pairwise",
+    "reasons": [
+     "global_large_hop"
+    ],
+    "ref_proxy": 0.0007551908493041992,
+    "radial_frac": 0.5127250225592779,
+    "flow_mag": 0.0013457227032631636,
+    "n_pairs": 5,
+    "global_hop_max": 0.8406792890383348,
+    "n_windows": 15,
+    "usable": true,
+    "reused_global": true,
+    "n_edges": 185,
+    "seg": true,
+    "n_supp_used": 6
+   }
+  }
+ ]
+}

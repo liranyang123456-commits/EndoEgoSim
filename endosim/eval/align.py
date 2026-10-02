@@ -39,7 +39,9 @@ def align_trajectories(est: np.ndarray, gt: np.ndarray, with_scale: bool = False
     n = len(est)
     aligned = np.zeros((n, 4, 4))
     for i in range(n):
-        aligned[i, :3, :3] = sR @ est[i, :3, :3]
+        # Scale acts on camera centres, not on rotation matrices.  Using sR
+        # here produces a non-rigid 3x3 block whenever Sim(3) scale is not one.
+        aligned[i, :3, :3] = R @ est[i, :3, :3]
         aligned[i, :3, 3] = sR @ est[i, :3, 3] + t
     aligned[:, 3, :] = [0.0, 0.0, 0.0, 1.0]
     return aligned, (s, R, t)

@@ -72,16 +72,30 @@ def _torch_load_any(path: str):
     return sd.get("model", sd) if isinstance(sd, dict) else sd
 
 
-def load_model(method: str, device: str, ckpt: str | None = None):
+def load_model(method: str, device: str, ckpt: str | None = None,
+               ph_input: bool = False, ml_head: bool = False):
     if method == "vggt":
         sys.path.insert(0, VGGT_ROOT)
         import torch
         from safetensors.torch import load_file
         from vggt.models.vggt import VGGT
         model = VGGT()
+        if ph_input:
+            # A 方案：patch_embed.proj 扩为 4 通道（结构需与训练侧一致）
+            pe = model.aggregator.patch_embed
+            host = pe.patch_embed if hasattr(pe, "patch_embed") else pe
+            old_proj = host.proj
+            host.proj = torch.nn.Conv2d(
+                4, old_proj.out_channels, kernel_size=old_proj.kernel_size,
+                stride=old_proj.stride, padding=old_proj.padding)
+        if ml_head:
+            # 运动层分解头（评测运动层分割质量时挂载）
+            from vggt.heads.dpt_head import DPTHead
+            model.ml_head = DPTHead(dim_in=2 * 1024, output_dim=4,
+                                    activation="linear", conf_activation="expp1")
         if ckpt:
             sd = _torch_load_any(ckpt)
-            model.load_state_dict(sd)
+            model.load_state_dict(sd, strict=False)
         else:
             model.load_state_dict(load_file(find_vggt_ckpt()))
         return model.to(device).eval()
@@ -118,11 +132,33 @@ def load_model(method: str, device: str, ckpt: str | None = None):
     return model.to(device).eval()
 
 
+def _maybe_append_ph(images, args):
+    """A 方案：pseudo-height 拼为第 4 输入通道（仅当 args.ph_input）。
+
+    load_and_preprocess_images 返回 (S,3,H,W)（无 batch 维），逐帧算 ph 后
+    拼成 (S,4,H,W)；若上游给 5 维 (1,S,3,H,W) 则保持 5 维输出。
+    """
+    if not getattr(args, "ph_input", False):
+        return images
+    import torch
+    from endosim.pseudoheight import pseudo_height_label
+    squeeze = images.dim() == 4
+    imgs5 = images[None] if squeeze else images
+    phs = []
+    for s in range(imgs5.shape[1]):
+        img = imgs5[0, s].permute(1, 2, 0).float().cpu().numpy()
+        phs.append(pseudo_height_label(img))
+    ph = torch.as_tensor(np.stack(phs), dtype=images.dtype, device=images.device)
+    out = torch.cat([imgs5, ph[None, :, None]], dim=2)
+    return out[0] if squeeze else out
+
+
 def run_vggt(model, frame_paths, device, args):
     import torch
     from vggt.utils.load_fn import load_and_preprocess_images
     from vggt.utils.pose_enc import pose_encoding_to_extri_intri
     images = load_and_preprocess_images(frame_paths).to(device)
+    images = _maybe_append_ph(images, args)
     dtype = torch.bfloat16 if args.dtype == "bfloat16" else torch.float32
     with torch.no_grad():
         with torch.amp.autocast("cuda", dtype=dtype):
@@ -135,6 +171,31 @@ def run_vggt(model, frame_paths, device, args):
         T[:3, :] = e
         est[i] = np.linalg.inv(T)                        # -> c2w
     return est
+
+
+def run_vggt_full(model, frame_paths, device, args):
+    """返回 VGGT 全部输出：poses + depth + depth_conf + intrinsics。"""
+    import torch
+    from vggt.utils.load_fn import load_and_preprocess_images
+    from vggt.utils.pose_enc import pose_encoding_to_extri_intri
+    images = load_and_preprocess_images(frame_paths).to(device)
+    images = _maybe_append_ph(images, args)
+    dtype = torch.bfloat16 if args.dtype == "bfloat16" else torch.float32
+    with torch.no_grad():
+        with torch.amp.autocast("cuda", dtype=dtype):
+            pred = model(images)
+    ext, intr = pose_encoding_to_extri_intri(pred["pose_enc"], images.shape[-2:])
+    ext = ext.reshape(-1, 3, 4).float().cpu().numpy()
+    intr = intr.reshape(-1, 3, 3).float().cpu().numpy()
+    est = np.zeros((len(ext), 4, 4))
+    for i, e in enumerate(ext):
+        T = np.eye(4)
+        T[:3, :] = e
+        est[i] = np.linalg.inv(T)                        # -> c2w
+    depth = pred["depth"].float().cpu().numpy()          # (B,S,H,W,1)
+    depth_conf = pred["depth_conf"].float().cpu().numpy()  # (B,S,H,W)
+    # 去掉 batch 维
+    return est, depth[0, ..., 0], depth_conf[0], intr
 
 
 def run_dust3r_like(model, frame_paths, device, args):
@@ -354,15 +415,42 @@ def main():
         seq_id = os.path.basename(seq_dir.rstrip("/\\"))
         est_path = os.path.join(out_dir, f"{seq_id}_est_c2w.txt")
         if args.skip_existing and os.path.isfile(est_path):
-            print(f"[{i+1}/{len(seqs)}] {seq_id}: skip existing", flush=True)
-            continue
+            try:
+                gt_all = load_pose_txt(os.path.join(seq_dir, "pose_c2w.txt"))
+                est = np.loadtxt(est_path).reshape(-1, 4, 4)
+                idx = select_frame_indices(
+                    gt_all, protocol=args.protocol, max_frames=args.max_frames,
+                    stride=args.stride, max_step_mm=args.max_step_mm)
+                n = min(len(est), len(idx))
+                est, idx = est[:n], idx[:n]
+                gt = gt_all[idx]
+                hop = motion_stats_of_indices(gt_all, idx)
+                res = eval_with_scale_correction(est, gt)
+                res["protocol_hop"] = hop
+                meta_p = os.path.join(seq_dir, "meta.json")
+                if os.path.exists(meta_p):
+                    meta = json.load(open(meta_p, encoding="utf-8"))
+                    refs = [r for r in meta.get("reference_fraction", []) if r is not None]
+                    res["reference_fraction"] = float(np.mean(refs)) if refs else None
+                    res["motion_type"] = meta.get("motion_type")
+                    res["scene_kind"] = meta.get("scene_kind")
+                res["seq_id"] = seq_id
+                res["n_frames_used"] = int(len(est))
+                res["time_sec"] = 0.0
+                records.append(res)
+                print(f"[{i+1}/{len(seqs)}] {seq_id}: skip existing "
+                      f"ATE(Sim3)={res['ate_sim3']['rmse']:.3f}mm", flush=True)
+                continue
+            except Exception as e:
+                print(f"[{i+1}/{len(seqs)}] {seq_id}: skip-existing reeval failed ({e})",
+                      flush=True)
         t_seq = time.time()
         try:
-            frames = list_color_frames(seq_dir)
             gt_all = load_pose_txt(os.path.join(seq_dir, "pose_c2w.txt"))
-            n_use = min(len(frames), len(gt_all))
-            frames, gt_all = frames[:n_use], gt_all[:n_use]
             if args.protocol == "sliding":
+                frames = list_color_frames(seq_dir)
+                n_use = min(len(frames), len(gt_all))
+                frames, gt_all = frames[:n_use], gt_all[:n_use]
                 wins_idx = sliding_windows(n_use, args.window, args.window_stride)
                 packed = []
                 for w in wins_idx:
@@ -374,7 +462,9 @@ def main():
                 idx = select_frame_indices(
                     gt_all, protocol=args.protocol, max_frames=args.max_frames,
                     stride=args.stride, max_step_mm=args.max_step_mm)
-                frame_paths = [frames[k] for k in idx]
+                frame_paths = list_color_frames(seq_dir, indices=idx)
+                n = min(len(frame_paths), len(idx))
+                frame_paths, idx = frame_paths[:n], idx[:n]
                 est = runner(model, frame_paths, args.device, args)
             gt = gt_all[idx]
             hop = motion_stats_of_indices(gt_all, idx)

@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from ..geometry.se3 import relative, so3_log
+from ..geometry.se3 import relative
 from .align import align_trajectories
 
 
@@ -38,7 +38,17 @@ def rpe(est: np.ndarray, gt: np.ndarray, gap: int = 1) -> dict:
         Tij_gt = relative(gt[i], gt[i + gap])
         dT = np.linalg.inv(Tij_gt) @ Tij_est
         errs_t.append(np.linalg.norm(dT[:3, 3]))
-        errs_r.append(np.rad2deg(np.linalg.norm(so3_log(dT[:3, :3]))))
+        # Project accumulated numerical drift to the nearest proper rotation,
+        # then use the bounded SO(3) geodesic angle.  Taking the norm of the
+        # closed-form log map is unstable near pi and can spuriously exceed
+        # 180 degrees when R is only approximately orthonormal.
+        U, _, Vt = np.linalg.svd(dT[:3, :3])
+        R_err = U @ Vt
+        if np.linalg.det(R_err) < 0:
+            U[:, -1] *= -1
+            R_err = U @ Vt
+        cos_angle = np.clip((np.trace(R_err) - 1.0) * 0.5, -1.0, 1.0)
+        errs_r.append(np.rad2deg(np.arccos(cos_angle)))
     errs_t = np.asarray(errs_t)
     errs_r = np.asarray(errs_r)
     return {"trans_mm_mean": float(errs_t.mean()) if len(errs_t) else 0.0,

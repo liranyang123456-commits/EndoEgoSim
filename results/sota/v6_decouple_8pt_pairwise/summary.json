@@ -1,0 +1,102 @@
+{
+ "summary": {
+  "method": "mdvggt_infer",
+  "n_seq": 1,
+  "n_failed": 0,
+  "n_finite": 1,
+  "protocol": {
+   "name": "clip",
+   "max_frames": 64,
+   "window": 16,
+   "window_stride": 8,
+   "pair_window": 8,
+   "pair_stride": 4
+  },
+  "ate_sim3_rmse_mean": 6.423748939353637,
+  "ate_sim3_rmse_median": 6.423748939353637,
+  "rpe1_trans_mean": 1.912800213062295,
+  "total_time_sec": 290.4,
+  "stratified": [
+   {
+    "bucket": "低参照(<0.3)",
+    "n": 1,
+    "ate_se3_mean": 45.899162155004916,
+    "ate_sim3_mean": 6.423748939353637,
+    "rpe1_t_mean": 1.912800213062295,
+    "rpe1_r_mean": 1.2131021102825514
+   }
+  ],
+  "n_pairwise": 1,
+  "n_global": 0
+ },
+ "records": [
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 45.899162155004916,
+    "mean": 41.159555700721256,
+    "max": 78.8129689988263,
+    "std": 20.313149953925407,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 6.423748939353637,
+    "mean": 5.5561966423913045,
+    "max": 13.184732159333482,
+    "std": 3.2238531770114114,
+    "scale": 105.5107209218708
+   },
+   "rpe_1": {
+    "trans_mm_mean": 1.912800213062295,
+    "trans_mm_max": 9.701931234516621,
+    "trans_mm_rmse": 2.498123819729958,
+    "rot_deg_mean": 1.2131021102825514,
+    "rot_deg_max": 5.988998090806076
+   },
+   "rpe_5": {
+    "trans_mm_mean": 5.759133177701041,
+    "trans_mm_max": 20.942957615102852,
+    "trans_mm_rmse": 7.153184374160032,
+    "rot_deg_mean": 3.980932468599054,
+    "rot_deg_max": 20.588681138817215
+   },
+   "rpe_10": {
+    "trans_mm_mean": 9.083050837767678,
+    "trans_mm_max": 22.972201306920123,
+    "trans_mm_rmse": 10.42757733612605,
+    "rot_deg_mean": 7.257616477090958,
+    "rot_deg_max": 26.830227404479327
+   },
+   "protocol_hop": {
+    "step_mm_mean": 2.709095257022632,
+    "step_mm_max": 6.634986311519479,
+    "rot_deg_mean": 0.7109134303999327,
+    "rot_deg_max": 2.678082272764138,
+    "n": 64
+   },
+   "reference_fraction": 0.1286236572265625,
+   "motion_type": "insertion",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00002141",
+   "n_frames_used": 64,
+   "time_sec": 280.5,
+   "infer": {
+    "mode": "pairwise",
+    "reasons": [
+     "global_large_hop"
+    ],
+    "ref_proxy": 0.010925054550170898,
+    "radial_frac": 0.6589008456894881,
+    "flow_mag": 0.3166293501853943,
+    "n_pairs": 5,
+    "global_hop_max": 0.3599768886698154,
+    "n_windows": 15,
+    "usable": true,
+    "n_edges": 185,
+    "seg": true,
+    "n_supp_used": 2,
+    "n_refined": 0
+   }
+  }
+ ]
+}

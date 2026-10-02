@@ -87,7 +87,11 @@ def run_eight(frame_paths, K) -> np.ndarray:
                 p0, p1, K, method=cv2.RANSAC, prob=0.999, threshold=1.0)
             if E is not None:
                 _, R, t, _ = cv2.recoverPose(E, p0, p1, K, mask=mask)
-                T = rot_trans(R, t.reshape(3))
+                # recoverPose returns X_i = R X_{i-1} + t (previous camera
+                # coordinates -> current camera coordinates).  The trajectory
+                # stored here is camera-to-world, so its compositional edge is
+                # the inverse transform: current camera -> previous camera.
+                T = np.linalg.inv(rot_trans(R, t.reshape(3)))
         poses.append(poses[-1] @ T)
         gray0 = gray1
     return np.stack(poses)
@@ -192,14 +196,13 @@ def main():
         sid = os.path.basename(seq_dir.rstrip("/\\"))
         t_seq = time.time()
         try:
-            frames = list_color_frames(seq_dir)
             gt_all = load_pose_txt(os.path.join(seq_dir, "pose_c2w.txt"))
-            n = min(len(frames), len(gt_all))
-            frames, gt_all = frames[:n], gt_all[:n]
             idx = select_frame_indices(
                 gt_all, protocol=args.protocol, max_frames=args.max_frames,
                 stride=args.stride, max_step_mm=args.max_step_mm)
-            frame_paths = [frames[k] for k in idx]
+            frame_paths = list_color_frames(seq_dir, indices=idx)
+            n = min(len(frame_paths), len(idx))
+            frame_paths, idx = frame_paths[:n], idx[:n]
             gt = gt_all[idx]
             intr = json.load(open(os.path.join(seq_dir, "intrinsics.json")))
             # 图像可能是原始分辨率; 8点用法与读图一致, 按第一帧尺寸缩放内参
@@ -247,6 +250,10 @@ def main():
         "rpe1_trans_mean": _finite_mean([r["rpe_1"]["trans_mm_mean"] for r in ok]) if ok else None,
         "rpe1_rot_mean": _finite_mean([r["rpe_1"]["rot_deg_mean"] for r in ok]) if ok else None,
         "total_time_sec": round(time.time() - t0, 1),
+        "protocol_hop_mm_mean": _finite_mean([
+            r.get("protocol_hop", {}).get("step_mm_mean")
+            for r in ok if r.get("protocol_hop")
+        ]) if ok else None,
     }
     if ok:
         summary["stratified"] = stratified_summary(ok)

@@ -1,0 +1,214 @@
+{
+  "issue": "legacy barrel distortion was applied to RGB without warping pinhole depth, flow, or motion masks",
+  "policy": {
+    "future_generation": "barrel_prob=0",
+    "future_training_default": "exclude",
+    "historical_reproduction": "barrel_policy=legacy",
+    "alternative_safe_use": "barrel_policy=camera_only"
+  },
+  "splits": {
+    "train": {
+      "n_total": 2046,
+      "n_barrel": 125,
+      "barrel_fraction": 0.06109481915933529,
+      "seed_min": 3002,
+      "seed_max": 5297,
+      "k1_min": -0.11978141684320573,
+      "k1_max": -0.020248125170057918,
+      "motion_types": {
+        "free": 46,
+        "insertion": 42,
+        "orbital": 18,
+        "retrace": 8,
+        "keyframe": 11
+      },
+      "scene_kinds": {
+        "organ": 44,
+        "tunnel": 81
+      }
+    },
+    "val": {
+      "n_total": 464,
+      "n_barrel": 21,
+      "barrel_fraction": 0.04525862068965517,
+      "seed_min": 3015,
+      "seed_max": 5299,
+      "k1_min": -0.11339915006237714,
+      "k1_max": -0.022140228146589835,
+      "motion_types": {
+        "insertion": 6,
+        "orbital": 4,
+        "free": 4,
+        "retrace": 3,
+        "keyframe": 4
+      },
+      "scene_kinds": {
+        "tunnel": 14,
+        "organ": 7
+      }
+    },
+    "test": {
+      "n_total": 450,
+      "n_barrel": 23,
+      "barrel_fraction": 0.051111111111111114,
+      "seed_min": 3028,
+      "seed_max": 5266,
+      "k1_min": -0.1178298983065734,
+      "k1_max": -0.02202341183887707,
+      "motion_types": {
+        "free": 7,
+        "insertion": 11,
+        "orbital": 4,
+        "keyframe": 1
+      },
+      "scene_kinds": {
+        "tunnel": 15,
+        "organ": 8
+      }
+    }
+  },
+  "facts": {
+    "all_affected_seeds_above_2400": true,
+    "simtest92_affected": 0,
+    "core_complement_affected": 0,
+    "extension_test_affected": 23
+  },
+  "extension_test_sensitivity": {
+    "interpretation": "exploratory subgroup analysis; groups were not randomized and the test does not estimate the causal effect of distortion",
+    "methods": [
+      {
+        "method": "MD-VGGT-R",
+        "tag": "ours_v7_confirmatory_extension93",
+        "barrel_n": 23,
+        "barrel_mean_ate_mm": 21.810864824026954,
+        "barrel_median_ate_mm": 7.683445309266275,
+        "no_barrel_n": 70,
+        "no_barrel_mean_ate_mm": 23.591149948773634,
+        "no_barrel_median_ate_mm": 6.24605543527652,
+        "barrel_minus_no_barrel_mean_mm": -1.7802851247466798,
+        "barrel_minus_no_barrel_mean_95ci_mm": [
+          -16.884507103357745,
+          16.72918051631582
+        ],
+        "mann_whitney_p_exploratory": 0.8203716779683954
+      },
+      {
+        "method": "MD-VGGT Stage 6",
+        "tag": "ours_v6_confirmatory_extension93",
+        "barrel_n": 23,
+        "barrel_mean_ate_mm": 27.965345345383223,
+        "barrel_median_ate_mm": 11.824472421677845,
+        "no_barrel_n": 70,
+        "no_barrel_mean_ate_mm": 31.001177629975487,
+        "no_barrel_median_ate_mm": 10.881147692419667,
+        "barrel_minus_no_barrel_mean_mm": -3.0358322845922636,
+        "barrel_minus_no_barrel_mean_95ci_mm": [
+          -20.787861088891432,
+          16.88160179921353
+        ],
+        "mann_whitney_p_exploratory": 0.8551558087472252
+      },
+      {
+        "method": "DROID-SLAM",
+        "tag": "droid_confirmatory_extension93",
+        "barrel_n": 23,
+        "barrel_mean_ate_mm": 24.815139300514133,
+        "barrel_median_ate_mm": 9.597376881744742,
+        "no_barrel_n": 70,
+        "no_barrel_mean_ate_mm": 24.61104727519041,
+        "no_barrel_median_ate_mm": 12.746887607606762,
+        "barrel_minus_no_barrel_mean_mm": 0.2040920253237246,
+        "barrel_minus_no_barrel_mean_95ci_mm": [
+          -15.103088695927939,
+          18.23925264382631
+        ],
+        "mann_whitney_p_exploratory": 0.7927931460088575
+      },
+      {
+        "method": "pi3",
+        "tag": "pi3_confirmatory_extension93",
+        "barrel_n": 23,
+        "barrel_mean_ate_mm": 28.72751317483678,
+        "barrel_median_ate_mm": 10.002234815407357,
+        "no_barrel_n": 70,
+        "no_barrel_mean_ate_mm": 28.099830431784735,
+        "no_barrel_median_ate_mm": 10.986619474713827,
+        "barrel_minus_no_barrel_mean_mm": 0.6276827430520449,
+        "barrel_minus_no_barrel_mean_95ci_mm": [
+          -15.91126075550566,
+          19.385116659174866
+        ],
+        "mann_whitney_p_exploratory": 0.953844363527121
+      },
+      {
+        "method": "Reloc3r-512",
+        "tag": "reloc3r_confirmatory_extension93",
+        "barrel_n": 23,
+        "barrel_mean_ate_mm": 22.690838563208644,
+        "barrel_median_ate_mm": 11.016188093581006,
+        "no_barrel_n": 70,
+        "no_barrel_mean_ate_mm": 22.789854871571524,
+        "no_barrel_median_ate_mm": 12.622945558782169,
+        "barrel_minus_no_barrel_mean_mm": -0.09901630836288078,
+        "barrel_minus_no_barrel_mean_95ci_mm": [
+          -12.681987580164995,
+          14.71109902191625
+        ],
+        "mann_whitney_p_exploratory": 0.6148875419644104
+      },
+      {
+        "method": "ORB-E",
+        "tag": "orb_e_confirmatory_extension93",
+        "barrel_n": 23,
+        "barrel_mean_ate_mm": 30.48931945894139,
+        "barrel_median_ate_mm": 22.222531671356137,
+        "no_barrel_n": 70,
+        "no_barrel_mean_ate_mm": 29.696133141097985,
+        "no_barrel_median_ate_mm": 19.065337032560727,
+        "barrel_minus_no_barrel_mean_mm": 0.7931863178434071,
+        "barrel_minus_no_barrel_mean_95ci_mm": [
+          -14.623135585235186,
+          19.46045290219084
+        ],
+        "mann_whitney_p_exploratory": 0.7250398838886378
+      }
+    ]
+  },
+  "lists": {
+    "train_barrel": {
+      "path": "lists\\sim_train_barrel125.txt",
+      "n": 125,
+      "sha256_utf8": "2ccd145425ac6ec1f367e0ce8453dfd7042f868615ff11d1734373931fb5b1a8"
+    },
+    "train_no_barrel": {
+      "path": "lists\\sim_train_no_barrel1921.txt",
+      "n": 1921,
+      "sha256_utf8": "4778e4a0aebb2317bb804d7c91c7450bf60769c2a80fa81cf9fcf98ea1ae7693"
+    },
+    "val_barrel": {
+      "path": "lists\\sim_val_barrel21.txt",
+      "n": 21,
+      "sha256_utf8": "07a0b3efff5cd8bc63c46dbe2835fb80f32a13b26ce51a0955b37cffe00ee4fa"
+    },
+    "val_no_barrel": {
+      "path": "lists\\sim_val_no_barrel443.txt",
+      "n": 443,
+      "sha256_utf8": "e9cd6ccb3e73aed6644aa90af25a4f720212f1cc4216119e10756f2538a17fdc"
+    },
+    "test_barrel": {
+      "path": "lists\\sim_test_barrel23.txt",
+      "n": 23,
+      "sha256_utf8": "a33ea7257cb184cd4447aaead75d9ad5c1d9f8b6f5b9985ebae30f02b6c9c488"
+    },
+    "extension_barrel": {
+      "path": "lists\\sim_confirmatory_extension_barrel23.txt",
+      "n": 23,
+      "sha256_utf8": "a33ea7257cb184cd4447aaead75d9ad5c1d9f8b6f5b9985ebae30f02b6c9c488"
+    },
+    "extension_no_barrel": {
+      "path": "lists\\sim_confirmatory_extension_no_barrel70.txt",
+      "n": 70,
+      "sha256_utf8": "6acc5364f6be2b32750c05a7693d7fbc9a5c33736a9d55eecae9afc069932c2e"
+    }
+  }
+}
