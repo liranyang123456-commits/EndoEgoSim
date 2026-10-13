@@ -7,6 +7,9 @@ seq_XXXXXX/
   object_mask/000000.png      # uint8 实例ID (0背景 1组织 2..物体)
   flow/000000.npz             # 稠密前向光流 t->t+1 (float16 HxWx2, NaN=无效)
   motion_mask/000000.png      # 运动分解 t->t+1 (0无效 1静态参照 2形变组织 3运动物体)
+  anatomy/000000.png          # 可选(Real2Sim 解剖模式), 逐像素解剖类别(CholecSeg8k id, 13=渲染器械, 255=无)
+  abs_motion/000000.npz       # 可选, 1/4 分辨率: world_disp t->t+1 世界(首帧相机)系位移 mm,
+                              #   max_disp 整段内相对首帧最大位移 mm（< motion_eps_mm 即绝对静止）
   pose_c2w.txt                # 每行16数=行主序4x4 c2w (SCARED d1_key1 同款格式)
   groundtruth.txt             # TUM格式: t tx ty tz qx qy qz qw
   intrinsics.json
@@ -18,12 +21,16 @@ from __future__ import annotations
 
 import json
 import os
+import warnings
 
 import cv2
 import numpy as np
 
 from ..geometry.se3 import quat_from_R
 from .generator import SequenceData
+
+
+ABS_MOTION_STRIDE = 4
 
 
 def write_sequence(seq: SequenceData, out_dir: str) -> dict:
@@ -72,6 +79,9 @@ def write_sequence(seq: SequenceData, out_dir: str) -> dict:
             enc = np.zeros(nn.shape, dtype=np.uint16)
             enc[valid] = (np.clip((nn[valid] + 1.0) * 0.5, 0, 1) * 65534 + 1).astype(np.uint16)
             cv2.imwrite(os.path.join(normal_dir, f"{i:06d}.png"), enc)
+        if "anatomy" in fr:
+            os.makedirs(os.path.join(out_dir, "anatomy"), exist_ok=True)
+            cv2.imwrite(os.path.join(out_dir, "anatomy", f"{i:06d}.png"), fr["anatomy"])
         if has_stereo:
             img_r = (np.clip(fr["color_right"], 0, 1)[..., ::-1] * 255).astype(np.uint8)
             cv2.imwrite(os.path.join(color_r_dir, f"{i:06d}.png"), img_r)
@@ -87,6 +97,21 @@ def write_sequence(seq: SequenceData, out_dir: str) -> dict:
                                 flow=m["flow"].astype(np.float16))
         if cfg_out["save_motion_mask"]:
             cv2.imwrite(os.path.join(mmask_dir, f"{t:06d}.png"), m["mask"])
+        if cfg_out.get("save_abs_motion") and m.get("world_disp") is not None:
+            abs_dir = os.path.join(out_dir, "abs_motion")
+            os.makedirs(abs_dir, exist_ok=True)
+            # 1/4 分辨率: 世界位移取块均值; 最大位移取块最大值（整块静止才算静止）
+            H, W = m["max_disp"].shape
+            s = ABS_MOTION_STRIDE
+            wd = m["world_disp"][: H // s * s, : W // s * s].reshape(H // s, s, W // s, s, 3)
+            md = m["max_disp"][: H // s * s, : W // s * s].reshape(H // s, s, W // s, s)
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore", RuntimeWarning)   # 全 NaN 块
+                wd = np.nanmean(wd, axis=(1, 3))
+                md = np.nanmax(md, axis=(1, 3))
+            np.savez_compressed(os.path.join(abs_dir, f"{t:06d}.npz"),
+                                world_disp=wd.astype(np.float16), max_disp=md.astype(np.float16),
+                                stride=np.int32(s))
 
     # ---- 位姿 ----
     with open(os.path.join(out_dir, "pose_c2w.txt"), "w") as f:

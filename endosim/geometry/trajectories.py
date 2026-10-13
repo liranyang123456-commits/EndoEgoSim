@@ -81,6 +81,9 @@ def generate_trajectory(rng: np.random.Generator, tunnel=None,
             return _traj_keyframe(rng, tunnel, n_frames, step_mm, rot_deg,
                                   tremor_mm, tremor_deg, start_arc, travel_mm,
                                   keyframe_hop_mm)
+        if motion_type == "hover":
+            return _traj_hover(rng, tunnel, n_frames, step_mm, rot_deg,
+                               tremor_mm, tremor_deg, start_arc)
         raise ValueError(f"未知运动类型: {motion_type}")
 
     poses = _gen()
@@ -140,6 +143,32 @@ def _traj_insertion(rng, tunnel, n_frames, step_mm, rot_deg, tremor_mm,
         poses.append(T @ rot_trans(R_off, np.zeros(3)))
     poses = np.stack(poses)
     return _apply_tremor(poses, rng, tremor_mm, tremor_deg)
+
+
+def _traj_hover(rng, tunnel, n_frames, step_mm, rot_deg, tremor_mm,
+                tremor_deg, start_arc):
+    """持镜悬停（机器人/助手持镜）: 大部分时间静止, 0~2 次平滑移动（停-动-停）。"""
+    arc_len = tunnel.arc[-1] if tunnel is not None else 500.0
+    s0 = start_arc if start_arc is not None else rng.uniform(30.0, max(arc_len * 0.5, 40.0))
+    s_t = np.full(n_frames, float(s0))
+    pitch = np.zeros(n_frames)
+    yaw = np.zeros(n_frames)
+    for _ in range(int(rng.integers(0, 3))):
+        a = int(rng.integers(0, max(n_frames - 5, 1)))
+        L = int(rng.integers(5, max(6, min(16, n_frames - a))))
+        x = np.clip((np.arange(n_frames) - a) / max(L, 1), 0, 1)
+        ramp = x * x * (3 - 2 * x)
+        s_t = s_t + ramp * rng.uniform(-1, 1) * step_mm * L * 0.5
+        pitch = pitch + ramp * rng.uniform(-1, 1) * rot_deg * 3
+        yaw = yaw + ramp * rng.uniform(-1, 1) * rot_deg * 3
+    s_t = np.clip(s_t, 10.0, max(arc_len - 10.0, 11.0))
+    roll0 = rng.uniform(0, 360)
+    poses = []
+    for i in range(n_frames):
+        T = tunnel.axis_pose_at(float(s_t[i]), roll=roll0)
+        R_off = so3_exp(np.deg2rad(np.array([pitch[i], yaw[i], 0.0])))
+        poses.append(T @ rot_trans(R_off, np.zeros(3)))
+    return _apply_tremor(np.stack(poses), rng, tremor_mm, tremor_deg)
 
 
 def _traj_orbital(rng, tunnel, n_frames, step_mm, rot_deg, tremor_mm,

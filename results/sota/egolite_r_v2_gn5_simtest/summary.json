@@ -1,0 +1,4191 @@
+{
+ "summary": {
+  "net_ms_per_frame": 22.736986287165962,
+  "method": "egolite",
+  "ckpt": "results/egolite/r_v2/last.pth",
+  "params_M": 20.86683,
+  "n_seq": 92,
+  "n_failed": 0,
+  "protocol": {
+   "name": "uniform",
+   "max_frames": 64,
+   "skips": [
+    1
+   ],
+   "rho_mode": "pixel"
+  },
+  "ate_sim3_rmse_mean": 4.333767290378091,
+  "ate_sim3_rmse_median": 1.4804722255518534,
+  "rpe1_trans_mean": 0.7420749319635405,
+  "net_ms_per_pair": 23.141891522416863,
+  "stratified": [
+   {
+    "bucket": "\u4f4e\u53c2\u7167(<0.3)",
+    "n": 16,
+    "ate_se3_mean": 24.73806173793983,
+    "ate_sim3_mean": 6.274335086042264,
+    "rpe1_t_mean": 1.1776902014464659,
+    "rpe1_r_mean": 0.6768567909317685
+   },
+   {
+    "bucket": "\u4e2d\u53c2\u7167(0.3-0.7)",
+    "n": 44,
+    "ate_se3_mean": 25.48503870008095,
+    "ate_sim3_mean": 5.475077861867624,
+    "rpe1_t_mean": 0.9047219376853122,
+    "rpe1_r_mean": 0.6204858241655331
+   },
+   {
+    "bucket": "\u9ad8\u53c2\u7167(>0.7)",
+    "n": 32,
+    "ate_se3_mean": 19.296302427873737,
+    "ate_sim3_mean": 1.7941813567478984,
+    "rpe1_t_mean": 0.30062766435464117,
+    "rpe1_r_mean": 0.24871988082477783
+   }
+  ],
+  "total_time_sec": 162.9
+ },
+ "records": [
+  {
+   "n_frames": 52,
+   "ate_se3": {
+    "rmse": 0.11818667904819355,
+    "mean": 0.11368146072614087,
+    "max": 0.17831931592592543,
+    "std": 0.03232052895005899,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 0.11818667904819355,
+    "mean": 0.11368146072614087,
+    "max": 0.17831931592592543,
+    "std": 0.03232052895005899,
+    "scale": 1.0
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.030606302499717155,
+    "trans_mm_max": 0.12515625665356278,
+    "trans_mm_rmse": 0.038226077377960035,
+    "rot_deg_mean": 1.8911766441377973,
+    "rot_deg_max": 5.083769893009557
+   },
+   "rpe_5": {
+    "trans_mm_mean": 0.1063287363665318,
+    "trans_mm_max": 0.27552193669373587,
+    "trans_mm_rmse": 0.11960171847963671,
+    "rot_deg_mean": 6.498521060398072,
+    "rot_deg_max": 16.177734032137007
+   },
+   "rpe_10": {
+    "trans_mm_mean": 0.13918458780396467,
+    "trans_mm_max": 0.2665984641569304,
+    "trans_mm_rmse": 0.1558779141101679,
+    "rot_deg_mean": 9.43608333286338,
+    "rot_deg_max": 16.06827155467173
+   },
+   "reference_fraction": 0.060106526083665346,
+   "motion_type": "orbital",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00002201",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00002201",
+   "n_frames_used": 52,
+   "time_sec": 3.37
+  },
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 15.585432134616276,
+    "mean": 13.976152892353255,
+    "max": 25.756915786020226,
+    "std": 6.8973070942430414,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 7.916842762599061,
+    "mean": 7.519825391589508,
+    "max": 13.111521483391389,
+    "std": 2.475606068768378,
+    "scale": 87.04798719421025
+   },
+   "rpe_1": {
+    "trans_mm_mean": 1.4437356157173031,
+    "trans_mm_max": 10.040435865245183,
+    "trans_mm_rmse": 2.2177906772393814,
+    "rot_deg_mean": 0.6297066564677686,
+    "rot_deg_max": 3.249819006291419
+   },
+   "rpe_5": {
+    "trans_mm_mean": 5.055438080304602,
+    "trans_mm_max": 17.75491098692126,
+    "trans_mm_rmse": 6.255344661748919,
+    "rot_deg_mean": 2.077080809738952,
+    "rot_deg_max": 7.099333681534505
+   },
+   "rpe_10": {
+    "trans_mm_mean": 8.802120919752825,
+    "trans_mm_max": 19.324786574714974,
+    "trans_mm_rmse": 9.983995143692487,
+    "rot_deg_mean": 2.9226729369966056,
+    "rot_deg_max": 8.564259315971798
+   },
+   "reference_fraction": 0.08087383932003087,
+   "motion_type": "insertion",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00002033",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00002033",
+   "n_frames_used": 64,
+   "time_sec": 1.96
+  },
+  {
+   "n_frames": 57,
+   "ate_se3": {
+    "rmse": 0.42869619526341884,
+    "mean": 0.3898698242752223,
+    "max": 0.9103275817455928,
+    "std": 0.17827492238937748,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 0.4248848524809749,
+    "mean": 0.3839857259262672,
+    "max": 0.9054335818902711,
+    "std": 0.18188485410461605,
+    "scale": 0.44889224034469355
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.4176119843413647,
+    "trans_mm_max": 0.8337771335404248,
+    "trans_mm_rmse": 0.4432753002355734,
+    "rot_deg_mean": 1.343061974837256,
+    "rot_deg_max": 4.256757854869734
+   },
+   "rpe_5": {
+    "trans_mm_mean": 0.5733124918448123,
+    "trans_mm_max": 1.2975898674316193,
+    "trans_mm_rmse": 0.632460516025954,
+    "rot_deg_mean": 6.182986342427521,
+    "rot_deg_max": 17.87355774161027
+   },
+   "rpe_10": {
+    "trans_mm_mean": 0.582858345554777,
+    "trans_mm_max": 1.0290018385645405,
+    "trans_mm_rmse": 0.6184243945638006,
+    "rot_deg_mean": 11.875577985744757,
+    "rot_deg_max": 33.12300680595496
+   },
+   "reference_fraction": 0.09340711321149553,
+   "motion_type": "orbital",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00001309",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00001309",
+   "n_frames_used": 57,
+   "time_sec": 1.83
+  },
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 45.87755012093108,
+    "mean": 41.17748567467421,
+    "max": 78.70945944187102,
+    "std": 20.227809535650263,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 17.060949712631096,
+    "mean": 13.413304393111687,
+    "max": 43.777341199871444,
+    "std": 10.543209679915215,
+    "scale": 88.48593188471892
+   },
+   "rpe_1": {
+    "trans_mm_mean": 2.3944427047979837,
+    "trans_mm_max": 22.047225176950437,
+    "trans_mm_rmse": 3.791587743496396,
+    "rot_deg_mean": 0.8673659322626452,
+    "rot_deg_max": 4.143118109113906
+   },
+   "rpe_5": {
+    "trans_mm_mean": 10.810787178087852,
+    "trans_mm_max": 40.18574135874247,
+    "trans_mm_rmse": 14.274594939498114,
+    "rot_deg_mean": 3.218503679095405,
+    "rot_deg_max": 9.459921748944655
+   },
+   "rpe_10": {
+    "trans_mm_mean": 17.8296432740649,
+    "trans_mm_max": 50.03333777359319,
+    "trans_mm_rmse": 22.629876793153855,
+    "rot_deg_mean": 5.631063162812978,
+    "rot_deg_max": 14.339830282810592
+   },
+   "reference_fraction": 0.1286236572265625,
+   "motion_type": "insertion",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00002141",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00002141",
+   "n_frames_used": 64,
+   "time_sec": 2.01
+  },
+  {
+   "n_frames": 53,
+   "ate_se3": {
+    "rmse": 34.61361246317224,
+    "mean": 31.199126235959824,
+    "max": 60.017393164401184,
+    "std": 14.990553354139925,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 4.481684871686308,
+    "mean": 4.053842566139656,
+    "max": 7.932136671774119,
+    "std": 1.9109839711667291,
+    "scale": 59.27748532533234
+   },
+   "rpe_1": {
+    "trans_mm_mean": 1.2141877762851485,
+    "trans_mm_max": 4.589009815753066,
+    "trans_mm_rmse": 1.532432453000152,
+    "rot_deg_mean": 0.767946505996641,
+    "rot_deg_max": 7.020787578921134
+   },
+   "rpe_5": {
+    "trans_mm_mean": 4.710194718574852,
+    "trans_mm_max": 11.3735725805941,
+    "trans_mm_rmse": 5.343485755884937,
+    "rot_deg_mean": 3.2150540693208556,
+    "rot_deg_max": 13.501398873347236
+   },
+   "rpe_10": {
+    "trans_mm_mean": 7.602879549850354,
+    "trans_mm_max": 13.86783866897853,
+    "trans_mm_rmse": 8.288191409951722,
+    "rot_deg_mean": 5.925770155223943,
+    "rot_deg_max": 14.438645385702873
+   },
+   "reference_fraction": 0.1388578561636118,
+   "motion_type": "insertion",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00002069",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00002069",
+   "n_frames_used": 53,
+   "time_sec": 1.86
+  },
+  {
+   "n_frames": 47,
+   "ate_se3": {
+    "rmse": 11.747523014674607,
+    "mean": 10.232158497502294,
+    "max": 22.972441839750996,
+    "std": 5.771241587587645,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 1.675594593528214,
+    "mean": 1.5731499762281667,
+    "max": 2.969017992540568,
+    "std": 0.5769024130252003,
+    "scale": 60.179540460454824
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.6471923669491556,
+    "trans_mm_max": 1.7333516563892781,
+    "trans_mm_rmse": 0.7379774018032025,
+    "rot_deg_mean": 0.14317443844799158,
+    "rot_deg_max": 0.34060456068118855
+   },
+   "rpe_5": {
+    "trans_mm_mean": 2.2673294925737695,
+    "trans_mm_max": 4.917226243213943,
+    "trans_mm_rmse": 2.4969820525681334,
+    "rot_deg_mean": 0.5267515731115702,
+    "rot_deg_max": 0.9789423140169834
+   },
+   "rpe_10": {
+    "trans_mm_mean": 2.2345429573819384,
+    "trans_mm_max": 3.6208386141708058,
+    "trans_mm_rmse": 2.388763286808349,
+    "rot_deg_mean": 0.4436482079097001,
+    "rot_deg_max": 1.0705314549438298
+   },
+   "reference_fraction": 0.15822705959153838,
+   "motion_type": "free",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00000710",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00000710",
+   "n_frames_used": 47,
+   "time_sec": 1.31
+  },
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 48.56736665548766,
+    "mean": 43.43029192294796,
+    "max": 85.15036702436724,
+    "std": 21.73933870512387,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 2.4981186233282804,
+    "mean": 2.3793839073373624,
+    "max": 4.385847028117385,
+    "std": 0.7610051758848738,
+    "scale": 52.677233551133206
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.7340762860477924,
+    "trans_mm_max": 2.7993431618541935,
+    "trans_mm_rmse": 0.9517313176015613,
+    "rot_deg_mean": 0.3352039369847213,
+    "rot_deg_max": 1.3799887832992959
+   },
+   "rpe_5": {
+    "trans_mm_mean": 2.7165760962700327,
+    "trans_mm_max": 6.09058892361684,
+    "trans_mm_rmse": 3.0939867519829582,
+    "rot_deg_mean": 1.2377008146899848,
+    "rot_deg_max": 3.1569259792667665
+   },
+   "rpe_10": {
+    "trans_mm_mean": 3.4118637666404528,
+    "trans_mm_max": 5.980479169909486,
+    "trans_mm_rmse": 3.651260754722481,
+    "rot_deg_mean": 1.7799229197825457,
+    "rot_deg_max": 3.6159948915690157
+   },
+   "reference_fraction": 0.18617201287839674,
+   "motion_type": "insertion",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00002035",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00002035",
+   "n_frames_used": 64,
+   "time_sec": 1.89
+  },
+  {
+   "n_frames": 46,
+   "ate_se3": {
+    "rmse": 11.550556023118618,
+    "mean": 10.234154104953912,
+    "max": 20.86649708097391,
+    "std": 5.355131576278663,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 2.043009434274034,
+    "mean": 1.7954631383170356,
+    "max": 5.339985220685562,
+    "std": 0.9747818563542566,
+    "scale": 54.34625542900715
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.42623226873431325,
+    "trans_mm_max": 0.7215696484577993,
+    "trans_mm_rmse": 0.4522032247240115,
+    "rot_deg_mean": 0.21669283563832803,
+    "rot_deg_max": 0.47561273560410233
+   },
+   "rpe_5": {
+    "trans_mm_mean": 1.781880894843114,
+    "trans_mm_max": 3.0045621434230947,
+    "trans_mm_rmse": 1.8757522329240812,
+    "rot_deg_mean": 0.8252250358128959,
+    "rot_deg_max": 2.183937550821859
+   },
+   "rpe_10": {
+    "trans_mm_mean": 2.7436463731276906,
+    "trans_mm_max": 4.056271239971551,
+    "trans_mm_rmse": 2.8206475379242915,
+    "rot_deg_mean": 1.1265653468088517,
+    "rot_deg_max": 2.7973581941498007
+   },
+   "reference_fraction": 0.1889866807725695,
+   "motion_type": "insertion",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00002111",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00002111",
+   "n_frames_used": 46,
+   "time_sec": 1.4
+  },
+  {
+   "n_frames": 44,
+   "ate_se3": {
+    "rmse": 20.170945999580766,
+    "mean": 17.799753012371557,
+    "max": 37.34830615901618,
+    "std": 9.48872252816854,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 1.718692950304088,
+    "mean": 1.4930928125195677,
+    "max": 3.2779010295006707,
+    "std": 0.8512222451436385,
+    "scale": 60.683468198044395
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.46522544673995186,
+    "trans_mm_max": 1.1560124106528593,
+    "trans_mm_rmse": 0.5294109347421504,
+    "rot_deg_mean": 0.12481908280488008,
+    "rot_deg_max": 0.301651072800281
+   },
+   "rpe_5": {
+    "trans_mm_mean": 2.014170103713609,
+    "trans_mm_max": 4.73057743996939,
+    "trans_mm_rmse": 2.294605142225856,
+    "rot_deg_mean": 0.5260910101693484,
+    "rot_deg_max": 1.1602604239390943
+   },
+   "rpe_10": {
+    "trans_mm_mean": 2.870582408931868,
+    "trans_mm_max": 6.393268334798494,
+    "trans_mm_rmse": 3.1968925498015985,
+    "rot_deg_mean": 0.7783241559896663,
+    "rot_deg_max": 1.2848779931789172
+   },
+   "reference_fraction": 0.194284483443859,
+   "motion_type": "insertion",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00002253",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00002253",
+   "n_frames_used": 44,
+   "time_sec": 1.4
+  },
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 75.88767829463566,
+    "mean": 73.98385475251808,
+    "max": 109.07839183365319,
+    "std": 16.89168295074309,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 46.56980585228809,
+    "mean": 44.272305432933706,
+    "max": 81.34309573019829,
+    "std": 14.446791642881651,
+    "scale": 106.73358566908746
+   },
+   "rpe_1": {
+    "trans_mm_mean": 7.386967015015129,
+    "trans_mm_max": 21.125921381460714,
+    "trans_mm_rmse": 8.369192219965111,
+    "rot_deg_mean": 2.457029454878402,
+    "rot_deg_max": 7.764629983341252
+   },
+   "rpe_5": {
+    "trans_mm_mean": 33.87813886114617,
+    "trans_mm_max": 70.09570297132193,
+    "trans_mm_rmse": 37.30357966086302,
+    "rot_deg_mean": 10.832945535620487,
+    "rot_deg_max": 14.542119990504661
+   },
+   "rpe_10": {
+    "trans_mm_mean": 59.28085859353377,
+    "trans_mm_max": 126.37253352328736,
+    "trans_mm_rmse": 64.4763324498069,
+    "rot_deg_mean": 18.940007977568012,
+    "rot_deg_max": 28.481428276272727
+   },
+   "reference_fraction": 0.19444444444444445,
+   "motion_type": "free",
+   "scene_kind": "organ",
+   "seq_id": "seq_00001305",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00001305",
+   "n_frames_used": 64,
+   "time_sec": 1.98
+  },
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 40.35763131618065,
+    "mean": 36.082060246790746,
+    "max": 70.10714774527489,
+    "std": 18.07825582847329,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 5.024917760135475,
+    "mean": 4.19353955872179,
+    "max": 13.049584264967724,
+    "std": 2.7683974544057754,
+    "scale": 58.383591592562475
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.9444126156321643,
+    "trans_mm_max": 6.184750597901281,
+    "trans_mm_rmse": 1.3824936050626533,
+    "rot_deg_mean": 0.36689164366584737,
+    "rot_deg_max": 2.187418151170454
+   },
+   "rpe_5": {
+    "trans_mm_mean": 3.5728112793818423,
+    "trans_mm_max": 18.22150107470022,
+    "trans_mm_rmse": 4.860111813345474,
+    "rot_deg_mean": 1.3237643294981583,
+    "rot_deg_max": 4.206504985972929
+   },
+   "rpe_10": {
+    "trans_mm_mean": 5.876347768163513,
+    "trans_mm_max": 15.020294640484307,
+    "trans_mm_rmse": 6.871545332601371,
+    "rot_deg_mean": 2.0892418946484232,
+    "rot_deg_max": 4.937873099601105
+   },
+   "reference_fraction": 0.23372135299740018,
+   "motion_type": "insertion",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00002077",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00002077",
+   "n_frames_used": 64,
+   "time_sec": 1.92
+  },
+  {
+   "n_frames": 50,
+   "ate_se3": {
+    "rmse": 16.30533071608755,
+    "mean": 14.290931873406585,
+    "max": 30.81836529398302,
+    "std": 7.850673598528974,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 5.003738670155259,
+    "mean": 4.261677483901988,
+    "max": 9.896652618148009,
+    "std": 2.6221185523179398,
+    "scale": 43.16445871782706
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.8449546501146775,
+    "trans_mm_max": 8.797765063473621,
+    "trans_mm_rmse": 1.7390247126762712,
+    "rot_deg_mean": 0.4608892392919377,
+    "rot_deg_max": 2.1276751509673106
+   },
+   "rpe_5": {
+    "trans_mm_mean": 3.7137625104527463,
+    "trans_mm_max": 12.003379204037445,
+    "trans_mm_rmse": 5.355040071603039,
+    "rot_deg_mean": 1.892769500910564,
+    "rot_deg_max": 4.247720197144569
+   },
+   "rpe_10": {
+    "trans_mm_mean": 4.86877449640863,
+    "trans_mm_max": 12.889334020311297,
+    "trans_mm_rmse": 6.513095345136948,
+    "rot_deg_mean": 2.6921013575742436,
+    "rot_deg_max": 6.020769931278877
+   },
+   "reference_fraction": 0.2479441740074936,
+   "motion_type": "insertion",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00002290",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00002290",
+   "n_frames_used": 50,
+   "time_sec": 1.77
+  },
+  {
+   "n_frames": 53,
+   "ate_se3": {
+    "rmse": 0.2925421259471695,
+    "mean": 0.26805432757251674,
+    "max": 0.5334382374239728,
+    "std": 0.11716557908931904,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 0.2925376772530727,
+    "mean": 0.2680876483130954,
+    "max": 0.5340916675898586,
+    "std": 0.1170782022179064,
+    "scale": 1.0355827496626924
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.3002807038426468,
+    "trans_mm_max": 0.7171541154349784,
+    "trans_mm_rmse": 0.33765248562358674,
+    "rot_deg_mean": 0.272822396514493,
+    "rot_deg_max": 0.970893048268825
+   },
+   "rpe_5": {
+    "trans_mm_mean": 0.4178563370992902,
+    "trans_mm_max": 0.7321587402869156,
+    "trans_mm_rmse": 0.4473930046316256,
+    "rot_deg_mean": 0.7938396581886721,
+    "rot_deg_max": 2.20947433454302
+   },
+   "rpe_10": {
+    "trans_mm_mean": 0.39583254726149075,
+    "trans_mm_max": 0.818247693867266,
+    "trans_mm_rmse": 0.43461149468115445,
+    "rot_deg_mean": 0.7630033054424723,
+    "rot_deg_max": 1.7501271497169564
+   },
+   "reference_fraction": 0.2618676405686599,
+   "motion_type": "orbital",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00002189",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00002189",
+   "n_frames_used": 53,
+   "time_sec": 1.69
+  },
+  {
+   "n_frames": 49,
+   "ate_se3": {
+    "rmse": 34.89852971550483,
+    "mean": 30.444855730228543,
+    "max": 67.35614788502538,
+    "std": 17.059253672700457,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 1.5129695129857375,
+    "mean": 1.3290012413474082,
+    "max": 3.3062787988571576,
+    "std": 0.7230715370703982,
+    "scale": 55.77498764692116
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.34866939962072063,
+    "trans_mm_max": 0.9058732947390485,
+    "trans_mm_rmse": 0.3907220611925641,
+    "rot_deg_mean": 0.07682265167337586,
+    "rot_deg_max": 0.1557935071682905
+   },
+   "rpe_5": {
+    "trans_mm_mean": 1.4910724797704957,
+    "trans_mm_max": 3.2743207613204124,
+    "trans_mm_rmse": 1.6509473475003176,
+    "rot_deg_mean": 0.33972807410935507,
+    "rot_deg_max": 0.6252480054497721
+   },
+   "rpe_10": {
+    "trans_mm_mean": 1.8717141700964448,
+    "trans_mm_max": 3.585401008779153,
+    "trans_mm_rmse": 2.055613183782111,
+    "rot_deg_mean": 0.5914088846659546,
+    "rot_deg_max": 0.9906421211959746
+   },
+   "reference_fraction": 0.27073904673258464,
+   "motion_type": "insertion",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00001038",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00001038",
+   "n_frames_used": 49,
+   "time_sec": 1.39
+  },
+  {
+   "n_frames": 57,
+   "ate_se3": {
+    "rmse": 10.107112494112359,
+    "mean": 8.796980088693818,
+    "max": 19.635934928747727,
+    "std": 4.9766318216004946,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 1.1253570176571703,
+    "mean": 1.0608229335280517,
+    "max": 1.6935356188073576,
+    "std": 0.37561033118270204,
+    "scale": 61.64212166667196
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.3651295763635674,
+    "trans_mm_max": 0.6919978326345384,
+    "trans_mm_rmse": 0.4029912301582929,
+    "rot_deg_mean": 0.2585671859283785,
+    "rot_deg_max": 0.5777324799112513
+   },
+   "rpe_5": {
+    "trans_mm_mean": 1.4043361205208114,
+    "trans_mm_max": 2.6279496556712996,
+    "trans_mm_rmse": 1.5380367050504031,
+    "rot_deg_mean": 0.9916893558118354,
+    "rot_deg_max": 2.09770808115631
+   },
+   "rpe_10": {
+    "trans_mm_mean": 1.2568611492887576,
+    "trans_mm_max": 2.1314113119273377,
+    "trans_mm_rmse": 1.3151102867128064,
+    "rot_deg_mean": 0.7395167409381215,
+    "rot_deg_max": 1.477773646042436
+   },
+   "reference_fraction": 0.27445309255624795,
+   "motion_type": "insertion",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00002164",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00002164",
+   "n_frames_used": 57,
+   "time_sec": 1.75
+  },
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 29.30029385867619,
+    "mean": 26.20544187490274,
+    "max": 50.3661190852509,
+    "std": 13.106564627921077,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 2.9220704063211684,
+    "mean": 2.761788601358092,
+    "max": 5.288488118413757,
+    "std": 0.95447324787365,
+    "scale": 55.56313341996267
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.8793185104418176,
+    "trans_mm_max": 2.5911133960134114,
+    "trans_mm_rmse": 1.0262012798997018,
+    "rot_deg_mean": 0.6175380753778328,
+    "rot_deg_max": 1.6999721679328355
+   },
+   "rpe_5": {
+    "trans_mm_mean": 3.468240223077762,
+    "trans_mm_max": 7.002209661656159,
+    "trans_mm_rmse": 3.802744136328812,
+    "rot_deg_mean": 2.543214634898902,
+    "rot_deg_max": 4.7271767066076515
+   },
+   "rpe_10": {
+    "trans_mm_mean": 3.5798683636004958,
+    "trans_mm_max": 7.728113999132157,
+    "trans_mm_rmse": 4.051826827319688,
+    "rot_deg_mean": 3.124465164844952,
+    "rot_deg_max": 7.209981868223703
+   },
+   "reference_fraction": 0.28074220844589853,
+   "motion_type": "insertion",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00002090",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00002090",
+   "n_frames_used": 64,
+   "time_sec": 1.99
+  },
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 21.56621669217698,
+    "mean": 19.19260492668364,
+    "max": 38.42379363724913,
+    "std": 9.835935061913121,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 1.5605325026012635,
+    "mean": 1.4775387398030289,
+    "max": 2.334431595639685,
+    "std": 0.5021363998519126,
+    "scale": 62.111885072357026
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.37717356761563414,
+    "trans_mm_max": 1.3625757630596003,
+    "trans_mm_rmse": 0.4372876836631251,
+    "rot_deg_mean": 0.20109754592084775,
+    "rot_deg_max": 0.8470969442830643
+   },
+   "rpe_5": {
+    "trans_mm_mean": 1.5819904949405017,
+    "trans_mm_max": 3.834854502478866,
+    "trans_mm_rmse": 1.8061507019350818,
+    "rot_deg_mean": 0.8435097475643202,
+    "rot_deg_max": 2.451017309553997
+   },
+   "rpe_10": {
+    "trans_mm_mean": 2.46194371235298,
+    "trans_mm_max": 4.19532477382649,
+    "trans_mm_rmse": 2.7356518469273325,
+    "rot_deg_mean": 1.283996259846467,
+    "rot_deg_max": 2.4031689989072014
+   },
+   "reference_fraction": 0.3013963344112934,
+   "motion_type": "insertion",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00002159",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00002159",
+   "n_frames_used": 64,
+   "time_sec": 1.94
+  },
+  {
+   "n_frames": 61,
+   "ate_se3": {
+    "rmse": 0.03448068268849462,
+    "mean": 0.03008570757766842,
+    "max": 0.07470854222709884,
+    "std": 0.016845405255311547,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 0.03448068268849462,
+    "mean": 0.03008570757766842,
+    "max": 0.07470854222709884,
+    "std": 0.016845405255311547,
+    "scale": 1.0
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.008195192427010282,
+    "trans_mm_max": 0.0290771747719124,
+    "trans_mm_rmse": 0.009998564948376807,
+    "rot_deg_mean": 0.3113775610099495,
+    "rot_deg_max": 1.7225212577797477
+   },
+   "rpe_5": {
+    "trans_mm_mean": 0.03400342466309887,
+    "trans_mm_max": 0.10929385788310575,
+    "trans_mm_rmse": 0.04100006513774956,
+    "rot_deg_mean": 1.302192443806219,
+    "rot_deg_max": 6.430875898797715
+   },
+   "rpe_10": {
+    "trans_mm_mean": 0.04274246977036687,
+    "trans_mm_max": 0.11206390952983832,
+    "trans_mm_rmse": 0.049192171068373855,
+    "rot_deg_mean": 1.678302225536666,
+    "rot_deg_max": 6.69312610256144
+   },
+   "reference_fraction": 0.31186607083793816,
+   "motion_type": "orbital",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00002202",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00002202",
+   "n_frames_used": 61,
+   "time_sec": 1.9
+  },
+  {
+   "n_frames": 46,
+   "ate_se3": {
+    "rmse": 38.00682567016846,
+    "mean": 33.58460335302012,
+    "max": 70.44505975864284,
+    "std": 17.793066490711652,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 13.91181162616125,
+    "mean": 12.822480619302112,
+    "max": 27.381492956775485,
+    "std": 5.396526057513022,
+    "scale": 52.78452147282551
+   },
+   "rpe_1": {
+    "trans_mm_mean": 1.7930116088111356,
+    "trans_mm_max": 4.496358687616782,
+    "trans_mm_rmse": 2.1062346585537037,
+    "rot_deg_mean": 1.236613245855709,
+    "rot_deg_max": 6.126125733588973
+   },
+   "rpe_5": {
+    "trans_mm_mean": 8.421217343748044,
+    "trans_mm_max": 18.299607529434287,
+    "trans_mm_rmse": 9.541750811040123,
+    "rot_deg_mean": 4.419183571385157,
+    "rot_deg_max": 14.25227289015486
+   },
+   "rpe_10": {
+    "trans_mm_mean": 15.474148776429384,
+    "trans_mm_max": 25.62157495105519,
+    "trans_mm_rmse": 16.562143417607206,
+    "rot_deg_mean": 7.150437393616651,
+    "rot_deg_max": 16.934657629519048
+   },
+   "reference_fraction": 0.3331399875217014,
+   "motion_type": "insertion",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00000732",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00000732",
+   "n_frames_used": 46,
+   "time_sec": 1.28
+  },
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 0.04781595566193838,
+    "mean": 0.04413932060506648,
+    "max": 0.07816354644726424,
+    "std": 0.018387114846751016,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 0.04781595566193838,
+    "mean": 0.04413932060506648,
+    "max": 0.07816354644726424,
+    "std": 0.018387114846751016,
+    "scale": 1.0
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.006731354099821772,
+    "trans_mm_max": 0.01991659492002286,
+    "trans_mm_rmse": 0.007982398431308891,
+    "rot_deg_mean": 0.1716245541291047,
+    "rot_deg_max": 0.8677776328260379
+   },
+   "rpe_5": {
+    "trans_mm_mean": 0.02626376664093978,
+    "trans_mm_max": 0.07802018647264754,
+    "trans_mm_rmse": 0.03108898546536413,
+    "rot_deg_mean": 0.6098527249070519,
+    "rot_deg_max": 3.4355530841381636
+   },
+   "rpe_10": {
+    "trans_mm_mean": 0.039014370814896566,
+    "trans_mm_max": 0.08382274851090578,
+    "trans_mm_rmse": 0.045810910126924155,
+    "rot_deg_mean": 1.0220916987076072,
+    "rot_deg_max": 3.630916791319781
+   },
+   "reference_fraction": 0.35015465070060536,
+   "motion_type": "orbital",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00000992",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00000992",
+   "n_frames_used": 64,
+   "time_sec": 1.81
+  },
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 40.78757049740628,
+    "mean": 35.38367109598758,
+    "max": 80.05240008358611,
+    "std": 20.288462900177027,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 3.8737426480728936,
+    "mean": 3.0150460703094577,
+    "max": 10.173615264553305,
+    "std": 2.4321552782275835,
+    "scale": 42.78913640103444
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.542908353329509,
+    "trans_mm_max": 3.2947296915840454,
+    "trans_mm_rmse": 0.8016984409672185,
+    "rot_deg_mean": 0.3479666253978218,
+    "rot_deg_max": 1.2704011534838244
+   },
+   "rpe_5": {
+    "trans_mm_mean": 2.095806230894081,
+    "trans_mm_max": 8.866791932186466,
+    "trans_mm_rmse": 2.760919157973809,
+    "rot_deg_mean": 1.1625124692737987,
+    "rot_deg_max": 2.9475163729612297
+   },
+   "rpe_10": {
+    "trans_mm_mean": 3.249891254309528,
+    "trans_mm_max": 10.647119987691635,
+    "trans_mm_rmse": 4.327029861549948,
+    "rot_deg_mean": 1.4344473190553795,
+    "rot_deg_max": 3.1001020942365223
+   },
+   "reference_fraction": 0.35662249549151814,
+   "motion_type": "insertion",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00002127",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00002127",
+   "n_frames_used": 64,
+   "time_sec": 1.92
+  },
+  {
+   "n_frames": 51,
+   "ate_se3": {
+    "rmse": 15.918305314842415,
+    "mean": 14.164828592012185,
+    "max": 28.152121545587924,
+    "std": 7.262924690195706,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 7.640884923268537,
+    "mean": 7.38575587891997,
+    "max": 10.828070115279466,
+    "std": 1.9579919580099252,
+    "scale": 62.873419686080574
+   },
+   "rpe_1": {
+    "trans_mm_mean": 1.0578817370020859,
+    "trans_mm_max": 15.360832690499416,
+    "trans_mm_rmse": 2.4641643589968183,
+    "rot_deg_mean": 0.7874974196068724,
+    "rot_deg_max": 22.252684512458906
+   },
+   "rpe_5": {
+    "trans_mm_mean": 4.107561382442068,
+    "trans_mm_max": 19.32446992217474,
+    "trans_mm_rmse": 6.5936655207952235,
+    "rot_deg_mean": 3.6070459632570855,
+    "rot_deg_max": 24.42011926651914
+   },
+   "rpe_10": {
+    "trans_mm_mean": 7.585855372110337,
+    "trans_mm_max": 22.442251550970745,
+    "trans_mm_rmse": 10.317113654536392,
+    "rot_deg_mean": 7.59325706244935,
+    "rot_deg_max": 25.789832725470887
+   },
+   "reference_fraction": 0.3794411010742187,
+   "motion_type": "insertion",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00001810",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00001810",
+   "n_frames_used": 51,
+   "time_sec": 1.67
+  },
+  {
+   "n_frames": 59,
+   "ate_se3": {
+    "rmse": 40.07626402700006,
+    "mean": 34.77090150075097,
+    "max": 78.53672869752394,
+    "std": 19.927151005271487,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 3.4812195537859676,
+    "mean": 2.870398028180627,
+    "max": 8.83029810053368,
+    "std": 1.9696966115314665,
+    "scale": 64.04251323722966
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.5938409666009087,
+    "trans_mm_max": 1.8891306723038597,
+    "trans_mm_rmse": 0.7062549397002611,
+    "rot_deg_mean": 0.2267932174115712,
+    "rot_deg_max": 0.7759213244250269
+   },
+   "rpe_5": {
+    "trans_mm_mean": 2.433452593232666,
+    "trans_mm_max": 4.9221644690424595,
+    "trans_mm_rmse": 2.7429262995490244,
+    "rot_deg_mean": 0.651798831725218,
+    "rot_deg_max": 1.393366533284957
+   },
+   "rpe_10": {
+    "trans_mm_mean": 4.23780900480671,
+    "trans_mm_max": 7.931050444707012,
+    "trans_mm_rmse": 4.7117629715731155,
+    "rot_deg_mean": 1.0153101176462023,
+    "rot_deg_max": 2.0702944461447417
+   },
+   "reference_fraction": 0.4002801747362939,
+   "motion_type": "insertion",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00002231",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00002231",
+   "n_frames_used": 59,
+   "time_sec": 1.84
+  },
+  {
+   "n_frames": 56,
+   "ate_se3": {
+    "rmse": 36.486111973825686,
+    "mean": 32.74965681555877,
+    "max": 62.381880412273944,
+    "std": 16.08404008418502,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 3.782625513928791,
+    "mean": 3.1542263385564113,
+    "max": 8.814805664024385,
+    "std": 2.08784864963485,
+    "scale": 50.79780699897545
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.6722176572854714,
+    "trans_mm_max": 2.3865497581625963,
+    "trans_mm_rmse": 0.8203284319701998,
+    "rot_deg_mean": 0.3977672689351596,
+    "rot_deg_max": 1.8852078208361456
+   },
+   "rpe_5": {
+    "trans_mm_mean": 2.9018073320668454,
+    "trans_mm_max": 7.477870953381682,
+    "trans_mm_rmse": 3.3780271933676214,
+    "rot_deg_mean": 1.5847632602866597,
+    "rot_deg_max": 3.6235690274153036
+   },
+   "rpe_10": {
+    "trans_mm_mean": 5.06706898774456,
+    "trans_mm_max": 10.392012105938488,
+    "trans_mm_rmse": 5.651428419356718,
+    "rot_deg_mean": 2.7433922917336386,
+    "rot_deg_max": 5.369286130255257
+   },
+   "reference_fraction": 0.40975935502485794,
+   "motion_type": "insertion",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00002081",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00002081",
+   "n_frames_used": 56,
+   "time_sec": 1.81
+  },
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 6.454134997559539,
+    "mean": 5.7697539362524015,
+    "max": 10.809011253994909,
+    "std": 2.892368939437496,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 2.5462262859111555,
+    "mean": 2.150516577098572,
+    "max": 5.585034578343295,
+    "std": 1.363285278541934,
+    "scale": 34.327771360793506
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.3640652485590839,
+    "trans_mm_max": 1.1159696090027247,
+    "trans_mm_rmse": 0.4399857881500254,
+    "rot_deg_mean": 0.4846494519085777,
+    "rot_deg_max": 2.1920335436805813
+   },
+   "rpe_5": {
+    "trans_mm_mean": 1.7181502524106667,
+    "trans_mm_max": 4.3438603749171145,
+    "trans_mm_rmse": 1.9965213646423268,
+    "rot_deg_mean": 2.011857068777345,
+    "rot_deg_max": 7.046562352230657
+   },
+   "rpe_10": {
+    "trans_mm_mean": 3.023083894371041,
+    "trans_mm_max": 5.512895460998749,
+    "trans_mm_rmse": 3.4032872692884304,
+    "rot_deg_mean": 3.819186888622854,
+    "rot_deg_max": 11.359368920632905
+   },
+   "reference_fraction": 0.4153846153846154,
+   "motion_type": "insertion",
+   "scene_kind": "organ",
+   "seq_id": "seq_00001523",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00001523",
+   "n_frames_used": 64,
+   "time_sec": 1.93
+  },
+  {
+   "n_frames": 42,
+   "ate_se3": {
+    "rmse": 16.35316126413466,
+    "mean": 15.220233813979508,
+    "max": 33.63789362591955,
+    "std": 5.980833217753965,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 4.673465027797244,
+    "mean": 4.312156385390964,
+    "max": 7.8325392143414385,
+    "std": 1.8018275927446068,
+    "scale": 108.5032666693295
+   },
+   "rpe_1": {
+    "trans_mm_mean": 1.1235988294544146,
+    "trans_mm_max": 2.603273037817873,
+    "trans_mm_rmse": 1.2595772664770963,
+    "rot_deg_mean": 1.1863651925074465,
+    "rot_deg_max": 2.936997992947239
+   },
+   "rpe_5": {
+    "trans_mm_mean": 4.608874683280117,
+    "trans_mm_max": 9.244056268041046,
+    "trans_mm_rmse": 5.160052887393752,
+    "rot_deg_mean": 5.73859224479469,
+    "rot_deg_max": 11.034670974776109
+   },
+   "rpe_10": {
+    "trans_mm_mean": 7.3496394205532685,
+    "trans_mm_max": 17.21638162258371,
+    "trans_mm_rmse": 8.511222658359994,
+    "rot_deg_mean": 10.763022357710842,
+    "rot_deg_max": 17.881802087503022
+   },
+   "reference_fraction": 0.42502018214956017,
+   "motion_type": "free",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00002080",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00002080",
+   "n_frames_used": 42,
+   "time_sec": 1.39
+  },
+  {
+   "n_frames": 51,
+   "ate_se3": {
+    "rmse": 49.923138219772184,
+    "mean": 44.8838797152617,
+    "max": 82.43858754599243,
+    "std": 21.85765475563189,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 1.233932809888909,
+    "mean": 1.0731672937565024,
+    "max": 3.3903395780547676,
+    "std": 0.6090173551974386,
+    "scale": 57.0587237899613
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.3638190574786568,
+    "trans_mm_max": 0.9548080759692134,
+    "trans_mm_rmse": 0.4254764003917692,
+    "rot_deg_mean": 0.26164117014061844,
+    "rot_deg_max": 0.7198786124348912
+   },
+   "rpe_5": {
+    "trans_mm_mean": 1.4424449137505997,
+    "trans_mm_max": 3.8631591852027367,
+    "trans_mm_rmse": 1.7110002570524818,
+    "rot_deg_mean": 1.1069676213838517,
+    "rot_deg_max": 2.784968527886305
+   },
+   "rpe_10": {
+    "trans_mm_mean": 1.7802397008575248,
+    "trans_mm_max": 3.655302401886251,
+    "trans_mm_rmse": 2.019980997870587,
+    "rot_deg_mean": 1.3521598327026416,
+    "rot_deg_max": 2.855397669317983
+   },
+   "reference_fraction": 0.4340019531250001,
+   "motion_type": "insertion",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00000423",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00000423",
+   "n_frames_used": 51,
+   "time_sec": 1.61
+  },
+  {
+   "n_frames": 62,
+   "ate_se3": {
+    "rmse": 34.03461073897863,
+    "mean": 30.137851321715182,
+    "max": 69.85521313521437,
+    "std": 15.813432450419793,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 11.506834875086351,
+    "mean": 9.601651498915498,
+    "max": 31.94210854930754,
+    "std": 6.341572150175166,
+    "scale": 49.133420849309374
+   },
+   "rpe_1": {
+    "trans_mm_mean": 1.3539550757694407,
+    "trans_mm_max": 3.093343645640759,
+    "trans_mm_rmse": 1.6866257567790148,
+    "rot_deg_mean": 0.6635196300917124,
+    "rot_deg_max": 2.3188195010062325
+   },
+   "rpe_5": {
+    "trans_mm_mean": 6.044176527706922,
+    "trans_mm_max": 15.197823735758135,
+    "trans_mm_rmse": 7.674656229816904,
+    "rot_deg_mean": 2.6899246299159443,
+    "rot_deg_max": 5.0875720751068085
+   },
+   "rpe_10": {
+    "trans_mm_mean": 10.830378244711243,
+    "trans_mm_max": 28.649015735309867,
+    "trans_mm_rmse": 13.825739310835532,
+    "rot_deg_mean": 4.599947940127341,
+    "rot_deg_max": 9.90038307707605
+   },
+   "reference_fraction": 0.44269467453769173,
+   "motion_type": "free",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00000337",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00000337",
+   "n_frames_used": 62,
+   "time_sec": 1.96
+  },
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 21.094177519276997,
+    "mean": 18.501487474907066,
+    "max": 39.97842521190338,
+    "std": 10.132091907924448,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 2.610199975373176,
+    "mean": 2.3301229171386364,
+    "max": 4.508423526015964,
+    "std": 1.1762954996358097,
+    "scale": 57.477491990590856
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.3647951734790766,
+    "trans_mm_max": 0.9428590776422222,
+    "trans_mm_rmse": 0.42197187584175644,
+    "rot_deg_mean": 0.20584528657779094,
+    "rot_deg_max": 0.628523630107995
+   },
+   "rpe_5": {
+    "trans_mm_mean": 1.7051328281573979,
+    "trans_mm_max": 4.002627089561178,
+    "trans_mm_rmse": 1.9116156398076278,
+    "rot_deg_mean": 0.9269313190530781,
+    "rot_deg_max": 2.6058428105472737
+   },
+   "rpe_10": {
+    "trans_mm_mean": 3.10922101759618,
+    "trans_mm_max": 5.849464085226827,
+    "trans_mm_rmse": 3.328605168726983,
+    "rot_deg_mean": 1.6629591280823024,
+    "rot_deg_max": 3.391661401105717
+   },
+   "reference_fraction": 0.4549402146112352,
+   "motion_type": "insertion",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00002355",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00002355",
+   "n_frames_used": 64,
+   "time_sec": 1.98
+  },
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 0.07125817184692936,
+    "mean": 0.06393566209631585,
+    "max": 0.11189897661577139,
+    "std": 0.0314636006723998,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 0.07125817184692936,
+    "mean": 0.06393566209631585,
+    "max": 0.11189897661577139,
+    "std": 0.0314636006723998,
+    "scale": 1.0
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.0044784564797278005,
+    "trans_mm_max": 0.011578983497329925,
+    "trans_mm_rmse": 0.005240304529782366,
+    "rot_deg_mean": 0.14571380894494707,
+    "rot_deg_max": 0.39523057143466933
+   },
+   "rpe_5": {
+    "trans_mm_mean": 0.022124507359998595,
+    "trans_mm_max": 0.04450694306313632,
+    "trans_mm_rmse": 0.025206255502284017,
+    "rot_deg_mean": 0.7000837329369191,
+    "rot_deg_max": 1.434040321709267
+   },
+   "rpe_10": {
+    "trans_mm_mean": 0.044251220185132466,
+    "trans_mm_max": 0.07993182389594605,
+    "trans_mm_rmse": 0.049261525400994606,
+    "rot_deg_mean": 1.3738776891600115,
+    "rot_deg_max": 2.525625656048789
+   },
+   "reference_fraction": 0.4656612049449574,
+   "motion_type": "orbital",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00001208",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00001208",
+   "n_frames_used": 64,
+   "time_sec": 1.98
+  },
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 30.50984596073557,
+    "mean": 27.264580024471087,
+    "max": 59.56524481570327,
+    "std": 13.692822084472752,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 4.517801355825072,
+    "mean": 4.167427566189535,
+    "max": 7.873286969503649,
+    "std": 1.7444416216252203,
+    "scale": 68.23679895779875
+   },
+   "rpe_1": {
+    "trans_mm_mean": 1.1097540800746575,
+    "trans_mm_max": 3.7313794369383024,
+    "trans_mm_rmse": 1.360145904369149,
+    "rot_deg_mean": 0.30397923173756125,
+    "rot_deg_max": 1.1706744686715784
+   },
+   "rpe_5": {
+    "trans_mm_mean": 3.817123191048968,
+    "trans_mm_max": 9.332035559750997,
+    "trans_mm_rmse": 4.166646491192833,
+    "rot_deg_mean": 1.1821422426876138,
+    "rot_deg_max": 2.5747105569767483
+   },
+   "rpe_10": {
+    "trans_mm_mean": 5.597519543588299,
+    "trans_mm_max": 9.583346352948999,
+    "trans_mm_rmse": 5.933029883437321,
+    "rot_deg_mean": 1.8985292544405954,
+    "rot_deg_max": 3.808474019237525
+   },
+   "reference_fraction": 0.47751547601283395,
+   "motion_type": "free",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00002358",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00002358",
+   "n_frames_used": 64,
+   "time_sec": 1.93
+  },
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 0.08852764410413677,
+    "mean": 0.08184985359512445,
+    "max": 0.1329232718053629,
+    "std": 0.0337304793485861,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 0.08852764410413677,
+    "mean": 0.08184985359512445,
+    "max": 0.1329232718053629,
+    "std": 0.0337304793485861,
+    "scale": 1.0
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.003960394327961751,
+    "trans_mm_max": 0.01310319425840222,
+    "trans_mm_rmse": 0.004965052640758265,
+    "rot_deg_mean": 0.1806631913223433,
+    "rot_deg_max": 0.7441787499589961
+   },
+   "rpe_5": {
+    "trans_mm_mean": 0.019762315726661005,
+    "trans_mm_max": 0.04240076731799554,
+    "trans_mm_rmse": 0.024484685379880553,
+    "rot_deg_mean": 0.9028997061118753,
+    "rot_deg_max": 2.43310567194374
+   },
+   "rpe_10": {
+    "trans_mm_mean": 0.04170899197603868,
+    "trans_mm_max": 0.07881386370332782,
+    "trans_mm_rmse": 0.04984710993313805,
+    "rot_deg_mean": 1.8832428880071534,
+    "rot_deg_max": 4.47282194367517
+   },
+   "reference_fraction": 0.479546279790486,
+   "motion_type": "orbital",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00002368",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00002368",
+   "n_frames_used": 64,
+   "time_sec": 1.96
+  },
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 37.11677164457151,
+    "mean": 33.396010501696324,
+    "max": 61.77424762064406,
+    "std": 16.19756833249535,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 1.2854444172952677,
+    "mean": 1.1704066891367901,
+    "max": 2.230423248035744,
+    "std": 0.5315219016930792,
+    "scale": 50.04649061079112
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.27954995955265816,
+    "trans_mm_max": 1.0254306783485145,
+    "trans_mm_rmse": 0.3379978357558559,
+    "rot_deg_mean": 0.11110216218839526,
+    "rot_deg_max": 0.3191066112409556
+   },
+   "rpe_5": {
+    "trans_mm_mean": 1.204072829468654,
+    "trans_mm_max": 2.5754409637687137,
+    "trans_mm_rmse": 1.3516680313163134,
+    "rot_deg_mean": 0.4476733536454679,
+    "rot_deg_max": 0.9299068536857016
+   },
+   "rpe_10": {
+    "trans_mm_mean": 1.8452159331608289,
+    "trans_mm_max": 3.2442577693488985,
+    "trans_mm_rmse": 2.011059771923745,
+    "rot_deg_mean": 0.7095410759510649,
+    "rot_deg_max": 1.7082936469419794
+   },
+   "reference_fraction": 0.484845863895552,
+   "motion_type": "insertion",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00002362",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00002362",
+   "n_frames_used": 64,
+   "time_sec": 1.99
+  },
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 63.930733638171155,
+    "mean": 56.70812278804905,
+    "max": 118.19234372882485,
+    "std": 29.518257288843134,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 9.089615954459688,
+    "mean": 7.423640494940745,
+    "max": 17.14910538796399,
+    "std": 5.245062440185441,
+    "scale": 44.890239671285144
+   },
+   "rpe_1": {
+    "trans_mm_mean": 1.320469356350603,
+    "trans_mm_max": 10.064787865717722,
+    "trans_mm_rmse": 2.1959478563807777,
+    "rot_deg_mean": 0.8664874623347832,
+    "rot_deg_max": 16.66894721977173
+   },
+   "rpe_5": {
+    "trans_mm_mean": 6.14115751419498,
+    "trans_mm_max": 25.060575057552235,
+    "trans_mm_rmse": 8.525212746947975,
+    "rot_deg_mean": 3.6097536262065963,
+    "rot_deg_max": 18.150232508938817
+   },
+   "rpe_10": {
+    "trans_mm_mean": 11.447162160422806,
+    "trans_mm_max": 31.88204060634995,
+    "trans_mm_rmse": 14.64629513874009,
+    "rot_deg_mean": 6.656315766255225,
+    "rot_deg_max": 18.406598214735837
+   },
+   "reference_fraction": 0.5016132119261187,
+   "motion_type": "insertion",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00002048",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00002048",
+   "n_frames_used": 64,
+   "time_sec": 1.93
+  },
+  {
+   "n_frames": 49,
+   "ate_se3": {
+    "rmse": 32.997604983422264,
+    "mean": 29.385051937233616,
+    "max": 58.18697776852488,
+    "std": 15.012017095915414,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 1.177404788386644,
+    "mean": 0.8802548204948012,
+    "max": 3.1093160389547925,
+    "std": 0.7819421249117245,
+    "scale": 51.32639289836189
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.2391159384281437,
+    "trans_mm_max": 2.2630292846455795,
+    "trans_mm_rmse": 0.4665762613356944,
+    "rot_deg_mean": 0.09769278872652622,
+    "rot_deg_max": 1.1398208950381865
+   },
+   "rpe_5": {
+    "trans_mm_mean": 0.9596793637013966,
+    "trans_mm_max": 4.179499871686585,
+    "trans_mm_rmse": 1.399821060863491,
+    "rot_deg_mean": 0.3949866690249504,
+    "rot_deg_max": 2.1272690762737567
+   },
+   "rpe_10": {
+    "trans_mm_mean": 1.1609466128474912,
+    "trans_mm_max": 3.6217506107325557,
+    "trans_mm_rmse": 1.498518854283494,
+    "rot_deg_mean": 0.5438069366237236,
+    "rot_deg_max": 2.103908785564863
+   },
+   "reference_fraction": 0.5226593292782018,
+   "motion_type": "insertion",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00002344",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00002344",
+   "n_frames_used": 49,
+   "time_sec": 1.46
+  },
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 0.20578593405187587,
+    "mean": 0.19457438130435173,
+    "max": 0.34755968013866306,
+    "std": 0.06699746856136991,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 0.20562934415491135,
+    "mean": 0.19462949874044883,
+    "max": 0.35191187409423763,
+    "std": 0.06635348820989456,
+    "scale": 1.4135955114213197
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.24007464375458398,
+    "trans_mm_max": 0.4498747197183693,
+    "trans_mm_rmse": 0.25620485521145253,
+    "rot_deg_mean": 0.17815849581542947,
+    "rot_deg_max": 1.0286882745603427
+   },
+   "rpe_5": {
+    "trans_mm_mean": 0.28566662255694764,
+    "trans_mm_max": 0.4829719395990191,
+    "trans_mm_rmse": 0.3023200192669117,
+    "rot_deg_mean": 0.6049600523215625,
+    "rot_deg_max": 1.9766036025685405
+   },
+   "rpe_10": {
+    "trans_mm_mean": 0.2604511304368159,
+    "trans_mm_max": 0.555250970444433,
+    "trans_mm_rmse": 0.2822837672647447,
+    "rot_deg_mean": 1.0888244629518937,
+    "rot_deg_max": 2.3428222312776503
+   },
+   "reference_fraction": 0.5299446173869388,
+   "motion_type": "orbital",
+   "scene_kind": "organ",
+   "seq_id": "seq_00002128",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00002128",
+   "n_frames_used": 64,
+   "time_sec": 1.99
+  },
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 0.14264207853672675,
+    "mean": 0.13256563600096444,
+    "max": 0.23119159532945036,
+    "std": 0.05266037144701439,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 0.1391742033363742,
+    "mean": 0.13014182735087124,
+    "max": 0.2205875258435249,
+    "std": 0.049321026429814424,
+    "scale": 3.147173869070774
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.15006007666123927,
+    "trans_mm_max": 0.38313051176741414,
+    "trans_mm_rmse": 0.1688887696268243,
+    "rot_deg_mean": 0.18986789626074105,
+    "rot_deg_max": 1.7460068815130005
+   },
+   "rpe_5": {
+    "trans_mm_mean": 0.18659912763567454,
+    "trans_mm_max": 0.352204770441561,
+    "trans_mm_rmse": 0.20322101651979838,
+    "rot_deg_mean": 0.710381027170541,
+    "rot_deg_max": 3.1779613852979973
+   },
+   "rpe_10": {
+    "trans_mm_mean": 0.1864715764088065,
+    "trans_mm_max": 0.35283930200277186,
+    "trans_mm_rmse": 0.19832292348001335,
+    "rot_deg_mean": 1.0502358211436646,
+    "rot_deg_max": 3.3307617865506236
+   },
+   "reference_fraction": 0.5474863125081142,
+   "motion_type": "orbital",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00000670",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00000670",
+   "n_frames_used": 64,
+   "time_sec": 1.96
+  },
+  {
+   "n_frames": 56,
+   "ate_se3": {
+    "rmse": 30.834084995318705,
+    "mean": 27.503500718022273,
+    "max": 53.95985152792996,
+    "std": 13.939090564032016,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 3.77891789948145,
+    "mean": 3.206309855827345,
+    "max": 7.128246171411457,
+    "std": 1.999949399221322,
+    "scale": 63.984844462444194
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.8076092013823328,
+    "trans_mm_max": 3.1076399384900997,
+    "trans_mm_rmse": 1.1473292552992687,
+    "rot_deg_mean": 0.6183305352420837,
+    "rot_deg_max": 2.8666026669937237
+   },
+   "rpe_5": {
+    "trans_mm_mean": 3.4274433514342277,
+    "trans_mm_max": 11.143362220600736,
+    "trans_mm_rmse": 4.430856127947636,
+    "rot_deg_mean": 2.5576398339428863,
+    "rot_deg_max": 6.867739750520009
+   },
+   "rpe_10": {
+    "trans_mm_mean": 5.742345494729146,
+    "trans_mm_max": 12.727369153214056,
+    "trans_mm_rmse": 6.570267421629678,
+    "rot_deg_mean": 4.428894744934132,
+    "rot_deg_max": 7.687972323371717
+   },
+   "reference_fraction": 0.5503141645951706,
+   "motion_type": "insertion",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00000010",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00000010",
+   "n_frames_used": 56,
+   "time_sec": 1.99
+  },
+  {
+   "n_frames": 59,
+   "ate_se3": {
+    "rmse": 0.5045054367514384,
+    "mean": 0.474421759323621,
+    "max": 0.9116206508215893,
+    "std": 0.1716092363249713,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 0.4605227738261334,
+    "mean": 0.4324819112971383,
+    "max": 0.7769568987599327,
+    "std": 0.15824228768976442,
+    "scale": 10.530051096402579
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.4667667083056638,
+    "trans_mm_max": 0.9142428652067282,
+    "trans_mm_rmse": 0.4914539840678794,
+    "rot_deg_mean": 0.14403021721766385,
+    "rot_deg_max": 0.31962611273452485
+   },
+   "rpe_5": {
+    "trans_mm_mean": 0.5893937627539552,
+    "trans_mm_max": 0.959220491985668,
+    "trans_mm_rmse": 0.6261155724313625,
+    "rot_deg_mean": 0.48405287372391814,
+    "rot_deg_max": 0.920861639700241
+   },
+   "rpe_10": {
+    "trans_mm_mean": 0.5951565044305248,
+    "trans_mm_max": 1.0931063462274635,
+    "trans_mm_rmse": 0.639413255136239,
+    "rot_deg_mean": 0.5529212072392746,
+    "rot_deg_max": 1.299201408583492
+   },
+   "reference_fraction": 0.5537894298998162,
+   "motion_type": "orbital",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00000478",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00000478",
+   "n_frames_used": 59,
+   "time_sec": 1.86
+  },
+  {
+   "n_frames": 60,
+   "ate_se3": {
+    "rmse": 39.48285785616312,
+    "mean": 34.58699232171035,
+    "max": 76.36575218460976,
+    "std": 19.043004663863627,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 4.56997622127913,
+    "mean": 4.279449072860968,
+    "max": 7.253202450464529,
+    "std": 1.6034332838774663,
+    "scale": 53.82938064886052
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.7748323495244809,
+    "trans_mm_max": 6.185029542256391,
+    "trans_mm_rmse": 1.3082337896484806,
+    "rot_deg_mean": 0.49349625666924274,
+    "rot_deg_max": 6.489320646785162
+   },
+   "rpe_5": {
+    "trans_mm_mean": 3.1068360420991334,
+    "trans_mm_max": 10.375547167178926,
+    "trans_mm_rmse": 3.9408305452674637,
+    "rot_deg_mean": 1.8368056142767006,
+    "rot_deg_max": 8.489616500822663
+   },
+   "rpe_10": {
+    "trans_mm_mean": 5.5769308656812555,
+    "trans_mm_max": 11.976497615182735,
+    "trans_mm_rmse": 6.402059394633321,
+    "rot_deg_mean": 3.4443263501892147,
+    "rot_deg_max": 10.288422979170573
+   },
+   "reference_fraction": 0.5647814147927097,
+   "motion_type": "insertion",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00000330",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00000330",
+   "n_frames_used": 60,
+   "time_sec": 1.91
+  },
+  {
+   "n_frames": 60,
+   "ate_se3": {
+    "rmse": 26.43863020812476,
+    "mean": 23.710171474349618,
+    "max": 44.81435640573387,
+    "std": 11.697390133653956,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 0.9422822481961245,
+    "mean": 0.8991748974669118,
+    "max": 1.3729569021075523,
+    "std": 0.2817451668279535,
+    "scale": 49.41843193400759
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.19972191656110014,
+    "trans_mm_max": 0.4674045848897759,
+    "trans_mm_rmse": 0.21963873686373991,
+    "rot_deg_mean": 0.09795311399781949,
+    "rot_deg_max": 0.21196217419933874
+   },
+   "rpe_5": {
+    "trans_mm_mean": 0.9260344328657074,
+    "trans_mm_max": 1.9690281133682221,
+    "trans_mm_rmse": 1.0025655088947316,
+    "rot_deg_mean": 0.42249920856791207,
+    "rot_deg_max": 0.8029468472217717
+   },
+   "rpe_10": {
+    "trans_mm_mean": 1.5923028786683895,
+    "trans_mm_max": 2.777689960770231,
+    "trans_mm_rmse": 1.685730516313379,
+    "rot_deg_mean": 0.692523870699364,
+    "rot_deg_max": 1.2441684525098333
+   },
+   "reference_fraction": 0.5675071292458056,
+   "motion_type": "insertion",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00001488",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00001488",
+   "n_frames_used": 60,
+   "time_sec": 1.9
+  },
+  {
+   "n_frames": 44,
+   "ate_se3": {
+    "rmse": 10.352062990932799,
+    "mean": 9.267130210869553,
+    "max": 17.209465100883904,
+    "std": 4.61362176852735,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 1.6128493909679298,
+    "mean": 1.5150337311644788,
+    "max": 3.2137847569926636,
+    "std": 0.5531328514737314,
+    "scale": 23.890282236898557
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.6329854711897565,
+    "trans_mm_max": 1.7227627165393709,
+    "trans_mm_rmse": 0.7340074538884745,
+    "rot_deg_mean": 2.912592261374955,
+    "rot_deg_max": 7.894610071398239
+   },
+   "rpe_5": {
+    "trans_mm_mean": 1.8004400275345671,
+    "trans_mm_max": 3.6165260195844797,
+    "trans_mm_rmse": 2.0014140441969994,
+    "rot_deg_mean": 9.958800565426484,
+    "rot_deg_max": 18.97252118753283
+   },
+   "rpe_10": {
+    "trans_mm_mean": 2.714030578376802,
+    "trans_mm_max": 6.071560698250868,
+    "trans_mm_rmse": 2.9608820906035485,
+    "rot_deg_mean": 15.586768783462075,
+    "rot_deg_max": 27.276502220252915
+   },
+   "reference_fraction": 0.5687623736292399,
+   "motion_type": "insertion",
+   "scene_kind": "organ",
+   "seq_id": "seq_00002099",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00002099",
+   "n_frames_used": 44,
+   "time_sec": 1.36
+  },
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 29.85562442656791,
+    "mean": 28.675745415207025,
+    "max": 49.56359488466944,
+    "std": 8.310230729799967,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 2.4300014865956285,
+    "mean": 2.1626036259780834,
+    "max": 4.212966702037278,
+    "std": 1.10817542914622,
+    "scale": 50.13723002573604
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.3885182129441001,
+    "trans_mm_max": 1.1832548476107438,
+    "trans_mm_rmse": 0.44608029631677887,
+    "rot_deg_mean": 0.1526337893499853,
+    "rot_deg_max": 0.522485316584665
+   },
+   "rpe_5": {
+    "trans_mm_mean": 1.776991334734264,
+    "trans_mm_max": 3.3339559327382466,
+    "trans_mm_rmse": 1.9379419928031762,
+    "rot_deg_mean": 0.632322167431984,
+    "rot_deg_max": 1.1897404453726808
+   },
+   "rpe_10": {
+    "trans_mm_mean": 3.157317965225338,
+    "trans_mm_max": 5.3067849664657505,
+    "trans_mm_rmse": 3.3815975817368518,
+    "rot_deg_mean": 1.025907019209914,
+    "rot_deg_max": 1.7575263619481776
+   },
+   "reference_fraction": 0.576599064593464,
+   "motion_type": "free",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00001211",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00001211",
+   "n_frames_used": 64,
+   "time_sec": 1.92
+  },
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 57.79673921008239,
+    "mean": 51.77119401428169,
+    "max": 98.10880832641543,
+    "std": 25.694484498698916,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 1.064397676038412,
+    "mean": 1.0015772502014453,
+    "max": 1.7646471733175184,
+    "std": 0.36025744216446576,
+    "scale": 51.914948726549085
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.20528135909721132,
+    "trans_mm_max": 0.641090994638359,
+    "trans_mm_rmse": 0.24854485456919184,
+    "rot_deg_mean": 0.06571175323634948,
+    "rot_deg_max": 0.25555706274701023
+   },
+   "rpe_5": {
+    "trans_mm_mean": 0.9041803311598183,
+    "trans_mm_max": 2.584317179388111,
+    "trans_mm_rmse": 1.0349466309518136,
+    "rot_deg_mean": 0.2522492558241124,
+    "rot_deg_max": 0.9235046333364381
+   },
+   "rpe_10": {
+    "trans_mm_mean": 1.5452129764544196,
+    "trans_mm_max": 2.979009565311474,
+    "trans_mm_rmse": 1.6795831747285266,
+    "rot_deg_mean": 0.35890771649754705,
+    "rot_deg_max": 0.9589198681426029
+   },
+   "reference_fraction": 0.5783170925057297,
+   "motion_type": "insertion",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00001039",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00001039",
+   "n_frames_used": 64,
+   "time_sec": 1.78
+  },
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 34.81202142961616,
+    "mean": 32.15077008940496,
+    "max": 62.000141934150555,
+    "std": 13.349337761637397,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 21.81011262549969,
+    "mean": 19.70843059082261,
+    "max": 37.25525041578326,
+    "std": 9.341240623370568,
+    "scale": 39.617278672065765
+   },
+   "rpe_1": {
+    "trans_mm_mean": 3.4261570441526605,
+    "trans_mm_max": 13.20656280080613,
+    "trans_mm_rmse": 4.810503101943685,
+    "rot_deg_mean": 1.8361597614991378,
+    "rot_deg_max": 8.953689290757765
+   },
+   "rpe_5": {
+    "trans_mm_mean": 14.71758132126702,
+    "trans_mm_max": 37.44049548796796,
+    "trans_mm_rmse": 18.353139158992445,
+    "rot_deg_mean": 5.843006198439727,
+    "rot_deg_max": 18.266168694969036
+   },
+   "rpe_10": {
+    "trans_mm_mean": 24.884058824603535,
+    "trans_mm_max": 63.297031305647415,
+    "trans_mm_rmse": 29.575888306079896,
+    "rot_deg_mean": 8.111321058879883,
+    "rot_deg_max": 19.226897306110292
+   },
+   "reference_fraction": 0.5889875338512519,
+   "motion_type": "free",
+   "scene_kind": "organ",
+   "seq_id": "seq_00000774",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00000774",
+   "n_frames_used": 64,
+   "time_sec": 1.91
+  },
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 34.925128948221044,
+    "mean": 31.820082864584045,
+    "max": 51.51731224190262,
+    "std": 14.396074414258637,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 23.950150847927723,
+    "mean": 21.12836489518883,
+    "max": 42.835553142844276,
+    "std": 11.278382973380772,
+    "scale": 79.97364640144919
+   },
+   "rpe_1": {
+    "trans_mm_mean": 2.8906875120134794,
+    "trans_mm_max": 8.891833914709302,
+    "trans_mm_rmse": 3.466808890468287,
+    "rot_deg_mean": 1.2996654398701357,
+    "rot_deg_max": 4.096370178820256
+   },
+   "rpe_5": {
+    "trans_mm_mean": 12.954401323196935,
+    "trans_mm_max": 29.042459763184382,
+    "trans_mm_rmse": 14.64194390602784,
+    "rot_deg_mean": 5.87696800875718,
+    "rot_deg_max": 13.859024393295616
+   },
+   "rpe_10": {
+    "trans_mm_mean": 22.81474627573037,
+    "trans_mm_max": 51.13641304047395,
+    "trans_mm_rmse": 25.66448580719123,
+    "rot_deg_mean": 10.47652152787871,
+    "rot_deg_max": 22.164499342864918
+   },
+   "reference_fraction": 0.5982265444375048,
+   "motion_type": "free",
+   "scene_kind": "organ",
+   "seq_id": "seq_00002279",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00002279",
+   "n_frames_used": 64,
+   "time_sec": 1.94
+  },
+  {
+   "n_frames": 50,
+   "ate_se3": {
+    "rmse": 75.87390891823549,
+    "mean": 70.42629451595143,
+    "max": 133.268709909312,
+    "std": 28.23095987183512,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 26.746655822420497,
+    "mean": 23.83682275081799,
+    "max": 63.47666348949373,
+    "std": 12.132167111819154,
+    "scale": 138.74216362392806
+   },
+   "rpe_1": {
+    "trans_mm_mean": 6.5392217485753275,
+    "trans_mm_max": 25.896652403067932,
+    "trans_mm_rmse": 7.914034713802929,
+    "rot_deg_mean": 3.422543277900958,
+    "rot_deg_max": 14.15993995489365
+   },
+   "rpe_5": {
+    "trans_mm_mean": 23.64410374609919,
+    "trans_mm_max": 53.276318095173714,
+    "trans_mm_rmse": 26.85842217297739,
+    "rot_deg_mean": 15.549131943050595,
+    "rot_deg_max": 38.890477621078006
+   },
+   "rpe_10": {
+    "trans_mm_mean": 36.77447531876535,
+    "trans_mm_max": 77.51211645166799,
+    "trans_mm_rmse": 39.71691103855466,
+    "rot_deg_mean": 28.280988565091082,
+    "rot_deg_max": 51.8190010306032
+   },
+   "reference_fraction": 0.6150135439366492,
+   "motion_type": "free",
+   "scene_kind": "organ",
+   "seq_id": "seq_00002168",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00002168",
+   "n_frames_used": 50,
+   "time_sec": 1.65
+  },
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 34.99051777842574,
+    "mean": 31.061221208063337,
+    "max": 63.07199230679252,
+    "std": 16.110148089514386,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 1.0132700701824957,
+    "mean": 0.9008041833879101,
+    "max": 1.6255400090698582,
+    "std": 0.4639698894524088,
+    "scale": 54.755416052973146
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.17668855778361636,
+    "trans_mm_max": 0.49486374722549203,
+    "trans_mm_rmse": 0.1972149533181595,
+    "rot_deg_mean": 0.06159786075036591,
+    "rot_deg_max": 0.21736176358100248
+   },
+   "rpe_5": {
+    "trans_mm_mean": 0.7831739617476982,
+    "trans_mm_max": 1.6552126122877475,
+    "trans_mm_rmse": 0.8485604568795354,
+    "rot_deg_mean": 0.263670496148026,
+    "rot_deg_max": 0.656495246273677
+   },
+   "rpe_10": {
+    "trans_mm_mean": 1.3538409225500756,
+    "trans_mm_max": 2.6793793420716154,
+    "trans_mm_rmse": 1.4495304951207382,
+    "rot_deg_mean": 0.46647278728009645,
+    "rot_deg_max": 1.0323294387888748
+   },
+   "reference_fraction": 0.6174760505334654,
+   "motion_type": "insertion",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00000206",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00000206",
+   "n_frames_used": 64,
+   "time_sec": 1.96
+  },
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 0.23159003505805018,
+    "mean": 0.2109091943299454,
+    "max": 0.5193606480843443,
+    "std": 0.09566219778618007,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 0.23040078378078357,
+    "mean": 0.20998936805241358,
+    "max": 0.49919912973823355,
+    "std": 0.09481026564537917,
+    "scale": 2.064038836313377
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.23491861660920116,
+    "trans_mm_max": 0.4429666016705806,
+    "trans_mm_rmse": 0.25107803241903004,
+    "rot_deg_mean": 0.28977147819839777,
+    "rot_deg_max": 3.72717698046711
+   },
+   "rpe_5": {
+    "trans_mm_mean": 0.3075116328963554,
+    "trans_mm_max": 0.5886727291669873,
+    "trans_mm_rmse": 0.33388589895814885,
+    "rot_deg_mean": 1.1544161502227497,
+    "rot_deg_max": 7.469485353575283
+   },
+   "rpe_10": {
+    "trans_mm_mean": 0.3139259523970481,
+    "trans_mm_max": 0.7866750631529126,
+    "trans_mm_rmse": 0.3392473527410273,
+    "rot_deg_mean": 2.001391074428097,
+    "rot_deg_max": 8.535737200366155
+   },
+   "reference_fraction": 0.6201739819018873,
+   "motion_type": "orbital",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00002222",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00002222",
+   "n_frames_used": 64,
+   "time_sec": 1.92
+  },
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 20.098026436640865,
+    "mean": 18.015845756712324,
+    "max": 33.10230612121316,
+    "std": 8.908421202338024,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 1.4479749381179692,
+    "mean": 1.1895577247747045,
+    "max": 3.5471561799268922,
+    "std": 0.8255809111447314,
+    "scale": 56.53399283692083
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.2592979881502636,
+    "trans_mm_max": 2.327303920156606,
+    "trans_mm_rmse": 0.4394592605573594,
+    "rot_deg_mean": 0.16950199633306604,
+    "rot_deg_max": 2.2535895517325275
+   },
+   "rpe_5": {
+    "trans_mm_mean": 0.9795948670589577,
+    "trans_mm_max": 4.83812976061843,
+    "trans_mm_rmse": 1.4029205691138564,
+    "rot_deg_mean": 0.5879070830001731,
+    "rot_deg_max": 2.4639550719800427
+   },
+   "rpe_10": {
+    "trans_mm_mean": 1.6778378463598702,
+    "trans_mm_max": 5.168060372304851,
+    "trans_mm_rmse": 2.1685457333654226,
+    "rot_deg_mean": 1.0120355281176958,
+    "rot_deg_max": 2.5644621308091105
+   },
+   "reference_fraction": 0.6292299257674314,
+   "motion_type": "insertion",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00001567",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00001567",
+   "n_frames_used": 64,
+   "time_sec": 2.0
+  },
+  {
+   "n_frames": 41,
+   "ate_se3": {
+    "rmse": 20.760097059678742,
+    "mean": 18.213533158757073,
+    "max": 39.10763323859625,
+    "std": 9.962371193753953,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 0.5064158751943174,
+    "mean": 0.4815706227251557,
+    "max": 0.890133397994927,
+    "std": 0.1566741011684198,
+    "scale": 63.93915062211205
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.16517681708133097,
+    "trans_mm_max": 0.41268156898457625,
+    "trans_mm_rmse": 0.18126769953206576,
+    "rot_deg_mean": 0.08581683870683357,
+    "rot_deg_max": 0.20582568098270504
+   },
+   "rpe_5": {
+    "trans_mm_mean": 0.6259852955680537,
+    "trans_mm_max": 1.115331828199791,
+    "trans_mm_rmse": 0.6668198188782513,
+    "rot_deg_mean": 0.37669861497663404,
+    "rot_deg_max": 0.7534699637062837
+   },
+   "rpe_10": {
+    "trans_mm_mean": 1.0008475493955349,
+    "trans_mm_max": 1.5593743199111045,
+    "trans_mm_rmse": 1.057054693151103,
+    "rot_deg_mean": 0.7205850326407566,
+    "rot_deg_max": 1.2717368364393349
+   },
+   "reference_fraction": 0.6405001831054687,
+   "motion_type": "insertion",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00002023",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00002023",
+   "n_frames_used": 41,
+   "time_sec": 1.18
+  },
+  {
+   "n_frames": 63,
+   "ate_se3": {
+    "rmse": 23.02324877356246,
+    "mean": 20.90322761028758,
+    "max": 50.43128737421067,
+    "std": 9.65013261887402,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 11.921136404966749,
+    "mean": 11.054176407121805,
+    "max": 19.1760895110281,
+    "std": 4.463034522167084,
+    "scale": 76.13092263989606
+   },
+   "rpe_1": {
+    "trans_mm_mean": 1.9538705727510008,
+    "trans_mm_max": 5.3076365360804205,
+    "trans_mm_rmse": 2.3099790528671607,
+    "rot_deg_mean": 1.5569504222134785,
+    "rot_deg_max": 4.909445237174374
+   },
+   "rpe_5": {
+    "trans_mm_mean": 8.711319041386886,
+    "trans_mm_max": 19.155748883426906,
+    "trans_mm_rmse": 9.782120669286211,
+    "rot_deg_mean": 6.55211536536536,
+    "rot_deg_max": 14.912744438059754
+   },
+   "rpe_10": {
+    "trans_mm_mean": 14.61550473650341,
+    "trans_mm_max": 28.32399097959785,
+    "trans_mm_rmse": 16.17980428912451,
+    "rot_deg_mean": 10.631019807735777,
+    "rot_deg_max": 21.59142972983009
+   },
+   "reference_fraction": 0.6449360505260155,
+   "motion_type": "free",
+   "scene_kind": "organ",
+   "seq_id": "seq_00000334",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00000334",
+   "n_frames_used": 63,
+   "time_sec": 1.85
+  },
+  {
+   "n_frames": 47,
+   "ate_se3": {
+    "rmse": 12.88877206198715,
+    "mean": 11.558525489914746,
+    "max": 22.70729608412916,
+    "std": 5.702712842573395,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 3.857980779103572,
+    "mean": 3.1710651250837043,
+    "max": 7.139444237315661,
+    "std": 2.1973533317176086,
+    "scale": 61.04251353385448
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.947797294474513,
+    "trans_mm_max": 2.747570475105984,
+    "trans_mm_rmse": 1.1272786726540724,
+    "rot_deg_mean": 1.047397954123733,
+    "rot_deg_max": 5.512419431599224
+   },
+   "rpe_5": {
+    "trans_mm_mean": 3.784726399283033,
+    "trans_mm_max": 7.545009733967284,
+    "trans_mm_rmse": 4.368214412033935,
+    "rot_deg_mean": 4.244544778181675,
+    "rot_deg_max": 7.936609982168449
+   },
+   "rpe_10": {
+    "trans_mm_mean": 6.333573150806252,
+    "trans_mm_max": 11.242420863132521,
+    "trans_mm_rmse": 7.044013369973927,
+    "rot_deg_mean": 7.14914997092105,
+    "rot_deg_max": 13.569717192965452
+   },
+   "reference_fraction": 0.6581948610539198,
+   "motion_type": "insertion",
+   "scene_kind": "organ",
+   "seq_id": "seq_00002242",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00002242",
+   "n_frames_used": 47,
+   "time_sec": 1.38
+  },
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 0.10936080327119216,
+    "mean": 0.10188627598102096,
+    "max": 0.2262600674806025,
+    "std": 0.039736281391690706,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 0.10817645461352392,
+    "mean": 0.10122518338014724,
+    "max": 0.21823562631008933,
+    "std": 0.03815242564251142,
+    "scale": 2.4921746846719843
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.11598092224306722,
+    "trans_mm_max": 0.275702694060206,
+    "trans_mm_rmse": 0.12803874433350773,
+    "rot_deg_mean": 0.1132796098434893,
+    "rot_deg_max": 0.4503427716081708
+   },
+   "rpe_5": {
+    "trans_mm_mean": 0.14185668536943227,
+    "trans_mm_max": 0.27684817180869814,
+    "trans_mm_rmse": 0.15335419158216063,
+    "rot_deg_mean": 0.42367903040145743,
+    "rot_deg_max": 1.4599253484254349
+   },
+   "rpe_10": {
+    "trans_mm_mean": 0.14931057010174575,
+    "trans_mm_max": 0.26885503650863357,
+    "trans_mm_rmse": 0.15746108228738415,
+    "rot_deg_mean": 0.42675709540916124,
+    "rot_deg_max": 1.3468759107136232
+   },
+   "reference_fraction": 0.6644694172754064,
+   "motion_type": "orbital",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00000753",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00000753",
+   "n_frames_used": 64,
+   "time_sec": 2.1
+  },
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 0.08060100669693675,
+    "mean": 0.07087616474300956,
+    "max": 0.18173883043161715,
+    "std": 0.03838087481912587,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 0.08060100669693675,
+    "mean": 0.07087616474300956,
+    "max": 0.18173883043161715,
+    "std": 0.03838087481912587,
+    "scale": 1.0
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.007162937805061167,
+    "trans_mm_max": 0.01826431252217544,
+    "trans_mm_rmse": 0.008433953192014993,
+    "rot_deg_mean": 0.22923089615136857,
+    "rot_deg_max": 0.6713807424898691
+   },
+   "rpe_5": {
+    "trans_mm_mean": 0.03383471869826565,
+    "trans_mm_max": 0.06283771818474468,
+    "trans_mm_rmse": 0.03717798608329316,
+    "rot_deg_mean": 1.0480443464530342,
+    "rot_deg_max": 2.2078850654983775
+   },
+   "rpe_10": {
+    "trans_mm_mean": 0.0628936088843137,
+    "trans_mm_max": 0.10942491137826132,
+    "trans_mm_rmse": 0.06881484066442428,
+    "rot_deg_mean": 1.927163077845444,
+    "rot_deg_max": 3.8581515891831986
+   },
+   "reference_fraction": 0.6723979432576479,
+   "motion_type": "orbital",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00001690",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00001690",
+   "n_frames_used": 64,
+   "time_sec": 2.01
+  },
+  {
+   "n_frames": 55,
+   "ate_se3": {
+    "rmse": 70.92825893187793,
+    "mean": 62.12186665995691,
+    "max": 128.28326539062155,
+    "std": 34.22998097852312,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 34.239999049474356,
+    "mean": 29.127249334536266,
+    "max": 80.63644783344932,
+    "std": 17.999468911936294,
+    "scale": 78.01612086693802
+   },
+   "rpe_1": {
+    "trans_mm_mean": 3.8532165250188823,
+    "trans_mm_max": 7.6787045985607465,
+    "trans_mm_rmse": 4.192181713922025,
+    "rot_deg_mean": 0.3917142228834115,
+    "rot_deg_max": 1.4264005512992681
+   },
+   "rpe_5": {
+    "trans_mm_mean": 17.9150571276051,
+    "trans_mm_max": 27.573567850972335,
+    "trans_mm_rmse": 19.313109183859776,
+    "rot_deg_mean": 1.7292368401975056,
+    "rot_deg_max": 4.720488831378997
+   },
+   "rpe_10": {
+    "trans_mm_mean": 34.09747734179325,
+    "trans_mm_max": 54.75021553484175,
+    "trans_mm_rmse": 36.55446296371484,
+    "rot_deg_mean": 3.129103149355956,
+    "rot_deg_max": 7.587715738274239
+   },
+   "reference_fraction": 0.6763553688441893,
+   "motion_type": "free",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00001088",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00001088",
+   "n_frames_used": 55,
+   "time_sec": 1.81
+  },
+  {
+   "n_frames": 42,
+   "ate_se3": {
+    "rmse": 29.771208185797743,
+    "mean": 26.270311660118615,
+    "max": 56.04102232609525,
+    "std": 14.006982620191483,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 1.3608705473852505,
+    "mean": 1.218731455236079,
+    "max": 2.2276413069409053,
+    "std": 0.6055264542187904,
+    "scale": 46.992545704925604
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.31729807828933504,
+    "trans_mm_max": 0.8023720289507884,
+    "trans_mm_rmse": 0.3700718832414256,
+    "rot_deg_mean": 0.14353024929219152,
+    "rot_deg_max": 0.45635702369171943
+   },
+   "rpe_5": {
+    "trans_mm_mean": 1.4576344685494718,
+    "trans_mm_max": 3.4116746643535754,
+    "trans_mm_rmse": 1.6740635511824251,
+    "rot_deg_mean": 0.628038922016854,
+    "rot_deg_max": 1.8874954862222244
+   },
+   "rpe_10": {
+    "trans_mm_mean": 2.4035934404987263,
+    "trans_mm_max": 4.580153669146472,
+    "trans_mm_rmse": 2.688637911098756,
+    "rot_deg_mean": 1.0493441534968402,
+    "rot_deg_max": 2.5101270502284008
+   },
+   "reference_fraction": 0.6820394949666725,
+   "motion_type": "insertion",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00000251",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00000251",
+   "n_frames_used": 42,
+   "time_sec": 1.34
+  },
+  {
+   "n_frames": 42,
+   "ate_se3": {
+    "rmse": 6.698079982135672,
+    "mean": 5.804032259288575,
+    "max": 15.135570229305408,
+    "std": 3.34327458941442,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 1.1471194834372063,
+    "mean": 1.0687477590099375,
+    "max": 2.188457835163303,
+    "std": 0.41672693324583654,
+    "scale": 65.51303342773504
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.2726172079110349,
+    "trans_mm_max": 0.44183606404479603,
+    "trans_mm_rmse": 0.2906149248985229,
+    "rot_deg_mean": 0.1466445195693493,
+    "rot_deg_max": 0.2967521794935447
+   },
+   "rpe_5": {
+    "trans_mm_mean": 1.112803366955571,
+    "trans_mm_max": 1.6373731722519076,
+    "trans_mm_rmse": 1.156768151124132,
+    "rot_deg_mean": 0.670909452438047,
+    "rot_deg_max": 1.3060896324290021
+   },
+   "rpe_10": {
+    "trans_mm_mean": 1.7128457433195876,
+    "trans_mm_max": 2.779012621299147,
+    "trans_mm_rmse": 1.7591400139858286,
+    "rot_deg_mean": 1.1603307008457144,
+    "rot_deg_max": 2.211402963051393
+   },
+   "reference_fraction": 0.6860250055375683,
+   "motion_type": "free",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00001416",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00001416",
+   "n_frames_used": 42,
+   "time_sec": 1.16
+  },
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 29.830962825227644,
+    "mean": 29.38661579198304,
+    "max": 37.78040898939173,
+    "std": 5.129635013769154,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 23.009543366713817,
+    "mean": 22.34884030546081,
+    "max": 33.10487377985119,
+    "std": 5.474342238634177,
+    "scale": 83.98715453905056
+   },
+   "rpe_1": {
+    "trans_mm_mean": 2.941104992784094,
+    "trans_mm_max": 9.880017302741978,
+    "trans_mm_rmse": 3.515835033612628,
+    "rot_deg_mean": 3.311217019612193,
+    "rot_deg_max": 15.480627637531184
+   },
+   "rpe_5": {
+    "trans_mm_mean": 11.648016428465061,
+    "trans_mm_max": 24.73545885269276,
+    "trans_mm_rmse": 12.717665730361736,
+    "rot_deg_mean": 14.565033974398425,
+    "rot_deg_max": 38.60398727301128
+   },
+   "rpe_10": {
+    "trans_mm_mean": 21.52563561867839,
+    "trans_mm_max": 34.70176407813762,
+    "trans_mm_rmse": 22.25478574911256,
+    "rot_deg_mean": 25.926222766531946,
+    "rot_deg_max": 70.2005360953141
+   },
+   "reference_fraction": 0.692867975113736,
+   "motion_type": "free",
+   "scene_kind": "organ",
+   "seq_id": "seq_00002091",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00002091",
+   "n_frames_used": 64,
+   "time_sec": 1.78
+  },
+  {
+   "n_frames": 62,
+   "ate_se3": {
+    "rmse": 45.209430894255355,
+    "mean": 40.122871973460995,
+    "max": 82.65504487600816,
+    "std": 20.83381353434145,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 1.1354419106407931,
+    "mean": 1.033820396498548,
+    "max": 2.002073838000063,
+    "std": 0.4695143450664736,
+    "scale": 58.019462776423204
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.2611964959644107,
+    "trans_mm_max": 0.5816828978142301,
+    "trans_mm_rmse": 0.2986654403400363,
+    "rot_deg_mean": 0.15518358242333607,
+    "rot_deg_max": 0.4444543085938157
+   },
+   "rpe_5": {
+    "trans_mm_mean": 1.0404434724215823,
+    "trans_mm_max": 2.3624658053533754,
+    "trans_mm_rmse": 1.1675627158508004,
+    "rot_deg_mean": 0.6015031144493921,
+    "rot_deg_max": 1.8644164587639818
+   },
+   "rpe_10": {
+    "trans_mm_mean": 1.6860406697749843,
+    "trans_mm_max": 3.842205998150793,
+    "trans_mm_rmse": 1.9175155674808644,
+    "rot_deg_mean": 0.8081719420871585,
+    "rot_deg_max": 2.278727684025683
+   },
+   "reference_fraction": 0.6978961709696945,
+   "motion_type": "insertion",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00000668",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00000668",
+   "n_frames_used": 62,
+   "time_sec": 1.86
+  },
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 23.44642256518309,
+    "mean": 20.523420697966458,
+    "max": 45.08122422877052,
+    "std": 11.336839681296066,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 1.171734380230383,
+    "mean": 1.02268297785335,
+    "max": 2.102954803036414,
+    "std": 0.5719099445042759,
+    "scale": 66.12601133890284
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.20591232999424017,
+    "trans_mm_max": 0.8236431548914591,
+    "trans_mm_rmse": 0.251355207784716,
+    "rot_deg_mean": 0.07237844342817226,
+    "rot_deg_max": 0.30454005283500285
+   },
+   "rpe_5": {
+    "trans_mm_mean": 0.9463904401116857,
+    "trans_mm_max": 2.5947414295866316,
+    "trans_mm_rmse": 1.0891859121933813,
+    "rot_deg_mean": 0.3204877722779573,
+    "rot_deg_max": 1.0078017381900366
+   },
+   "rpe_10": {
+    "trans_mm_mean": 1.6107345522462864,
+    "trans_mm_max": 3.5605014572279283,
+    "trans_mm_rmse": 1.7809244670111297,
+    "rot_deg_mean": 0.5545611118428668,
+    "rot_deg_max": 1.3956467762655407
+   },
+   "reference_fraction": 0.7006592506586118,
+   "motion_type": "insertion",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00000136",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00000136",
+   "n_frames_used": 64,
+   "time_sec": 1.97
+  },
+  {
+   "n_frames": 61,
+   "ate_se3": {
+    "rmse": 17.173682782406456,
+    "mean": 15.048375429642515,
+    "max": 32.3012814855469,
+    "std": 8.27537172816155,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 1.2507933234574613,
+    "mean": 1.095853847863245,
+    "max": 2.637967456075354,
+    "std": 0.6029828207578404,
+    "scale": 55.88983384457098
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.22361177989459294,
+    "trans_mm_max": 1.4460274767187309,
+    "trans_mm_rmse": 0.3703655715482355,
+    "rot_deg_mean": 0.1445543405547681,
+    "rot_deg_max": 1.607340694707599
+   },
+   "rpe_5": {
+    "trans_mm_mean": 0.7037544301052591,
+    "trans_mm_max": 2.426691248666495,
+    "trans_mm_rmse": 0.8738859378245135,
+    "rot_deg_mean": 0.5119395271028448,
+    "rot_deg_max": 2.777819444616726
+   },
+   "rpe_10": {
+    "trans_mm_mean": 1.2887226324416678,
+    "trans_mm_max": 2.7417763121855048,
+    "trans_mm_rmse": 1.4721550288168568,
+    "rot_deg_mean": 0.9679323629426202,
+    "rot_deg_max": 3.5697608641896252
+   },
+   "reference_fraction": 0.7208929443359374,
+   "motion_type": "insertion",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00000296",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00000296",
+   "n_frames_used": 61,
+   "time_sec": 1.87
+  },
+  {
+   "n_frames": 49,
+   "ate_se3": {
+    "rmse": 47.47892605086613,
+    "mean": 42.78285628667602,
+    "max": 81.14666980014013,
+    "std": 20.58824001456271,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 2.0786596736345078,
+    "mean": 1.82549810103017,
+    "max": 3.7742142379350154,
+    "std": 0.9941743921111443,
+    "scale": 52.26164214986411
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.38058935593201504,
+    "trans_mm_max": 0.7839377273417159,
+    "trans_mm_rmse": 0.43189505873177203,
+    "rot_deg_mean": 0.0952432377219087,
+    "rot_deg_max": 0.16637395796165252
+   },
+   "rpe_5": {
+    "trans_mm_mean": 1.831772308295522,
+    "trans_mm_max": 3.520448487747348,
+    "trans_mm_rmse": 2.0579250887347014,
+    "rot_deg_mean": 0.435474750982511,
+    "rot_deg_max": 0.6736180743652317
+   },
+   "rpe_10": {
+    "trans_mm_mean": 3.1657093626216013,
+    "trans_mm_max": 5.94026637255624,
+    "trans_mm_rmse": 3.5450883184440776,
+    "rot_deg_mean": 0.7409503568557074,
+    "rot_deg_max": 1.0996081803824433
+   },
+   "reference_fraction": 0.7406331597977439,
+   "motion_type": "insertion",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00001348",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00001348",
+   "n_frames_used": 49,
+   "time_sec": 1.39
+  },
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 0.10980991325503207,
+    "mean": 0.10249163053992283,
+    "max": 0.1838121375091413,
+    "std": 0.03941678219167097,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 0.10980991325503207,
+    "mean": 0.10249163053992283,
+    "max": 0.1838121375091413,
+    "std": 0.03941678219167097,
+    "scale": 1.0
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.006128085913322287,
+    "trans_mm_max": 0.015216812882117346,
+    "trans_mm_rmse": 0.00673383575038108,
+    "rot_deg_mean": 0.1959804744037801,
+    "rot_deg_max": 0.4857770140321721
+   },
+   "rpe_5": {
+    "trans_mm_mean": 0.03092591304531122,
+    "trans_mm_max": 0.05282818981444599,
+    "trans_mm_rmse": 0.03237922307640707,
+    "rot_deg_mean": 0.9857737544410071,
+    "rot_deg_max": 1.6790691977797765
+   },
+   "rpe_10": {
+    "trans_mm_mean": 0.06277482412925607,
+    "trans_mm_max": 0.09527129283199444,
+    "trans_mm_rmse": 0.06535119423196581,
+    "rot_deg_mean": 2.0008949126813045,
+    "rot_deg_max": 3.0115946812396044
+   },
+   "reference_fraction": 0.7664565051972891,
+   "motion_type": "orbital",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00000229",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00000229",
+   "n_frames_used": 64,
+   "time_sec": 2.08
+  },
+  {
+   "n_frames": 59,
+   "ate_se3": {
+    "rmse": 39.765412212959035,
+    "mean": 36.488385922117565,
+    "max": 89.2800936534528,
+    "std": 15.80777344426355,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 5.795163657256571,
+    "mean": 5.1779931308501,
+    "max": 12.931445903442304,
+    "std": 2.602366029454064,
+    "scale": 63.57136467941765
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.9508079648396783,
+    "trans_mm_max": 6.164407685357961,
+    "trans_mm_rmse": 1.2549062975728933,
+    "rot_deg_mean": 0.5814831807037998,
+    "rot_deg_max": 3.3074419651788354
+   },
+   "rpe_5": {
+    "trans_mm_mean": 4.00203833197892,
+    "trans_mm_max": 11.09937844367601,
+    "trans_mm_rmse": 4.526944131512637,
+    "rot_deg_mean": 2.6564339482726522,
+    "rot_deg_max": 11.082491567628741
+   },
+   "rpe_10": {
+    "trans_mm_mean": 6.491788710633496,
+    "trans_mm_max": 11.647733007127737,
+    "trans_mm_rmse": 6.957619489185086,
+    "rot_deg_mean": 4.523744166279234,
+    "rot_deg_max": 14.462512543052732
+   },
+   "reference_fraction": 0.7973483754267686,
+   "motion_type": "free",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00001816",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00001816",
+   "n_frames_used": 59,
+   "time_sec": 1.9
+  },
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 0.007354200860657084,
+    "mean": 0.006531981495452949,
+    "max": 0.015109803551559262,
+    "std": 0.003378977366297331,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 0.007354200860657084,
+    "mean": 0.006531981495452949,
+    "max": 0.015109803551559262,
+    "std": 0.003378977366297331,
+    "scale": 1.0
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.0031125478545503756,
+    "trans_mm_max": 0.009924230251631664,
+    "trans_mm_rmse": 0.0036656475509576096,
+    "rot_deg_mean": 0.11664437867472298,
+    "rot_deg_max": 0.42099516139923343
+   },
+   "rpe_5": {
+    "trans_mm_mean": 0.0058353897637491246,
+    "trans_mm_max": 0.014068065029510671,
+    "trans_mm_rmse": 0.006395076146631435,
+    "rot_deg_mean": 0.2507511634110502,
+    "rot_deg_max": 0.6427702085365682
+   },
+   "rpe_10": {
+    "trans_mm_mean": 0.006429961496869903,
+    "trans_mm_max": 0.013924790103598579,
+    "trans_mm_rmse": 0.006958450930523409,
+    "rot_deg_mean": 0.23133468548110342,
+    "rot_deg_max": 0.5166268362233221
+   },
+   "reference_fraction": 0.8189980554129722,
+   "motion_type": "orbital",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00001188",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00001188",
+   "n_frames_used": 64,
+   "time_sec": 1.97
+  },
+  {
+   "n_frames": 48,
+   "ate_se3": {
+    "rmse": 0.00551713534925947,
+    "mean": 0.005192676171609326,
+    "max": 0.00867990592721459,
+    "std": 0.0018641074644046482,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 0.00551713534925947,
+    "mean": 0.005192676171609326,
+    "max": 0.00867990592721459,
+    "std": 0.0018641074644046482,
+    "scale": 1.0
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.0009827793771031953,
+    "trans_mm_max": 0.002580448431960202,
+    "trans_mm_rmse": 0.0010825096343342294,
+    "rot_deg_mean": 0.0368966510087431,
+    "rot_deg_max": 0.07019137577702096
+   },
+   "rpe_5": {
+    "trans_mm_mean": 0.0036188916402744046,
+    "trans_mm_max": 0.007678123839534161,
+    "trans_mm_rmse": 0.004134649174658286,
+    "rot_deg_mean": 0.1438475747489721,
+    "rot_deg_max": 0.2711717501756046
+   },
+   "rpe_10": {
+    "trans_mm_mean": 0.0056858440886331865,
+    "trans_mm_max": 0.010122366266381742,
+    "trans_mm_rmse": 0.006222682838641893,
+    "rot_deg_mean": 0.19289740477829037,
+    "rot_deg_max": 0.26907950091609545
+   },
+   "reference_fraction": 0.834241631690492,
+   "motion_type": "orbital",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00000150",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00000150",
+   "n_frames_used": 48,
+   "time_sec": 1.43
+  },
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 66.97837859381029,
+    "mean": 60.36792678300826,
+    "max": 113.03062684020333,
+    "std": 29.014076152397802,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 1.8464933810028927,
+    "mean": 1.6956454627428885,
+    "max": 3.368455444138804,
+    "std": 0.7309748769738597,
+    "scale": 48.22597378652965
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.42317349409051647,
+    "trans_mm_max": 1.8636313699016493,
+    "trans_mm_rmse": 0.544488993253223,
+    "rot_deg_mean": 0.30065737492868916,
+    "rot_deg_max": 1.4785523174480126
+   },
+   "rpe_5": {
+    "trans_mm_mean": 1.8138484458297996,
+    "trans_mm_max": 4.350678705259261,
+    "trans_mm_rmse": 2.1414207007922323,
+    "rot_deg_mean": 1.3754075532982273,
+    "rot_deg_max": 4.507184050076368
+   },
+   "rpe_10": {
+    "trans_mm_mean": 2.6985335355873357,
+    "trans_mm_max": 5.7494403237158815,
+    "trans_mm_rmse": 3.180001177272308,
+    "rot_deg_mean": 2.3973379192813535,
+    "rot_deg_max": 6.878990726708905
+   },
+   "reference_fraction": 0.8443106342577331,
+   "motion_type": "insertion",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00002002",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00002002",
+   "n_frames_used": 64,
+   "time_sec": 1.85
+  },
+  {
+   "n_frames": 48,
+   "ate_se3": {
+    "rmse": 27.162566021639275,
+    "mean": 24.460599999454757,
+    "max": 46.229516739300344,
+    "std": 11.810336174156363,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 1.8404150045941674,
+    "mean": 1.5482042607291262,
+    "max": 4.445700869808519,
+    "std": 0.9950833915785797,
+    "scale": 52.455447034787525
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.4321638712856906,
+    "trans_mm_max": 1.3646831666611996,
+    "trans_mm_rmse": 0.5166417402604687,
+    "rot_deg_mean": 0.2957553901436823,
+    "rot_deg_max": 0.9633074205809361
+   },
+   "rpe_5": {
+    "trans_mm_mean": 1.6329430534962286,
+    "trans_mm_max": 4.221041531387535,
+    "trans_mm_rmse": 1.8874454940458782,
+    "rot_deg_mean": 1.1253758915901222,
+    "rot_deg_max": 2.660771667075561
+   },
+   "rpe_10": {
+    "trans_mm_mean": 2.3675049888480157,
+    "trans_mm_max": 5.121874256721712,
+    "trans_mm_rmse": 2.7475293923824164,
+    "rot_deg_mean": 1.6967369531703043,
+    "rot_deg_max": 3.493729097778273
+   },
+   "reference_fraction": 0.8745366804544349,
+   "motion_type": "insertion",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00000873",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00000873",
+   "n_frames_used": 48,
+   "time_sec": 1.27
+  },
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 35.13830818839571,
+    "mean": 31.14032750453795,
+    "max": 63.70727700121406,
+    "std": 16.2782279518624,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 0.8999371587525934,
+    "mean": 0.7881787382697066,
+    "max": 1.834005772000816,
+    "std": 0.43435143172696444,
+    "scale": 53.39444764495312
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.2792816777719333,
+    "trans_mm_max": 0.7147120118367536,
+    "trans_mm_rmse": 0.3193085322411848,
+    "rot_deg_mean": 0.24470838023352381,
+    "rot_deg_max": 0.8334562973698311
+   },
+   "rpe_5": {
+    "trans_mm_mean": 0.9675870003038011,
+    "trans_mm_max": 2.111951011080035,
+    "trans_mm_rmse": 1.058157982578123,
+    "rot_deg_mean": 0.9143092690209021,
+    "rot_deg_max": 2.2216980914094244
+   },
+   "rpe_10": {
+    "trans_mm_mean": 1.662858896328284,
+    "trans_mm_max": 3.351481484567185,
+    "trans_mm_rmse": 1.8047946449672987,
+    "rot_deg_mean": 1.7428387289370022,
+    "rot_deg_max": 3.686379854853705
+   },
+   "reference_fraction": 0.8935103093929547,
+   "motion_type": "insertion",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00001081",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00001081",
+   "n_frames_used": 64,
+   "time_sec": 1.86
+  },
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 5.93931261648753,
+    "mean": 5.138756321708609,
+    "max": 11.795146759858653,
+    "std": 2.978022468428967,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 0.27947351411573024,
+    "mean": 0.2605990496984124,
+    "max": 0.5206430323964152,
+    "std": 0.10096326256851873,
+    "scale": 58.05470423309593
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.07147422373882274,
+    "trans_mm_max": 0.17302341931923956,
+    "trans_mm_rmse": 0.07988296688470857,
+    "rot_deg_mean": 0.07245081222680315,
+    "rot_deg_max": 0.17271281363077842
+   },
+   "rpe_5": {
+    "trans_mm_mean": 0.2579965580235634,
+    "trans_mm_max": 0.5804805885614716,
+    "trans_mm_rmse": 0.28877939674207703,
+    "rot_deg_mean": 0.2396941329630603,
+    "rot_deg_max": 0.49451331629925677
+   },
+   "rpe_10": {
+    "trans_mm_mean": 0.40919518451389125,
+    "trans_mm_max": 0.99509054953748,
+    "trans_mm_rmse": 0.4545839732083765,
+    "rot_deg_mean": 0.3825585640443289,
+    "rot_deg_max": 0.6350861082814039
+   },
+   "reference_fraction": 0.9073061117793845,
+   "motion_type": "insertion",
+   "scene_kind": "organ",
+   "seq_id": "seq_00001829",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00001829",
+   "n_frames_used": 64,
+   "time_sec": 1.9
+  },
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 0.024932383510116597,
+    "mean": 0.02318456369598986,
+    "max": 0.04645952535289133,
+    "std": 0.009170591786909009,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 0.024932383510116597,
+    "mean": 0.02318456369598986,
+    "max": 0.04645952535289133,
+    "std": 0.009170591786909009,
+    "scale": 1.0
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.0020253586224144335,
+    "trans_mm_max": 0.005549617880674806,
+    "trans_mm_rmse": 0.002332870556503185,
+    "rot_deg_mean": 0.04577978067387155,
+    "rot_deg_max": 0.12760086985932972
+   },
+   "rpe_5": {
+    "trans_mm_mean": 0.009773393326596734,
+    "trans_mm_max": 0.018105274786279407,
+    "trans_mm_rmse": 0.010235336783858011,
+    "rot_deg_mean": 0.211511540354591,
+    "rot_deg_max": 0.4210901752656855
+   },
+   "rpe_10": {
+    "trans_mm_mean": 0.018554119244158215,
+    "trans_mm_max": 0.03035312343676905,
+    "trans_mm_rmse": 0.019056694364831487,
+    "rot_deg_mean": 0.40002241982227715,
+    "rot_deg_max": 0.69734580226902
+   },
+   "reference_fraction": 0.9179493778875759,
+   "motion_type": "orbital",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00001218",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00001218",
+   "n_frames_used": 64,
+   "time_sec": 1.91
+  },
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 25.741781579288954,
+    "mean": 24.943139506860362,
+    "max": 41.22464282795434,
+    "std": 6.362319578355216,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 10.692799169344338,
+    "mean": 9.998776002867547,
+    "max": 18.70790550304014,
+    "std": 3.7895161327550806,
+    "scale": 51.89367465928842
+   },
+   "rpe_1": {
+    "trans_mm_mean": 1.253486422098659,
+    "trans_mm_max": 6.261854413720029,
+    "trans_mm_rmse": 1.7219227221583822,
+    "rot_deg_mean": 0.7128935522425321,
+    "rot_deg_max": 3.7791092294150816
+   },
+   "rpe_5": {
+    "trans_mm_mean": 5.817919707282021,
+    "trans_mm_max": 20.213482146952693,
+    "trans_mm_rmse": 7.456878953889886,
+    "rot_deg_mean": 3.4009601579719138,
+    "rot_deg_max": 11.537768200459741
+   },
+   "rpe_10": {
+    "trans_mm_mean": 10.216307278844473,
+    "trans_mm_max": 31.21309079789531,
+    "trans_mm_rmse": 12.715666557091273,
+    "rot_deg_mean": 6.257663241739816,
+    "rot_deg_max": 18.315634838754356
+   },
+   "reference_fraction": 0.9292246181814678,
+   "motion_type": "free",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00001730",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00001730",
+   "n_frames_used": 64,
+   "time_sec": 1.99
+  },
+  {
+   "n_frames": 48,
+   "ate_se3": {
+    "rmse": 0.006941666564303264,
+    "mean": 0.0064777806861904584,
+    "max": 0.012701282088670069,
+    "std": 0.0024950134411629446,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 0.006941666564303264,
+    "mean": 0.0064777806861904584,
+    "max": 0.012701282088670069,
+    "std": 0.0024950134411629446,
+    "scale": 1.0
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.001690445680490742,
+    "trans_mm_max": 0.004417605226026605,
+    "trans_mm_rmse": 0.0020148343359586546,
+    "rot_deg_mean": 0.03433415994868371,
+    "rot_deg_max": 0.1126623945372649
+   },
+   "rpe_5": {
+    "trans_mm_mean": 0.005187034721667029,
+    "trans_mm_max": 0.011149181521682287,
+    "trans_mm_rmse": 0.005849387348355269,
+    "rot_deg_mean": 0.11571009749458291,
+    "rot_deg_max": 0.4158737232948077
+   },
+   "rpe_10": {
+    "trans_mm_mean": 0.006304018393757444,
+    "trans_mm_max": 0.011079006626366322,
+    "trans_mm_rmse": 0.006749881554571978,
+    "rot_deg_mean": 0.17858783766002204,
+    "rot_deg_max": 0.4758610091933963
+   },
+   "reference_fraction": 0.9456501192806925,
+   "motion_type": "orbital",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00001541",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00001541",
+   "n_frames_used": 48,
+   "time_sec": 1.41
+  },
+  {
+   "n_frames": 58,
+   "ate_se3": {
+    "rmse": 0.00140972430006492,
+    "mean": 0.0012833420563464872,
+    "max": 0.0028433786735884165,
+    "std": 0.0005834001787845952,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 0.00140972430006492,
+    "mean": 0.0012833420563464872,
+    "max": 0.0028433786735884165,
+    "std": 0.0005834001787845952,
+    "scale": 1.0
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.0006887449217985084,
+    "trans_mm_max": 0.0018688550895350888,
+    "trans_mm_rmse": 0.0007959500177997334,
+    "rot_deg_mean": 0.044115332366599674,
+    "rot_deg_max": 0.13127925951198277
+   },
+   "rpe_5": {
+    "trans_mm_mean": 0.002220225387081115,
+    "trans_mm_max": 0.005486746561080865,
+    "trans_mm_rmse": 0.0025235710533989737,
+    "rot_deg_mean": 0.1359672094244703,
+    "rot_deg_max": 0.3708795080979506
+   },
+   "rpe_10": {
+    "trans_mm_mean": 0.0011754646811579874,
+    "trans_mm_max": 0.0018803450235666238,
+    "trans_mm_rmse": 0.00122153608626175,
+    "rot_deg_mean": 0.0892147856076148,
+    "rot_deg_max": 0.14178652876310416
+   },
+   "reference_fraction": 0.9551901663368562,
+   "motion_type": "orbital",
+   "scene_kind": "organ",
+   "seq_id": "seq_00001780",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00001780",
+   "n_frames_used": 58,
+   "time_sec": 1.86
+  },
+  {
+   "n_frames": 45,
+   "ate_se3": {
+    "rmse": 13.615749058990534,
+    "mean": 12.050434200129848,
+    "max": 24.782237087272367,
+    "std": 6.338427093983371,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 0.1896661395358713,
+    "mean": 0.17535928092335468,
+    "max": 0.2999150234119834,
+    "std": 0.0722659468939872,
+    "scale": 44.81503027099916
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.05060099237154663,
+    "trans_mm_max": 0.10753152761971872,
+    "trans_mm_rmse": 0.05556319741218237,
+    "rot_deg_mean": 0.021845654641952265,
+    "rot_deg_max": 0.04595870002027836
+   },
+   "rpe_5": {
+    "trans_mm_mean": 0.20765195969372757,
+    "trans_mm_max": 0.32989274519428574,
+    "trans_mm_rmse": 0.22037451814517262,
+    "rot_deg_mean": 0.07464528110628835,
+    "rot_deg_max": 0.14395378066527426
+   },
+   "rpe_10": {
+    "trans_mm_mean": 0.3305268709656857,
+    "trans_mm_max": 0.5136977698046004,
+    "trans_mm_rmse": 0.3555268565963924,
+    "rot_deg_mean": 0.1254778527419762,
+    "rot_deg_max": 0.2515386148849512
+   },
+   "reference_fraction": 0.9646572730782936,
+   "motion_type": "insertion",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00000698",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00000698",
+   "n_frames_used": 45,
+   "time_sec": 1.46
+  },
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 10.560210237316193,
+    "mean": 9.409913113337993,
+    "max": 18.692214615256848,
+    "std": 4.792867143552743,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 5.0786767500213,
+    "mean": 4.343243372571855,
+    "max": 13.438881954542005,
+    "std": 2.6323363268810387,
+    "scale": 89.84059362262916
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.6873511510174068,
+    "trans_mm_max": 3.267130796777032,
+    "trans_mm_rmse": 0.9936765297252598,
+    "rot_deg_mean": 1.060142244130882,
+    "rot_deg_max": 4.242616040569951
+   },
+   "rpe_5": {
+    "trans_mm_mean": 2.346752640435635,
+    "trans_mm_max": 9.066720134454243,
+    "trans_mm_rmse": 3.240145393959595,
+    "rot_deg_mean": 4.68232176199691,
+    "rot_deg_max": 14.473542285142193
+   },
+   "rpe_10": {
+    "trans_mm_mean": 3.5343904043916927,
+    "trans_mm_max": 12.173369689391555,
+    "trans_mm_rmse": 4.699173269920497,
+    "rot_deg_mean": 8.519252086334912,
+    "rot_deg_max": 19.596161290637454
+   },
+   "reference_fraction": 0.9737718094226927,
+   "motion_type": "insertion",
+   "scene_kind": "organ",
+   "seq_id": "seq_00001818",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00001818",
+   "n_frames_used": 64,
+   "time_sec": 1.91
+  },
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 78.16770510601998,
+    "mean": 68.27598878912852,
+    "max": 149.4509880281001,
+    "std": 38.06020857021805,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 2.8839635665046903,
+    "mean": 2.569050584027894,
+    "max": 5.862951468049167,
+    "std": 1.3104292997458469,
+    "scale": 43.846185903832215
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.4820047580990887,
+    "trans_mm_max": 1.9644125451749592,
+    "trans_mm_rmse": 0.621036893073016,
+    "rot_deg_mean": 0.09879173395454842,
+    "rot_deg_max": 0.31742674442100405
+   },
+   "rpe_5": {
+    "trans_mm_mean": 2.2582204645267225,
+    "trans_mm_max": 5.376240803619131,
+    "trans_mm_rmse": 2.6761343088003806,
+    "rot_deg_mean": 0.4354329567990409,
+    "rot_deg_max": 1.0185320078797004
+   },
+   "rpe_10": {
+    "trans_mm_mean": 3.623223571998829,
+    "trans_mm_max": 6.978605353422222,
+    "trans_mm_rmse": 4.208103103635192,
+    "rot_deg_mean": 0.7575621080645365,
+    "rot_deg_max": 1.2656104616717558
+   },
+   "reference_fraction": 0.98079845253746,
+   "motion_type": "insertion",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00001547",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00001547",
+   "n_frames_used": 64,
+   "time_sec": 1.89
+  },
+  {
+   "n_frames": 54,
+   "ate_se3": {
+    "rmse": 0.004177680826001486,
+    "mean": 0.0037815449238429656,
+    "max": 0.008318678136853197,
+    "std": 0.0017756506055240588,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 0.004177680826001486,
+    "mean": 0.0037815449238429656,
+    "max": 0.008318678136853197,
+    "std": 0.0017756506055240588,
+    "scale": 1.0
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.001770237384204194,
+    "trans_mm_max": 0.006146508642001448,
+    "trans_mm_rmse": 0.0021718779676237563,
+    "rot_deg_mean": 0.027872973835643137,
+    "rot_deg_max": 0.09407954560661402
+   },
+   "rpe_5": {
+    "trans_mm_mean": 0.003667500262865444,
+    "trans_mm_max": 0.013424657894628456,
+    "trans_mm_rmse": 0.004395367611383818,
+    "rot_deg_mean": 0.08092993739862758,
+    "rot_deg_max": 0.1789283468525647
+   },
+   "rpe_10": {
+    "trans_mm_mean": 0.006014363766946259,
+    "trans_mm_max": 0.015268055670921186,
+    "trans_mm_rmse": 0.006807321763488659,
+    "rot_deg_mean": 0.12480616337008138,
+    "rot_deg_max": 0.22971020968158784
+   },
+   "reference_fraction": 0.9851879767651828,
+   "motion_type": "orbital",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00001929",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00001929",
+   "n_frames_used": 54,
+   "time_sec": 1.77
+  },
+  {
+   "n_frames": 44,
+   "ate_se3": {
+    "rmse": 18.771790879933747,
+    "mean": 17.349990404224783,
+    "max": 39.36167443822076,
+    "std": 7.1664472239228605,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 3.4670266612296263,
+    "mean": 3.219339501351447,
+    "max": 7.223518409763486,
+    "std": 1.286905996844862,
+    "scale": 52.62307074466092
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.6294668037730058,
+    "trans_mm_max": 1.5073157542211193,
+    "trans_mm_rmse": 0.7113576656286666,
+    "rot_deg_mean": 0.26283580615284086,
+    "rot_deg_max": 0.6033995648972207
+   },
+   "rpe_5": {
+    "trans_mm_mean": 2.7605014401900707,
+    "trans_mm_max": 4.449696023801899,
+    "trans_mm_rmse": 2.993490774106886,
+    "rot_deg_mean": 1.1378040744148568,
+    "rot_deg_max": 2.194044794615277
+   },
+   "rpe_10": {
+    "trans_mm_mean": 4.647161336537791,
+    "trans_mm_max": 8.550603765112246,
+    "trans_mm_rmse": 5.129801759663503,
+    "rot_deg_mean": 1.8643914228941907,
+    "rot_deg_max": 4.339938304403241
+   },
+   "reference_fraction": 0.994343053742656,
+   "motion_type": "free",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00001979",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00001979",
+   "n_frames_used": 44,
+   "time_sec": 1.3
+  },
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 31.89728399607326,
+    "mean": 30.699719991262043,
+    "max": 52.450193890632136,
+    "std": 8.658170637279957,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 7.619624330205177,
+    "mean": 6.907663602281101,
+    "max": 18.583304967311612,
+    "std": 3.2160314816829123,
+    "scale": 56.132591961416495
+   },
+   "rpe_1": {
+    "trans_mm_mean": 1.0397510528047624,
+    "trans_mm_max": 4.352883603078448,
+    "trans_mm_rmse": 1.306889618204641,
+    "rot_deg_mean": 0.7977516963704622,
+    "rot_deg_max": 5.301960864190943
+   },
+   "rpe_5": {
+    "trans_mm_mean": 4.4117012066563035,
+    "trans_mm_max": 10.252587958495592,
+    "trans_mm_rmse": 5.152126382587544,
+    "rot_deg_mean": 3.2813157053718007,
+    "rot_deg_max": 11.667866662882037
+   },
+   "rpe_10": {
+    "trans_mm_mean": 7.709542044641127,
+    "trans_mm_max": 18.55052664832304,
+    "trans_mm_rmse": 9.232868099779722,
+    "rot_deg_mean": 5.651377206517712,
+    "rot_deg_max": 15.455798815733766
+   },
+   "reference_fraction": 0.9980110163405518,
+   "motion_type": "free",
+   "scene_kind": "organ",
+   "seq_id": "seq_00000294",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00000294",
+   "n_frames_used": 64,
+   "time_sec": 1.85
+  },
+  {
+   "n_frames": 42,
+   "ate_se3": {
+    "rmse": 5.027684551549243,
+    "mean": 4.44191959552772,
+    "max": 9.376415968560716,
+    "std": 2.355198984534806,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 0.1726287861502965,
+    "mean": 0.1566090667782843,
+    "max": 0.2990646391609981,
+    "std": 0.07262436237626944,
+    "scale": 52.43400207318357
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.05900622385616676,
+    "trans_mm_max": 0.11695187184918336,
+    "trans_mm_rmse": 0.06431078912515194,
+    "rot_deg_mean": 0.04519108797954907,
+    "rot_deg_max": 0.10889556779459655
+   },
+   "rpe_5": {
+    "trans_mm_mean": 0.2412824672003187,
+    "trans_mm_max": 0.41659765286263134,
+    "trans_mm_rmse": 0.25767958774193717,
+    "rot_deg_mean": 0.17663609613205003,
+    "rot_deg_max": 0.34914820126690266
+   },
+   "rpe_10": {
+    "trans_mm_mean": 0.42470369615949954,
+    "trans_mm_max": 0.6340579225323191,
+    "trans_mm_rmse": 0.4592105879352168,
+    "rot_deg_mean": 0.3290368025395892,
+    "rot_deg_max": 0.5564393256376545
+   },
+   "reference_fraction": 0.9995858098706479,
+   "motion_type": "insertion",
+   "scene_kind": "organ",
+   "seq_id": "seq_00001245",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00001245",
+   "n_frames_used": 42,
+   "time_sec": 1.16
+  },
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 32.18566366774084,
+    "mean": 29.44317372741453,
+    "max": 52.15741412234335,
+    "std": 13.000633314966612,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 4.80379922017327,
+    "mean": 4.391025917531613,
+    "max": 10.322283128048115,
+    "std": 1.9481730773478454,
+    "scale": 50.11980164878702
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.7724213597100023,
+    "trans_mm_max": 3.4920660503129386,
+    "trans_mm_rmse": 1.0507655983016109,
+    "rot_deg_mean": 0.6308277194082673,
+    "rot_deg_max": 2.2565406479954935
+   },
+   "rpe_5": {
+    "trans_mm_mean": 3.2465586744335053,
+    "trans_mm_max": 10.96587240099363,
+    "trans_mm_rmse": 4.130677429881229,
+    "rot_deg_mean": 2.6579443666674445,
+    "rot_deg_max": 8.872174902067757
+   },
+   "rpe_10": {
+    "trans_mm_mean": 5.175701186878911,
+    "trans_mm_max": 15.836601214994442,
+    "trans_mm_rmse": 6.2565182394111085,
+    "rot_deg_mean": 4.4311027142954424,
+    "rot_deg_max": 14.029176761324656
+   },
+   "reference_fraction": 0.9999170031931491,
+   "motion_type": "free",
+   "scene_kind": "organ",
+   "seq_id": "seq_00000508",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00000508",
+   "n_frames_used": 64,
+   "time_sec": 1.87
+  },
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 37.34609854571738,
+    "mean": 32.88104847042639,
+    "max": 69.69949878086653,
+    "std": 17.70784368780975,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 0.6391811303884917,
+    "mean": 0.47026647469206495,
+    "max": 1.4571158103886122,
+    "std": 0.4328994805095145,
+    "scale": 57.802929302814775
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.1046555583973152,
+    "trans_mm_max": 0.3329220929955084,
+    "trans_mm_rmse": 0.13603830035312614,
+    "rot_deg_mean": 0.04442367191161728,
+    "rot_deg_max": 0.17274968851366237
+   },
+   "rpe_5": {
+    "trans_mm_mean": 0.46346573874175345,
+    "trans_mm_max": 1.3813552824850475,
+    "trans_mm_rmse": 0.615792368848886,
+    "rot_deg_mean": 0.19827946011178804,
+    "rot_deg_max": 0.7299502674099357
+   },
+   "rpe_10": {
+    "trans_mm_mean": 0.8099586520508654,
+    "trans_mm_max": 1.9536328732788184,
+    "trans_mm_rmse": 1.051138923869505,
+    "rot_deg_mean": 0.3740497452404472,
+    "rot_deg_max": 1.0050310961410307
+   },
+   "reference_fraction": 1.0,
+   "motion_type": "insertion",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00000062",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00000062",
+   "n_frames_used": 64,
+   "time_sec": 1.91
+  },
+  {
+   "n_frames": 45,
+   "ate_se3": {
+    "rmse": 24.260890948248324,
+    "mean": 22.85669842613821,
+    "max": 42.02506472904298,
+    "std": 8.13401294929927,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 2.3811052442967844,
+    "mean": 2.2909174338956313,
+    "max": 3.741795639510272,
+    "std": 0.6491220959809542,
+    "scale": 48.06505217831191
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.4866423767386367,
+    "trans_mm_max": 0.9326541040803473,
+    "trans_mm_rmse": 0.5180077139104295,
+    "rot_deg_mean": 0.25142392832192917,
+    "rot_deg_max": 0.4992710812078809
+   },
+   "rpe_5": {
+    "trans_mm_mean": 2.4505471223533015,
+    "trans_mm_max": 3.763494747753006,
+    "trans_mm_rmse": 2.5139544031666796,
+    "rot_deg_mean": 1.2678657175092374,
+    "rot_deg_max": 2.3891150618468915
+   },
+   "rpe_10": {
+    "trans_mm_mean": 4.5812479467086815,
+    "trans_mm_max": 5.4313395032372,
+    "trans_mm_rmse": 4.611608454323301,
+    "rot_deg_mean": 2.538071665843337,
+    "rot_deg_max": 4.270873472584495
+   },
+   "reference_fraction": 1.0,
+   "motion_type": "free",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00000267",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00000267",
+   "n_frames_used": 45,
+   "time_sec": 1.27
+  },
+  {
+   "n_frames": 48,
+   "ate_se3": {
+    "rmse": 9.352424223052987,
+    "mean": 8.379089561824374,
+    "max": 15.50562214934002,
+    "std": 4.154358790821287,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 1.1554925196132364,
+    "mean": 0.9519976647362193,
+    "max": 3.3924033499827617,
+    "std": 0.654876636641536,
+    "scale": 40.160439744524155
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.31543032186883974,
+    "trans_mm_max": 1.382902521449055,
+    "trans_mm_rmse": 0.4211798574575383,
+    "rot_deg_mean": 0.6517237367249534,
+    "rot_deg_max": 4.452487171752412
+   },
+   "rpe_5": {
+    "trans_mm_mean": 1.083886758524045,
+    "trans_mm_max": 3.740178702528094,
+    "trans_mm_rmse": 1.355753505503341,
+    "rot_deg_mean": 2.531770870824168,
+    "rot_deg_max": 11.574280807018377
+   },
+   "rpe_10": {
+    "trans_mm_mean": 1.6597917759975653,
+    "trans_mm_max": 4.213729855799754,
+    "trans_mm_rmse": 1.9219130977982886,
+    "rot_deg_mean": 4.755657369688679,
+    "rot_deg_max": 13.908556210523212
+   },
+   "reference_fraction": 1.0,
+   "motion_type": "insertion",
+   "scene_kind": "organ",
+   "seq_id": "seq_00000491",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00000491",
+   "n_frames_used": 48,
+   "time_sec": 1.33
+  },
+  {
+   "n_frames": 55,
+   "ate_se3": {
+    "rmse": 24.008668763150435,
+    "mean": 21.503014606837667,
+    "max": 40.41535310938726,
+    "std": 10.678789191514246,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 0.7430519392067108,
+    "mean": 0.61632169753457,
+    "max": 1.6011117058581028,
+    "std": 0.41505873019002887,
+    "scale": 40.465115145779514
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.1153801918397964,
+    "trans_mm_max": 0.2749353294939323,
+    "trans_mm_rmse": 0.13208228864504212,
+    "rot_deg_mean": 0.03782702459044828,
+    "rot_deg_max": 0.07715002676088595
+   },
+   "rpe_5": {
+    "trans_mm_mean": 0.5516578093112435,
+    "trans_mm_max": 1.2445459988464815,
+    "trans_mm_rmse": 0.6311784498022445,
+    "rot_deg_mean": 0.1700583893629857,
+    "rot_deg_max": 0.2628382270612837
+   },
+   "rpe_10": {
+    "trans_mm_mean": 0.9423335586429727,
+    "trans_mm_max": 2.231765362909475,
+    "trans_mm_rmse": 1.1014651447916994,
+    "rot_deg_mean": 0.31127941009967613,
+    "rot_deg_max": 0.44132091184538735
+   },
+   "reference_fraction": 1.0,
+   "motion_type": "insertion",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00000743",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00000743",
+   "n_frames_used": 55,
+   "time_sec": 1.77
+  },
+  {
+   "n_frames": 51,
+   "ate_se3": {
+    "rmse": 19.471619499717644,
+    "mean": 17.112343521415923,
+    "max": 37.267359506163714,
+    "std": 9.29040715721538,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 0.5888592282213047,
+    "mean": 0.5376165872494251,
+    "max": 0.9154784751345816,
+    "std": 0.24025735321873504,
+    "scale": 51.57435246273568
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.11942741878206956,
+    "trans_mm_max": 0.24970236894785608,
+    "trans_mm_rmse": 0.13354226820709791,
+    "rot_deg_mean": 0.03993776235695626,
+    "rot_deg_max": 0.10547892793993531
+   },
+   "rpe_5": {
+    "trans_mm_mean": 0.5645671664305937,
+    "trans_mm_max": 0.9895066390027527,
+    "trans_mm_rmse": 0.6157957325573253,
+    "rot_deg_mean": 0.16806384274556893,
+    "rot_deg_max": 0.3924137327253089
+   },
+   "rpe_10": {
+    "trans_mm_mean": 1.018360542258542,
+    "trans_mm_max": 1.6091415978367163,
+    "trans_mm_rmse": 1.089786140892805,
+    "rot_deg_mean": 0.29507691990814505,
+    "rot_deg_max": 0.6144610512554788
+   },
+   "reference_fraction": 1.0,
+   "motion_type": "insertion",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00000989",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00000989",
+   "n_frames_used": 51,
+   "time_sec": 1.84
+  },
+  {
+   "n_frames": 40,
+   "ate_se3": {
+    "rmse": 6.313090910615321,
+    "mean": 5.573762488272349,
+    "max": 11.628129877825913,
+    "std": 2.964504776522011,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 0.184385742002031,
+    "mean": 0.1576234042172487,
+    "max": 0.413108549895091,
+    "std": 0.09567112572038311,
+    "scale": 62.25594053964798
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.08646312818838758,
+    "trans_mm_max": 0.2262377780786607,
+    "trans_mm_rmse": 0.09770218080968081,
+    "rot_deg_mean": 0.15769680469339842,
+    "rot_deg_max": 0.41261177672573784
+   },
+   "rpe_5": {
+    "trans_mm_mean": 0.34132942256227217,
+    "trans_mm_max": 0.7282098173215615,
+    "trans_mm_rmse": 0.3802806164400296,
+    "rot_deg_mean": 0.7394512928805649,
+    "rot_deg_max": 1.7155705516478243
+   },
+   "rpe_10": {
+    "trans_mm_mean": 0.5365999839030293,
+    "trans_mm_max": 0.9408037927318289,
+    "trans_mm_rmse": 0.5870808490319748,
+    "rot_deg_mean": 1.3678347865249658,
+    "rot_deg_max": 2.588641991252482
+   },
+   "reference_fraction": 1.0,
+   "motion_type": "insertion",
+   "scene_kind": "organ",
+   "seq_id": "seq_00001237",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00001237",
+   "n_frames_used": 40,
+   "time_sec": 1.15
+  },
+  {
+   "n_frames": 55,
+   "ate_se3": {
+    "rmse": 0.0029131900125793277,
+    "mean": 0.002696642189817271,
+    "max": 0.005085221921011447,
+    "std": 0.0011021782748219379,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 0.0029131900125793277,
+    "mean": 0.002696642189817271,
+    "max": 0.005085221921011447,
+    "std": 0.0011021782748219379,
+    "scale": 1.0
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.0007085887044588376,
+    "trans_mm_max": 0.0015049649266633519,
+    "trans_mm_rmse": 0.0007632213827536667,
+    "rot_deg_mean": 0.024509444448500055,
+    "rot_deg_max": 0.05961968005601379
+   },
+   "rpe_5": {
+    "trans_mm_mean": 0.001940545790035636,
+    "trans_mm_max": 0.003250190566501336,
+    "trans_mm_rmse": 0.002046453843406882,
+    "rot_deg_mean": 0.05946645263031769,
+    "rot_deg_max": 0.1265904434811843
+   },
+   "rpe_10": {
+    "trans_mm_mean": 0.002730399806408446,
+    "trans_mm_max": 0.004250311175940969,
+    "trans_mm_rmse": 0.0028347541346797193,
+    "rot_deg_mean": 0.084934075634161,
+    "rot_deg_max": 0.13929428919532036
+   },
+   "reference_fraction": 1.0,
+   "motion_type": "orbital",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00001403",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00001403",
+   "n_frames_used": 55,
+   "time_sec": 1.91
+  },
+  {
+   "n_frames": 64,
+   "ate_se3": {
+    "rmse": 7.544736109620945,
+    "mean": 6.717376456865951,
+    "max": 13.444386653489868,
+    "std": 3.4350977425047478,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 0.8759311622789945,
+    "mean": 0.7348136450486019,
+    "max": 2.814659384318746,
+    "std": 0.47676441572522715,
+    "scale": 47.40985620259709
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.267488401660583,
+    "trans_mm_max": 2.4035779588925124,
+    "trans_mm_rmse": 0.4641550060400138,
+    "rot_deg_mean": 0.6990304018816228,
+    "rot_deg_max": 8.873206866564477
+   },
+   "rpe_5": {
+    "trans_mm_mean": 0.6638329105368712,
+    "trans_mm_max": 3.1283842381636817,
+    "trans_mm_rmse": 0.9320838743914329,
+    "rot_deg_mean": 2.357641888655694,
+    "rot_deg_max": 12.356747155968554
+   },
+   "rpe_10": {
+    "trans_mm_mean": 0.8665427579097356,
+    "trans_mm_max": 2.9758102064897067,
+    "trans_mm_rmse": 1.130179131387569,
+    "rot_deg_mean": 4.260514467955452,
+    "rot_deg_max": 16.01893066149137
+   },
+   "reference_fraction": 1.0,
+   "motion_type": "insertion",
+   "scene_kind": "organ",
+   "seq_id": "seq_00001702",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00001702",
+   "n_frames_used": 64,
+   "time_sec": 2.0
+  },
+  {
+   "n_frames": 49,
+   "ate_se3": {
+    "rmse": 9.970214688498274,
+    "mean": 9.342310569384727,
+    "max": 17.466715430278818,
+    "std": 3.4823001249043934,
+    "scale": 1.0
+   },
+   "ate_sim3": {
+    "rmse": 0.611885839038307,
+    "mean": 0.5424830280869508,
+    "max": 1.3514640695367952,
+    "std": 0.283048483926739,
+    "scale": 56.267866695420565
+   },
+   "rpe_1": {
+    "trans_mm_mean": 0.16638761213642006,
+    "trans_mm_max": 0.4322414868859929,
+    "trans_mm_rmse": 0.19520193059792262,
+    "rot_deg_mean": 0.11332900572903948,
+    "rot_deg_max": 0.36123253661564964
+   },
+   "rpe_5": {
+    "trans_mm_mean": 0.5754884010378791,
+    "trans_mm_max": 1.815174061434287,
+    "trans_mm_rmse": 0.7576098870050193,
+    "rot_deg_mean": 0.42290820504898113,
+    "rot_deg_max": 1.3493331603182188
+   },
+   "rpe_10": {
+    "trans_mm_mean": 1.1707180444988785,
+    "trans_mm_max": 3.153534227043115,
+    "trans_mm_rmse": 1.4886377371970052,
+    "rot_deg_mean": 0.859944438532826,
+    "rot_deg_max": 2.1888105645808875
+   },
+   "reference_fraction": 1.0,
+   "motion_type": "free",
+   "scene_kind": "tunnel",
+   "seq_id": "seq_00001846",
+   "seq_dir": "D:\\ego_motiion_Camera\\sim_data\\test\\seq_00001846",
+   "n_frames_used": 49,
+   "time_sec": 1.42
+  }
+ ]
+}

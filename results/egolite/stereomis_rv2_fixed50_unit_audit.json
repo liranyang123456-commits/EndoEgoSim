@@ -1,0 +1,604 @@
+{
+  "unit_basis": "r_v2 checkpoint args abs_depth=true; training defines DEPTH_UNIT_MM=50 and normalizes GT pair translation by 50; convert chained estimator translations from depth units to mm before SE3 metric ATE/RPE.",
+  "n_seq": 11,
+  "ate_se3_mm_mean": 25.551050356993276,
+  "ate_se3_mm_median": 22.32539610866804,
+  "ate_se3_paired_wilcoxon_vs_droid_not_applicable": null,
+  "ate_sim3_mm_mean": 22.55157518755324,
+  "ate_sim3_mm_median": 21.099329051088333,
+  "sim3_scale_after_x50_median": 0.7886785002520076,
+  "sim3_scale_after_x50_range": [
+    0.12753826628508202,
+    1.5463248544007824
+  ],
+  "rpe_metric_mean_mm": {
+    "1": 0.12503248313818396,
+    "5": 0.5579083109296635,
+    "10": 1.058676157589252
+  },
+  "sequences": [
+    {
+      "seq_id": "stereomis_extracted_StereoMIS_0_0_1_P1",
+      "n": 13859,
+      "ate_se3_mm": 11.72022318281932,
+      "ate_sim3_mm": 7.827350463169326,
+      "fitted_sim3_scale_after_x50": 0.5994125070431129,
+      "rpe_metric": {
+        "1": {
+          "trans_mm_mean": 0.07614698579244386,
+          "trans_mm_max": 1.8001012145865458,
+          "trans_mm_rmse": 0.12184224423119616,
+          "rot_deg_mean": 0.06087674537913367,
+          "rot_deg_max": 2.7828259637432953
+        },
+        "5": {
+          "trans_mm_mean": 0.27786177975828547,
+          "trans_mm_max": 6.283905484162016,
+          "trans_mm_rmse": 0.4758538666183705,
+          "rot_deg_mean": 0.2531559293919984,
+          "rot_deg_max": 6.8080192676147915
+        },
+        "10": {
+          "trans_mm_mean": 0.44242099577846944,
+          "trans_mm_max": 10.304375694351387,
+          "trans_mm_rmse": 0.8116793619067978,
+          "rot_deg_mean": 0.4257389921861036,
+          "rot_deg_max": 9.880655952717639
+        }
+      },
+      "rpe_raw_model_units": {
+        "1": {
+          "trans_mm_mean": 0.04983476545657736,
+          "trans_mm_max": 1.850872877137114,
+          "trans_mm_rmse": 0.10646175015766321,
+          "rot_deg_mean": 0.06087674537913367,
+          "rot_deg_max": 2.7828259637432953
+        },
+        "5": {
+          "trans_mm_mean": 0.15730485989892526,
+          "trans_mm_max": 4.8471095934697805,
+          "trans_mm_rmse": 0.464739628551994,
+          "rot_deg_mean": 0.2531559293919984,
+          "rot_deg_max": 6.8080192676147915
+        },
+        "10": {
+          "trans_mm_mean": 0.2837858032482582,
+          "trans_mm_max": 8.533584168422902,
+          "trans_mm_rmse": 0.8851313884839956,
+          "rot_deg_mean": 0.4257389921861036,
+          "rot_deg_max": 9.880655952717639
+        }
+      }
+    },
+    {
+      "seq_id": "stereomis_extracted_StereoMIS_0_0_1_P2_0",
+      "n": 10925,
+      "ate_se3_mm": 10.892012830203331,
+      "ate_sim3_mm": 8.583007541513755,
+      "fitted_sim3_scale_after_x50": 0.35069930008517797,
+      "rpe_metric": {
+        "1": {
+          "trans_mm_mean": 0.08118189024195946,
+          "trans_mm_max": 1.174525914359636,
+          "trans_mm_rmse": 0.13185315952079352,
+          "rot_deg_mean": 0.10313899877458958,
+          "rot_deg_max": 1.882936676472401
+        },
+        "5": {
+          "trans_mm_mean": 0.36120004031733055,
+          "trans_mm_max": 3.9966596349403387,
+          "trans_mm_rmse": 0.6015575246743738,
+          "rot_deg_mean": 0.49718167330724433,
+          "rot_deg_max": 7.636165548140305
+        },
+        "10": {
+          "trans_mm_mean": 0.6961263827998708,
+          "trans_mm_max": 7.336983244041989,
+          "trans_mm_rmse": 1.1620102188064447,
+          "rot_deg_mean": 0.9669700320739755,
+          "rot_deg_max": 14.025603942407853
+        }
+      },
+      "rpe_raw_model_units": {
+        "1": {
+          "trans_mm_mean": 0.04752033611520673,
+          "trans_mm_max": 1.1864259530434658,
+          "trans_mm_rmse": 0.10610788261044708,
+          "rot_deg_mean": 0.10313899877458958,
+          "rot_deg_max": 1.882936676472401
+        },
+        "5": {
+          "trans_mm_mean": 0.17601931095478746,
+          "trans_mm_max": 3.47805679241752,
+          "trans_mm_rmse": 0.48736288206617734,
+          "rot_deg_mean": 0.49718167330724433,
+          "rot_deg_max": 7.636165548140305
+        },
+        "10": {
+          "trans_mm_mean": 0.33436514244429566,
+          "trans_mm_max": 6.522738494523944,
+          "trans_mm_rmse": 0.9489543649190816,
+          "rot_deg_mean": 0.9669700320739755,
+          "rot_deg_max": 14.025603942407853
+        }
+      }
+    },
+    {
+      "seq_id": "stereomis_extracted_StereoMIS_0_0_1_P2_1",
+      "n": 8464,
+      "ate_se3_mm": 23.616442499455168,
+      "ate_sim3_mm": 20.5711842239332,
+      "fitted_sim3_scale_after_x50": 1.5463248544007824,
+      "rpe_metric": {
+        "1": {
+          "trans_mm_mean": 0.1357470458414267,
+          "trans_mm_max": 16.109174069641014,
+          "trans_mm_rmse": 0.2459812429291119,
+          "rot_deg_mean": 0.07358854067779841,
+          "rot_deg_max": 4.0247108605698605
+        },
+        "5": {
+          "trans_mm_mean": 0.6243885297823228,
+          "trans_mm_max": 18.717543917988678,
+          "trans_mm_rmse": 0.8785032068960656,
+          "rot_deg_mean": 0.334829311747919,
+          "rot_deg_max": 4.366819191608624
+        },
+        "10": {
+          "trans_mm_mean": 1.2106896859075438,
+          "trans_mm_max": 21.668106887017412,
+          "trans_mm_rmse": 1.6264838650390876,
+          "rot_deg_mean": 0.6346480164105612,
+          "rot_deg_max": 5.869022208408186
+        }
+      },
+      "rpe_raw_model_units": {
+        "1": {
+          "trans_mm_mean": 0.14384247049596913,
+          "trans_mm_max": 16.5168700272636,
+          "trans_mm_rmse": 0.2863327409169625,
+          "rot_deg_mean": 0.07358854067779841,
+          "rot_deg_max": 4.0247108605698605
+        },
+        "5": {
+          "trans_mm_mean": 0.6530425330929023,
+          "trans_mm_max": 20.54179476111261,
+          "trans_mm_rmse": 1.1408926718517478,
+          "rot_deg_mean": 0.334829311747919,
+          "rot_deg_max": 4.366819191608624
+        },
+        "10": {
+          "trans_mm_mean": 1.285512792160333,
+          "trans_mm_max": 25.07344246484135,
+          "trans_mm_rmse": 2.1903873867284074,
+          "rot_deg_mean": 0.6346480164105612,
+          "rot_deg_max": 5.869022208408186
+        }
+      }
+    },
+    {
+      "seq_id": "stereomis_extracted_StereoMIS_0_0_1_P2_2",
+      "n": 8554,
+      "ate_se3_mm": 22.637983862594233,
+      "ate_sim3_mm": 22.614676606041503,
+      "fitted_sim3_scale_after_x50": 0.9490480434446823,
+      "rpe_metric": {
+        "1": {
+          "trans_mm_mean": 0.08517078328062941,
+          "trans_mm_max": 2.1384921140149067,
+          "trans_mm_rmse": 0.148171962052021,
+          "rot_deg_mean": 0.039834554291387034,
+          "rot_deg_max": 2.067532570447666
+        },
+        "5": {
+          "trans_mm_mean": 0.3549893786041695,
+          "trans_mm_max": 6.410730033597012,
+          "trans_mm_rmse": 0.6749923631466609,
+          "rot_deg_mean": 0.1654435497007134,
+          "rot_deg_max": 2.887844802277439
+        },
+        "10": {
+          "trans_mm_mean": 0.679502693315337,
+          "trans_mm_max": 11.61670165078045,
+          "trans_mm_rmse": 1.3196170077087581,
+          "rot_deg_mean": 0.3092028606039491,
+          "rot_deg_max": 5.097915793903694
+        }
+      },
+      "rpe_raw_model_units": {
+        "1": {
+          "trans_mm_mean": 0.09579235103948743,
+          "trans_mm_max": 3.1627955217881487,
+          "trans_mm_rmse": 0.2190892526900335,
+          "rot_deg_mean": 0.039834554291387034,
+          "rot_deg_max": 2.067532570447666
+        },
+        "5": {
+          "trans_mm_mean": 0.3968816370663005,
+          "trans_mm_max": 10.996165829639265,
+          "trans_mm_rmse": 1.0354529127602032,
+          "rot_deg_mean": 0.1654435497007134,
+          "rot_deg_max": 2.887844802277439
+        },
+        "10": {
+          "trans_mm_mean": 0.7698244161702892,
+          "trans_mm_max": 19.707028962237608,
+          "trans_mm_rmse": 2.0414890692088177,
+          "rot_deg_mean": 0.3092028606039491,
+          "rot_deg_max": 5.097915793903694
+        }
+      }
+    },
+    {
+      "seq_id": "stereomis_extracted_StereoMIS_0_0_1_P2_3",
+      "n": 8445,
+      "ate_se3_mm": 9.543161931900306,
+      "ate_sim3_mm": 4.56683192050614,
+      "fitted_sim3_scale_after_x50": 0.12753826628508202,
+      "rpe_metric": {
+        "1": {
+          "trans_mm_mean": 0.06038346111686354,
+          "trans_mm_max": 6.0809321099178915,
+          "trans_mm_rmse": 0.14734775026592375,
+          "rot_deg_mean": 0.02389400363974115,
+          "rot_deg_max": 2.853551500443126
+        },
+        "5": {
+          "trans_mm_mean": 0.21992931150039413,
+          "trans_mm_max": 9.197528993156416,
+          "trans_mm_rmse": 0.5573882082306917,
+          "rot_deg_mean": 0.09346197147594797,
+          "rot_deg_max": 3.8661336847428878
+        },
+        "10": {
+          "trans_mm_mean": 0.40392873542418967,
+          "trans_mm_max": 13.072266795940228,
+          "trans_mm_rmse": 1.0393539722743768,
+          "rot_deg_mean": 0.16824110322297298,
+          "rot_deg_max": 5.548523556740726
+        }
+      },
+      "rpe_raw_model_units": {
+        "1": {
+          "trans_mm_mean": 0.048424303490976796,
+          "trans_mm_max": 6.37971523307539,
+          "trans_mm_rmse": 0.18250505812941822,
+          "rot_deg_mean": 0.02389400363974115,
+          "rot_deg_max": 2.853551500443126
+        },
+        "5": {
+          "trans_mm_mean": 0.13901547201065662,
+          "trans_mm_max": 10.971520997088044,
+          "trans_mm_rmse": 0.764754022189693,
+          "rot_deg_mean": 0.09346197147594797,
+          "rot_deg_max": 3.8661336847428878
+        },
+        "10": {
+          "trans_mm_mean": 0.2469217681371565,
+          "trans_mm_max": 17.604346261575653,
+          "trans_mm_rmse": 1.4584593011728362,
+          "rot_deg_mean": 0.16824110322297298,
+          "rot_deg_max": 5.548523556740726
+        }
+      }
+    },
+    {
+      "seq_id": "stereomis_extracted_StereoMIS_0_0_1_P2_4",
+      "n": 8560,
+      "ate_se3_mm": 35.073631825019916,
+      "ate_sim3_mm": 34.62841007105803,
+      "fitted_sim3_scale_after_x50": 0.8836143938571668,
+      "rpe_metric": {
+        "1": {
+          "trans_mm_mean": 0.16197622172677162,
+          "trans_mm_max": 11.052943778757497,
+          "trans_mm_rmse": 0.2544239421013245,
+          "rot_deg_mean": 0.10216750217717079,
+          "rot_deg_max": 5.7731697960594675
+        },
+        "5": {
+          "trans_mm_mean": 0.7588104064912399,
+          "trans_mm_max": 13.525355483098172,
+          "trans_mm_rmse": 1.019513072998342,
+          "rot_deg_mean": 0.4588119083762481,
+          "rot_deg_max": 7.861587797681132
+        },
+        "10": {
+          "trans_mm_mean": 1.4454352274659383,
+          "trans_mm_max": 18.138177231341267,
+          "trans_mm_rmse": 1.9081267981146885,
+          "rot_deg_mean": 0.8553543670402161,
+          "rot_deg_max": 11.536043593637777
+        }
+      },
+      "rpe_raw_model_units": {
+        "1": {
+          "trans_mm_mean": 0.21257948966668092,
+          "trans_mm_max": 12.627579519568501,
+          "trans_mm_rmse": 0.3410410056928002,
+          "rot_deg_mean": 0.10216750217717079,
+          "rot_deg_max": 5.7731697960594675
+        },
+        "5": {
+          "trans_mm_mean": 1.0481382285214362,
+          "trans_mm_max": 19.014584014377295,
+          "trans_mm_rmse": 1.5165582065734895,
+          "rot_deg_mean": 0.4588119083762481,
+          "rot_deg_max": 7.861587797681132
+        },
+        "10": {
+          "trans_mm_mean": 2.0736946991048977,
+          "trans_mm_max": 26.21921985440878,
+          "trans_mm_rmse": 2.942442105335641,
+          "rot_deg_mean": 0.8553543670402161,
+          "rot_deg_max": 11.536043593637777
+        }
+      }
+    },
+    {
+      "seq_id": "stereomis_extracted_StereoMIS_0_0_1_P2_5",
+      "n": 10736,
+      "ate_se3_mm": 51.50072007654709,
+      "ate_sim3_mm": 51.04847197725723,
+      "fitted_sim3_scale_after_x50": 1.160328259305979,
+      "rpe_metric": {
+        "1": {
+          "trans_mm_mean": 0.14465811480246094,
+          "trans_mm_max": 7.0649209118805665,
+          "trans_mm_rmse": 0.22929401172774716,
+          "rot_deg_mean": 0.10518615609588054,
+          "rot_deg_max": 2.353084683102684
+        },
+        "5": {
+          "trans_mm_mean": 0.6525844703146527,
+          "trans_mm_max": 7.768742272215249,
+          "trans_mm_rmse": 0.9338729004935872,
+          "rot_deg_mean": 0.4652268883599488,
+          "rot_deg_max": 5.755556065651325
+        },
+        "10": {
+          "trans_mm_mean": 1.2342613228098047,
+          "trans_mm_max": 8.724848399109755,
+          "trans_mm_rmse": 1.7397433816873389,
+          "rot_deg_mean": 0.8588130944934861,
+          "rot_deg_max": 7.268954674459068
+        }
+      },
+      "rpe_raw_model_units": {
+        "1": {
+          "trans_mm_mean": 0.15915392191139707,
+          "trans_mm_max": 6.987779496972541,
+          "trans_mm_rmse": 0.29359961948557844,
+          "rot_deg_mean": 0.10518615609588054,
+          "rot_deg_max": 2.353084683102684
+        },
+        "5": {
+          "trans_mm_mean": 0.7528307404761686,
+          "trans_mm_max": 7.775868321212874,
+          "trans_mm_rmse": 1.33044776234178,
+          "rot_deg_mean": 0.4652268883599488,
+          "rot_deg_max": 5.755556065651325
+        },
+        "10": {
+          "trans_mm_mean": 1.4747236053028652,
+          "trans_mm_max": 13.321716072823339,
+          "trans_mm_rmse": 2.56866562513849,
+          "rot_deg_mean": 0.8588130944934861,
+          "rot_deg_max": 7.268954674459068
+        }
+      }
+    },
+    {
+      "seq_id": "stereomis_extracted_StereoMIS_0_0_1_P2_6",
+      "n": 1357,
+      "ate_se3_mm": 20.199943282152795,
+      "ate_sim3_mm": 8.86172627552161,
+      "fitted_sim3_scale_after_x50": 0.5693546610704646,
+      "rpe_metric": {
+        "1": {
+          "trans_mm_mean": 0.24280184338206445,
+          "trans_mm_max": 2.709685969360456,
+          "trans_mm_rmse": 0.3355886380950465,
+          "rot_deg_mean": 0.13767694323303292,
+          "rot_deg_max": 2.8966519348691517
+        },
+        "5": {
+          "trans_mm_mean": 1.1420194257074696,
+          "trans_mm_max": 8.49278340187768,
+          "trans_mm_rmse": 1.5390697163448595,
+          "rot_deg_mean": 0.6330965351081904,
+          "rot_deg_max": 8.480851252789865
+        },
+        "10": {
+          "trans_mm_mean": 2.185820047143606,
+          "trans_mm_max": 14.762484494715528,
+          "trans_mm_rmse": 2.9400525383495957,
+          "rot_deg_mean": 1.2044085308816845,
+          "rot_deg_max": 14.496716954124185
+        }
+      },
+      "rpe_raw_model_units": {
+        "1": {
+          "trans_mm_mean": 0.1478172028872712,
+          "trans_mm_max": 2.042914697651534,
+          "trans_mm_rmse": 0.2714557667988421,
+          "rot_deg_mean": 0.13767694323303292,
+          "rot_deg_max": 2.8966519348691517
+        },
+        "5": {
+          "trans_mm_mean": 0.6906858587933639,
+          "trans_mm_max": 7.105253535096436,
+          "trans_mm_rmse": 1.2663260070340343,
+          "rot_deg_mean": 0.6330965351081904,
+          "rot_deg_max": 8.480851252789865
+        },
+        "10": {
+          "trans_mm_mean": 1.3456130658448746,
+          "trans_mm_max": 12.895132454926586,
+          "trans_mm_rmse": 2.4600980180255845,
+          "rot_deg_mean": 1.2044085308816845,
+          "rot_deg_max": 14.496716954124185
+        }
+      }
+    },
+    {
+      "seq_id": "stereomis_extracted_StereoMIS_0_0_1_P2_7",
+      "n": 5406,
+      "ate_se3_mm": 51.362439027917866,
+      "ate_sim3_mm": 45.99045569305947,
+      "fitted_sim3_scale_after_x50": 0.5144636607912572,
+      "rpe_metric": {
+        "1": {
+          "trans_mm_mean": 0.20082392554209655,
+          "trans_mm_max": 2.658354170664215,
+          "trans_mm_rmse": 0.30342941056767125,
+          "rot_deg_mean": 0.1420108607625141,
+          "rot_deg_max": 2.162822063436601
+        },
+        "5": {
+          "trans_mm_mean": 0.9646705989189793,
+          "trans_mm_max": 8.19791132969344,
+          "trans_mm_rmse": 1.443328110408825,
+          "rot_deg_mean": 0.691400712694171,
+          "rot_deg_max": 5.345158931677416
+        },
+        "10": {
+          "trans_mm_mean": 1.8907548123590794,
+          "trans_mm_max": 15.303196304336577,
+          "trans_mm_rmse": 2.825282206635858,
+          "rot_deg_mean": 1.3507363987128012,
+          "rot_deg_max": 9.404088904634957
+        }
+      },
+      "rpe_raw_model_units": {
+        "1": {
+          "trans_mm_mean": 0.13440061944791046,
+          "trans_mm_max": 2.6517542931803604,
+          "trans_mm_rmse": 0.2409418770528981,
+          "rot_deg_mean": 0.1420108607625141,
+          "rot_deg_max": 2.162822063436601
+        },
+        "5": {
+          "trans_mm_mean": 0.63339789010804,
+          "trans_mm_max": 8.175742865355662,
+          "trans_mm_rmse": 1.1473864439513932,
+          "rot_deg_mean": 0.691400712694171,
+          "rot_deg_max": 5.345158931677416
+        },
+        "10": {
+          "trans_mm_mean": 1.2454256103401318,
+          "trans_mm_max": 15.270791188095846,
+          "trans_mm_rmse": 2.2475461911047603,
+          "rot_deg_mean": 1.3507363987128012,
+          "rot_deg_max": 9.404088904634957
+        }
+      }
+    },
+    {
+      "seq_id": "stereomis_extracted_StereoMIS_0_0_1_P2_8",
+      "n": 9155,
+      "ate_se3_mm": 22.189599299647963,
+      "ate_sim3_mm": 21.099329051088333,
+      "fitted_sim3_scale_after_x50": 0.7886785002520076,
+      "rpe_metric": {
+        "1": {
+          "trans_mm_mean": 0.07419328839434337,
+          "trans_mm_max": 3.509228344452321,
+          "trans_mm_rmse": 0.13040841773397419,
+          "rot_deg_mean": 0.045524901322363406,
+          "rot_deg_max": 4.2431517213157255
+        },
+        "5": {
+          "trans_mm_mean": 0.2794712024360071,
+          "trans_mm_max": 3.5301797806771953,
+          "trans_mm_rmse": 0.5071221682634096,
+          "rot_deg_mean": 0.18891518388387157,
+          "rot_deg_max": 4.419649142872727
+        },
+        "10": {
+          "trans_mm_mean": 0.508495438035031,
+          "trans_mm_max": 5.752515581140442,
+          "trans_mm_rmse": 0.9459236639542117,
+          "rot_deg_mean": 0.3438414867536682,
+          "rot_deg_max": 4.609347753500431
+        }
+      },
+      "rpe_raw_model_units": {
+        "1": {
+          "trans_mm_mean": 0.10265115640393281,
+          "trans_mm_max": 1.7083261330170454,
+          "trans_mm_rmse": 0.19920261311985907,
+          "rot_deg_mean": 0.045524901322363406,
+          "rot_deg_max": 4.2431517213157255
+        },
+        "5": {
+          "trans_mm_mean": 0.44433480615451404,
+          "trans_mm_max": 5.285463209642484,
+          "trans_mm_rmse": 0.9395543836054967,
+          "rot_deg_mean": 0.18891518388387157,
+          "rot_deg_max": 4.419649142872727
+        },
+        "10": {
+          "trans_mm_mean": 0.8585487203525007,
+          "trans_mm_max": 10.396299138702885,
+          "trans_mm_rmse": 1.8339702264181297,
+          "rot_deg_mean": 0.3438414867536682,
+          "rot_deg_max": 4.609347753500431
+        }
+      }
+    },
+    {
+      "seq_id": "stereomis_extracted_StereoMIS_0_0_1_P3",
+      "n": 10664,
+      "ate_se3_mm": 22.32539610866804,
+      "ate_sim3_mm": 22.275883239937052,
+      "fitted_sim3_scale_after_x50": 0.9356644788330916,
+      "rpe_metric": {
+        "1": {
+          "trans_mm_mean": 0.11227375439896378,
+          "trans_mm_max": 3.9856151840886747,
+          "trans_mm_rmse": 0.19208274223808777,
+          "rot_deg_mean": 0.07628371454881522,
+          "rot_deg_max": 2.8031441007475215
+        },
+        "5": {
+          "trans_mm_mean": 0.5010662763954463,
+          "trans_mm_max": 6.630968916768467,
+          "trans_mm_rmse": 0.8094327420177081,
+          "rot_deg_mean": 0.33045283663051217,
+          "rot_deg_max": 6.872223001452767
+        },
+        "10": {
+          "trans_mm_mean": 0.9480023924429034,
+          "trans_mm_max": 10.851888957218396,
+          "trans_mm_rmse": 1.5179562625138165,
+          "rot_deg_mean": 0.6173709141666842,
+          "rot_deg_max": 11.468592148781017
+        }
+      },
+      "rpe_raw_model_units": {
+        "1": {
+          "trans_mm_mean": 0.05809646243269424,
+          "trans_mm_max": 5.71660443043218,
+          "trans_mm_rmse": 0.23244933634216616,
+          "rot_deg_mean": 0.07628371454881522,
+          "rot_deg_max": 2.8031441007475215
+        },
+        "5": {
+          "trans_mm_mean": 0.24010523618684348,
+          "trans_mm_max": 16.616471914390978,
+          "trans_mm_rmse": 1.06627527517174,
+          "rot_deg_mean": 0.33045283663051217,
+          "rot_deg_max": 6.872223001452767
+        },
+        "10": {
+          "trans_mm_mean": 0.4647561034517461,
+          "trans_mm_max": 25.99692464284497,
+          "trans_mm_rmse": 2.076598264761226,
+          "rot_deg_mean": 0.6173709141666842,
+          "rot_deg_max": 11.468592148781017
+        }
+      }
+    }
+  ]
+}

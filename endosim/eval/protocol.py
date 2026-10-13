@@ -19,6 +19,13 @@ from ..geometry.se3 import relative, so3_log
 from .align import umeyama_alignment
 
 
+def _native_path(p: str) -> str:
+    """Windows drive paths stored in color_index.json, read from WSL/Linux."""
+    if os.name != "nt" and len(p) > 2 and p[1] == ":" and p[0].isalpha():
+        return f"/mnt/{p[0].lower()}{p[2:]}".replace("\\", "/")
+    return p
+
+
 def list_color_frames(seq_dir: str, indices=None) -> list[str]:
     """列出序列帧路径: 优先本地 color/, 否则读 color_index.json (原始路径引用)。
 
@@ -44,12 +51,14 @@ def list_color_frames(seq_dir: str, indices=None) -> list[str]:
             return materialize_video_indices(seq_dir, idx, indices)
         return materialize_video_frames(seq_dir, idx)
     if isinstance(idx, list):
-        paths = [p for p in idx if isinstance(p, str) and os.path.exists(p)]
+        paths = [_native_path(p) for p in idx if isinstance(p, str)]
+        paths = [p for p in paths if os.path.exists(p)]
         if indices is None:
             return paths
         return [paths[int(i)] for i in indices if 0 <= int(i) < len(paths)]
     keys = sorted(idx, key=lambda k: int(k) if str(k).isdigit() else str(k))
-    return [idx[k] for k in keys if os.path.exists(idx[k])]
+    paths = [_native_path(idx[k]) for k in keys]
+    return [p for p in paths if os.path.exists(p)]
 
 
 def _steps_mm(poses: np.ndarray) -> np.ndarray:

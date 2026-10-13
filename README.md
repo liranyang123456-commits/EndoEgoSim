@@ -6,6 +6,9 @@ Code and frozen evaluation ledgers for the manuscript:
 
 Repository: https://github.com/liranyang123456-commits/EndoEgoSim
 
+> **EgoLite.** This repository also hosts the code, evaluation ledgers and trained checkpoint of EgoLite, a 20.9 M-parameter
+> monocular network that separates camera motion from tissue motion (manuscript under review). See [EGOLITE.md](EGOLITE.md).
+
 > **Claim boundary.** We do **not** claim a universal real-domain SOTA.
 > Primary simulation evidence is protocol-matched Sim(3) ATE. The development
 > route threshold is post hoc; frozen confirmatory sets are mixed (core mean
@@ -56,7 +59,8 @@ python scripts/generate_dataset.py \
 |------|----------|
 | `endosim/` | Generator, rasterizer, metrics, `geometry/pose_graph.py`, `pseudoheight.py`, `eval/` (MD-VGGT infer, decouple, static support) |
 | `scripts/` | Generation, MD-VGGT eval, reconstruction/motion-layer/board-pose eval, EGO-Mo converters, leaderboard/trajectory plots, packaging |
-| `configs/` | Default / hard / keyframe / lowref / href / disaster / ego_protocol / **procedural_review** |
+| `endosim/lite/`, `EGOLITE.md` | EgoLite model, training and evaluation scripts, checkpoint instructions (see `EGOLITE.md`) |
+| `configs/` | Default / hard / keyframe / lowref / href / disaster / ego_protocol / **procedural_review** / abs |
 | `lists/` | Frozen identities used in the paper + EGO-Mo real-capture lists |
 | `results/sota/` | Summary JSON ledgers (not full RGB) |
 | `mia_paper/` | Manuscript sources (local workspace; may not be on GitHub) |

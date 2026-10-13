@@ -43,7 +43,7 @@ def _first_file(*cands):
 RELOC3R_ROOT = os.environ.get("RELOC3R_ROOT") or _first_dir(
     r"E:\SOTA_Methods\Reloc3r", r"D:\reloc3r_src", r"D:\Reloc3r_src")
 DROID_ROOT = os.environ.get("DROID_ROOT") or _first_dir(
-    "/root/DROID-SLAM", r"D:\DROID-SLAM")
+    r"D:\DROID-SLAM", "/root/DROID-SLAM")
 DROID_CKPT = os.environ.get("DROID_CKPT") or _first_file(
     os.path.join(DROID_ROOT, "droid.pth"),
     "/root/DROID-SLAM/droid.pth", r"D:\DROID-SLAM\droid.pth")
@@ -244,11 +244,12 @@ def run_droid(frame_paths, K):
     if not os.path.isfile(DROID_CKPT):
         raise FileNotFoundError(f"DROID weights missing: {DROID_CKPT}")
     import torch
-    if DROID_ROOT not in sys.path:
-        sys.path.insert(0, DROID_ROOT)
     slam_dir = os.path.join(DROID_ROOT, "droid_slam")
     if slam_dir not in sys.path:
         sys.path.insert(0, slam_dir)
+    lt_dir = os.path.join(DROID_ROOT, "thirdparty", "lietorch")
+    if os.path.isdir(lt_dir) and lt_dir not in sys.path:
+        sys.path.insert(0, lt_dir)
     from droid import Droid
     stream, image_size = _droid_stream(frame_paths, K)
     args = argparse.Namespace(
@@ -452,7 +453,7 @@ def stratified_summary(records):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--method", required=True,
-                    choices=["pi3", "droid", "orbslam3", "reloc3r"])
+                    choices=["pi3", "droid", "orbslam3", "reloc3r", "afsfm", "endodac"])
     ap.add_argument("--list", default="lists/simtest92.txt")
     ap.add_argument("--out", default="results/sota")
     ap.add_argument("--tag", default=None)
@@ -506,6 +507,9 @@ def main():
                 est = run_pi3(frame_paths)
             elif args.method == "reloc3r":
                 est = run_reloc3r(frame_paths)
+            elif args.method in ("afsfm", "endodac"):
+                from egomotion_baselines import run_posenet
+                est = run_posenet(frame_paths, args.method)
             elif args.method == "droid":
                 est = run_droid(frame_paths, K)
             else:
@@ -531,7 +535,7 @@ def main():
         except Exception as e:
             print(f"[{i+1}/{len(seqs)}] {sid}: FAILED", flush=True)
             traceback.print_exc()
-            records.append({"seq_id": sid, "error": traceback.format_exc()[-400:]})
+            records.append({"seq_id": sid, "error": traceback.format_exc()[-1000:]})
             if i == 0 and isinstance(e, (FileNotFoundError, ImportError)):
                 break
 

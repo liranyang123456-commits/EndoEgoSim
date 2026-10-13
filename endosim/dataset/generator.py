@@ -231,6 +231,14 @@ def generate_sequence(seq_id: str, seed: int, cfg: GenConfig,
                 fps=cfg.fps,
                 contact_point=instrument_tip,
             )
+    if cfg.deformation.respiration_prob > 0 and rng.random() < cfg.deformation.respiration_prob:
+        from ..motion.deformation import RespiratoryMotion
+        deform = RespiratoryMotion(
+            tunnel.mesh.verts, rng, fps=cfg.fps,
+            amp_mm=_sample_uniform(rng, cfg.deformation.resp_amp_mm),
+            hz=_sample_uniform(rng, cfg.deformation.resp_hz),
+            static_frac=_sample_uniform(rng, cfg.deformation.resp_static_frac),
+            base=deform)
 
     # 序列级外观参照 (同一张真实图, 保证时序颜色一致; 路径访问不拷贝)
     color_ref = None
@@ -449,6 +457,8 @@ def generate_sequence(seq_id: str, seed: int, cfg: GenConfig,
         "n_objects": len([o for o in scene_objects if not o.is_marker]),
         "has_marker": has_marker,
         "reference_fraction": ref_fracs,   # 源帧 t -> t+1 的参照物像素占比
+        # 整段序列内绝对静止（相对首帧位移 < eps）的像素占比; 仅 save_abs_motion 时有值
+        "abs_reference_fraction": [m.get("abs_ref_frac") for m in motion_gt] + [None],
         "appearance": {
             "color_transfer": color_ref is not None,
             "color_transfer_strength": ct_strength,
@@ -555,6 +565,22 @@ def _compute_motion_gt(frames, poses_wc, cam, base_verts, base_faces,
     eps = cfg.motion_eps_mm
     n = len(frames)
     out = []
+    want_abs = bool(getattr(cfg.output, "save_abs_motion", False))
+    if want_abs:
+        # 整段序列内材料点相对首帧位置的最大位移: < eps 即绝对静止
+        d0 = tissue_disp(0)
+        vmax = np.zeros(len(base_verts))
+        for t in range(n):
+            vmax = np.maximum(vmax, np.linalg.norm(tissue_disp(t) - d0, axis=1))
+        omax = []
+        for obj in scene_objects:
+            P0 = transform_points(obj.poses_wo[0], obj.mesh.verts)
+            m = np.zeros(len(obj.mesh.verts))
+            for t in range(n):
+                m = np.maximum(m, np.linalg.norm(
+                    transform_points(obj.poses_wo[t], obj.mesh.verts) - P0, axis=1))
+            omax.append(m)
+        R_G = np.linalg.inv(poses_wc[0])[:3, :3]     # 场景系 -> 导出(首帧相机)系
 
     for t in range(1, n):
         f0, f1 = frames[t - 1], frames[t]
@@ -576,10 +602,14 @@ def _compute_motion_gt(frames, poses_wc, cam, base_verts, base_faces,
         # ---- 材料点世界位置: t-1 与 t ----
         X_prev = np.zeros((len(ys), 3))
         X_cur = np.zeros((len(ys), 3))
+        max_disp = np.zeros(len(ys))
         is_tissue = insts == 1
         if is_tissue.any():
             F_idx = base_faces[ids[is_tissue]]
             w0, w1, w2 = b0[is_tissue], b1[is_tissue], b2[is_tissue]
+            if want_abs:
+                max_disp[is_tissue] = (w0 * vmax[F_idx[:, 0]] + w1 * vmax[F_idx[:, 1]]
+                                       + w2 * vmax[F_idx[:, 2]])
             v_base = (w0[:, None] * base_verts[F_idx[:, 0]]
                       + w1[:, None] * base_verts[F_idx[:, 1]]
                       + w2[:, None] * base_verts[F_idx[:, 2]])
@@ -606,6 +636,9 @@ def _compute_motion_gt(frames, poses_wc, cam, base_verts, base_faces,
                        + w2[:, None] * verts[F_idx[:, 2]])
             X_prev[m] = transform_points(obj.poses_wo[t - 1], p_local)
             X_cur[m] = transform_points(obj.poses_wo[t], p_local)
+            if want_abs:
+                om = omax[oi]
+                max_disp[m] = w0 * om[F_idx[:, 0]] + w1 * om[F_idx[:, 1]] + w2 * om[F_idx[:, 2]]
 
         # ---- 场景运动幅度 ----
         scene_motion = np.linalg.norm(X_cur - X_prev, axis=1)
@@ -643,5 +676,14 @@ def _compute_motion_gt(frames, poses_wc, cam, base_verts, base_faces,
         flow_full[ys[ok], xs[ok], 1] = flow[ok, 1]
 
         ref_frac = float((labels_full == 1).sum() / max(len(ys), 1))
-        out.append({"flow": flow_full, "mask": mask, "ref_frac": ref_frac})
+        rec = {"flow": flow_full, "mask": mask, "ref_frac": ref_frac}
+        if want_abs:
+            world = np.full((H, W, 3), np.nan, dtype=np.float32)
+            world[ys, xs] = (X_cur - X_prev) @ R_G.T
+            mx = np.full((H, W), np.nan, dtype=np.float32)
+            mx[ys, xs] = max_disp
+            rec["world_disp"] = world
+            rec["max_disp"] = mx
+            rec["abs_ref_frac"] = float((max_disp < eps).sum() / max(len(ys), 1))
+        out.append(rec)
     return out

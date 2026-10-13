@@ -74,6 +74,11 @@ class DeformationConfig:
     """内窥镜现实: 形变是常态（默认85%序列含形变）。"""
     prob: float = 0.85
     strength: tuple = (0.15, 1.0)
+    # 整体呼吸运动（在体腹腔: 大片组织随呼吸机整体位移）; 0 = 关闭（旧数据集行为）
+    respiration_prob: float = 0.0
+    resp_amp_mm: tuple = (2.0, 10.0)
+    resp_hz: tuple = (0.2, 0.4)
+    resp_static_frac: tuple = (0.0, 0.6)   # 不随呼吸动的组织顶点比例（绝对静止区）
 
 
 @dataclass
@@ -113,6 +118,7 @@ class OutputConfig:
     save_motion_gt: bool = True
     save_flow: bool = True            # 稠密光流(压缩npz, ~0.5MB/帧)
     save_motion_mask: bool = True     # 运动分解掩码(png, 几KB/帧)
+    save_abs_motion: bool = False     # 逐像素世界位移 + 整段最大位移(npz), 组织绝对运动真值
     save_normals: bool = False        # 法线图(png16, 相机系, 0=无效像素)
     stereo_baseline_mm: float = 0.0   # >0 时渲染右目(沿相机+X基线), 输出 color_right/depth_right
     depth_format: Literal["png16", "tiff"] = "png16"

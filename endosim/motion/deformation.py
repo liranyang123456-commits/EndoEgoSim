@@ -258,3 +258,78 @@ class MeshHarmonicDeformation:
         return {"kind": "mesh_harmonic", "strength": self.strength,
                 "fps": self.fps, "n_modes": len(self.modes),
                 "t_freqs": [m["t_freq"] for m in self.modes]}
+
+
+class RespiratoryMotion:
+    """整体呼吸运动 + 可选局部形变（在体腹腔: 大片组织随呼吸机整体位移）。
+
+    d(v, t) = d_base(v, t) + w(v) · s(t) · (A · e + A_s · (v − c) / R)
+
+    s(t) ∈ [0, 1] 为呼吸机波形（吸气快、呼气慢）; e 为整体位移方向; 第二项为轻微膨胀。
+    w(v) ∈ [0, 1] 沿随机方向平滑过渡; w = 0 的顶点（比例 static_frac）在整段序列内
+    不随呼吸运动, 构成绝对静止区（若无局部形变叠加）。
+    """
+
+    def __init__(self, verts: np.ndarray, rng: np.random.Generator, fps: float,
+                 amp_mm: float, hz: float, static_frac: float, base=None,
+                 weights: np.ndarray | None = None):
+        self.base = base
+        self.fps = float(fps)
+        self.amp = float(amp_mm)
+        self.hz = float(hz)
+        self.static_frac = float(static_frac)
+        v = np.asarray(verts, dtype=np.float64)
+        self.n_verts = len(v)
+        e = rng.normal(size=3)
+        self.e = e / np.linalg.norm(e)
+        self.amp_scale = self.amp * rng.uniform(0.0, 0.3)
+        self.center = v.mean(0)
+        self.radius = float(np.linalg.norm(v - self.center, axis=1).mean()) + 1e-6
+        self.phase0 = rng.uniform(0, 1)
+        self.insp = rng.uniform(0.3, 0.45)
+        g = rng.normal(size=3)
+        proj = (v - self.center) @ (g / np.linalg.norm(g))
+        if weights is not None:                       # per-vertex weights, e.g. from anatomy
+            self.w = np.asarray(weights, dtype=np.float64)
+        elif self.static_frac <= 0:
+            self.w = np.ones(self.n_verts)
+        else:
+            q = np.quantile(proj, min(self.static_frac, 1.0))
+            width = 0.15 * (proj.max() - proj.min()) + 1e-6
+            x = np.clip((proj - q) / width, 0, 1)
+            self.w = x * x * (3 - 2 * x)
+        self.verts_ref = v
+
+    def waveform(self, t: float) -> float:
+        ph = (t * self.hz + self.phase0) % 1.0
+        if ph < self.insp:
+            return 0.5 - 0.5 * np.cos(np.pi * ph / self.insp)
+        return 0.5 + 0.5 * np.cos(np.pi * (ph - self.insp) / (1 - self.insp))
+
+    def displacement(self, frame: int) -> np.ndarray:
+        s = self.waveform(frame / self.fps)
+        d = self.w[:, None] * s * (self.amp * self.e[None, :]
+                                   + self.amp_scale * (self.verts_ref - self.center) / self.radius)
+        if self.base is not None:
+            d = d + self.base.displacement(frame)
+        return d
+
+    def to_dict(self) -> dict:
+        return {"kind": "respiration", "amp_mm": self.amp, "hz": self.hz,
+                "static_frac": self.static_frac, "amp_scale_mm": self.amp_scale,
+                "base": self.base.to_dict() if self.base is not None else None}
+
+
+class ScaledDeformation:
+    """Per-vertex scaling of another deformation (e.g. no local deformation on anchors)."""
+
+    def __init__(self, base, scale: np.ndarray):
+        self.base = base
+        self.scale = np.asarray(scale, dtype=np.float64)[:, None]
+
+    def displacement(self, frame: int) -> np.ndarray:
+        return self.base.displacement(frame) * self.scale
+
+    def to_dict(self) -> dict:
+        return {"kind": "scaled", "base": self.base.to_dict(),
+                "scale_mean": float(self.scale.mean())}
