@@ -45,9 +45,11 @@ SHA-256  f2c6def4a6e6c81d01a95a0c59150047a661c2f5537486cf30efaf967b6266a4
 ```
 
 ```bash
-gh release download egolite-v1.0 --repo liranyang123456-commits/EndoEgoSim --pattern egolite_r_v2.pth
+curl -L -o egolite_r_v2.pth https://github.com/liranyang123456-commits/EndoEgoSim/releases/download/egolite-v1.0/egolite_r_v2.pth
 python -c "import hashlib;print(hashlib.sha256(open('egolite_r_v2.pth','rb').read()).hexdigest())"
 ```
+
+(`gh release download egolite-v1.0 --pattern egolite_r_v2.pth` works as well.)
 
 The weights were trained on simulated and real-to-sim scenes only (see below). They are released for research use.
 
@@ -91,8 +93,8 @@ python scripts/eval_egolite.py --list lists/simtest92.txt --ckpt egolite_r_v2.pt
 The evaluation needs the generated sequences named in the list. List entries are the author's local paths; only the last
 path component (`seq_<seed>`) identifies a sequence, because the generator derives the split and the content of
 `seq_<seed>` from the seed. The shipped ledger `results/sota/egolite_r_v2_simtest/summary.json` holds the numbers of the
-manuscript. In a re-run of three sequences from this repository, the per-sequence ATE differed from the ledger by at most
-0.03 mm (GPU kernels are not bit-deterministic).
+manuscript. In a re-run of four sequences from a fresh clone with the downloaded checkpoint, the per-sequence ATE differed
+from the ledger by at most 0.06 mm (below 0.4 %); GPU kernels are not bit-deterministic.
 
 ## Data
 
