@@ -368,20 +368,27 @@ def evaluate_sequence(seq, net, windows, main_win):
 
 
 def pick_example(examples, med_none, med_ego):
-    pool = [e for e in examples if e[0] > e[1] + 5] or examples
-    return min(pool, key=lambda e: abs(e[0] - med_none) + abs(e[1] - med_ego))
+    """The update whose two errors are closest to the sequence medians, with no other filter (representative frame)."""
+    return min(examples, key=lambda e: abs(e[0] - med_none) + abs(e[1] - med_ego))
 
 
 def save_gallery(rows, dest):
-    """3 x 3 grid of equal-size panels; each cell pairs 'camera motion left in' with 'after EgoLite'."""
-    out_w, out_h = 220, 132
+    """Grid of equal-size cells, three sequences per row. Each sequence is a pair: camera motion left in | after EgoLite.
+    Column headers are drawn once; each cell carries the sequence number and the error of that update."""
+    out_w, out_h = 300, 180
+    font = cv2.FONT_HERSHEY_SIMPLEX
+
+    def label(img, text, org, scale=0.9):
+        cv2.putText(img, text, org, font, scale, (255, 255, 255), 5, cv2.LINE_AA)
+        cv2.putText(img, text, org, font, scale, (25, 25, 25), 2, cv2.LINE_AA)
+
     panels = []
     for index, im, truth, raw, ego, raw_err, ego_err in rows:
         pts = np.vstack([truth, raw, ego])
         box = (max(0, int(pts[:, 0].min()) - 36), max(0, int(pts[:, 1].min()) - 28),
                min(im.shape[1], int(pts[:, 0].max()) + 36), min(im.shape[0], int(pts[:, 1].max()) + 28))
         pair = []
-        for est, e, label in ((raw, raw_err, "camera left in"), (ego, ego_err, "after EgoLite")):
+        for est, e, first in ((raw, raw_err, True), (ego, ego_err, False)):
             x0, y0, x1, y1 = box
             src = im[y0:y1, x0:x1]
             scale = min(out_w / max(1, src.shape[1]), out_h / max(1, src.shape[0]))
@@ -392,35 +399,42 @@ def save_gallery(rows, dest):
 
             def pt(u, v):
                 return int(round((u - x0) * scale + ox)), int(round((v - y0) * scale + oy))
-            for a, b in zip(est, truth):
-                cv2.line(crop, pt(*a), pt(*b), (255, 255, 255), 1, cv2.LINE_AA)
+            for a_, b_ in zip(est, truth):
+                cv2.line(crop, pt(*a_), pt(*b_), (255, 255, 255), 1, cv2.LINE_AA)
             for u in truth:
-                cv2.circle(crop, pt(*u), 4, (255, 255, 255), 1, cv2.LINE_AA)
-                cv2.circle(crop, pt(*u), 3, (40, 160, 40), 1, cv2.LINE_AA)
+                cv2.circle(crop, pt(*u), 6, (255, 255, 255), 1, cv2.LINE_AA)
+                cv2.circle(crop, pt(*u), 5, (40, 160, 40), 2, cv2.LINE_AA)
             for u in est:
-                cv2.circle(crop, pt(*u), 3, (255, 255, 255), -1, cv2.LINE_AA)
-                cv2.circle(crop, pt(*u), 2, (40, 40, 210), -1, cv2.LINE_AA)
-            bar = np.full((20, out_w, 3), 255, np.uint8)
-            cv2.putText(bar, f"{index}  {label}  {e:.1f} px", (3, 14), cv2.FONT_HERSHEY_SIMPLEX, 0.38,
-                        (20, 20, 20), 1, cv2.LINE_AA)
-            pair.append(np.vstack([bar, crop]))
-        panels.append(np.hstack([pair[0], np.full((pair[0].shape[0], 6, 3), 255, np.uint8), pair[1]]))
+                cv2.circle(crop, pt(*u), 4, (255, 255, 255), -1, cv2.LINE_AA)
+                cv2.circle(crop, pt(*u), 3, (40, 40, 210), -1, cv2.LINE_AA)
+            label(crop, (f"{index}   " if first else "") + f"{e:.1f} px", (8, 28))
+            pair.append(crop)
+        panels.append(np.hstack([pair[0], np.full((out_h, 6, 3), 255, np.uint8), pair[1]]))
     per_row = 3 if len(panels) % 3 == 0 else 2
     while len(panels) % per_row:
         panels.append(np.full_like(panels[0], 255))
+    gutter = 14
     rows_img = []
     for i in range(0, len(panels), per_row):
         row = panels[i]
         for k in range(1, per_row):
-            row = np.hstack([row, np.full((row.shape[0], 8, 3), 255, np.uint8), panels[i + k]])
-        rows_img += [row, np.full((6, row.shape[1], 3), 255, np.uint8)]
+            row = np.hstack([row, np.full((out_h, gutter, 3), 255, np.uint8), panels[i + k]])
+        rows_img += [row, np.full((8, row.shape[1], 3), 255, np.uint8)]
     width = rows_img[0].shape[1]
-    legend = np.full((28, width, 3), 255, np.uint8)
-    cv2.circle(legend, (14, 14), 5, (40, 160, 40), 1, cv2.LINE_AA)
-    cv2.putText(legend, "true patch", (28, 18), cv2.FONT_HERSHEY_SIMPLEX, 0.45, (20, 20, 20), 1, cv2.LINE_AA)
-    cv2.circle(legend, (140, 14), 4, (40, 40, 210), -1, cv2.LINE_AA)
-    cv2.putText(legend, "registered model", (150, 18), cv2.FONT_HERSHEY_SIMPLEX, 0.45, (20, 20, 20), 1, cv2.LINE_AA)
-    cv2.imwrite(dest, np.vstack([legend] + rows_img))
+    header = np.full((40, width, 3), 255, np.uint8)
+    for k in range(per_row):
+        x = k * (2 * out_w + 6 + gutter)
+        for j, txt in enumerate(("camera motion left in", "after EgoLite")):
+            (tw, _), _ = cv2.getTextSize(txt, font, 0.8, 2)
+            cx = x + j * (out_w + 6) + (out_w - tw) // 2
+            cv2.putText(header, txt, (cx, 28), font, 0.8, (25, 25, 25), 2, cv2.LINE_AA)
+    legend = np.full((44, width, 3), 255, np.uint8)
+    cv2.circle(legend, (20, 22), 7, (40, 160, 40), 2, cv2.LINE_AA)
+    cv2.putText(legend, "true tissue patch", (38, 30), font, 0.8, (25, 25, 25), 2, cv2.LINE_AA)
+    cv2.circle(legend, (330, 22), 6, (40, 40, 210), -1, cv2.LINE_AA)
+    cv2.putText(legend, "registered model", (346, 30), font, 0.8, (25, 25, 25), 2, cv2.LINE_AA)
+    cv2.putText(legend, "number: sequence, error of this update", (640, 30), font, 0.8, (25, 25, 25), 2, cv2.LINE_AA)
+    cv2.imwrite(dest, np.vstack([header] + rows_img + [legend]))
 
 
 def main():
