@@ -24,6 +24,7 @@ size 1 on an RTX 5090 laptop GPU (unoptimised PyTorch).
 | `scripts/eval_decoupling.py` | Image-space separation of camera and tissue motion (tracked-displacement error, AUROC, direction cosine) |
 | `scripts/run_gn_sensitivity.py`, `eval_label_ablation.py`, `run_pairlab_eval.py`, `run_pairlab_full_chain.py`, `paired_bootstrap_ci.py`, `rotation_rpe_summary.py`, `eval_static_leak.py` | Analyses reported in the manuscript |
 | `scripts/audit_egolite_fixed50_scale.py`, `results/egolite/stereomis_rv2_fixed50_unit_audit.json` | Re-evaluation of the full StereoMIS videos in the fixed 50 mm depth unit (the script needs the `*_est_c2w.txt` files written by `eval_egolite.py`, which are not shipped) |
+| `scripts/eval_ar_registration.py`, `results/ar_reg/ar_registration_summary.json` | Augmented-reality registration test: registering a tissue patch with and without ego-motion removal (see below) |
 | `scripts/bench_egolite_streaming.py`, `bench_baselines_latency.py`, `make_accuracy_latency_figure.py` | Latency and accuracy-latency figure (the baseline wrappers expect local clones of the official baseline code; edit the paths at the top of `egomotion_baselines.py` and `eval_slam.py`) |
 | `scripts/egolite_pipelines/` | PowerShell pipelines of the reported runs (stage 6 training and evaluation, ablations) |
 | `configs/egolite_r_v2_args.json`, `results/egolite/chain/*.json` | Configuration of the reported checkpoint and the arguments of every training stage |
@@ -95,6 +96,34 @@ path component (`seq_<seed>`) identifies a sequence, because the generator deriv
 `seq_<seed>` from the seed. The shipped ledger `results/sota/egolite_r_v2_simtest/summary.json` holds the numbers of the
 manuscript. In a re-run of four sequences from a fresh clone with the downloaded checkpoint, the per-sequence ATE differed
 from the ledger by at most 0.06 mm (below 0.4 %); GPU kernels are not bit-deterministic.
+
+## Augmented-reality registration test
+
+```bash
+python scripts/eval_ar_registration.py --root sim_data_abs/test --ckpt egolite_r_v2.pth
+```
+
+On the EndoEgoSim-Abs test sequences in which the camera travels at least 40 mm and respiration has an amplitude of at
+least 4 mm (nine sequences with visible deforming tissue, 163 updates), a rigid patch on deforming tissue is registered
+between frames that are far enough apart for the camera-induced displacement to exceed an 18 px search window. All
+methods register the same patch; they differ only in the prior. Median over sequences of the per-sequence median error:
+
+| Registration | Prior | Error (px) | Within 10 px |
+|---|---|---:|---:|
+| Pyramidal LK, then PnP | none | 20.3 | 37% |
+| Dense optical flow, then PnP | none | 20.1 | 38% |
+| Depth ICP (simulator depth) | previous pose | 25.9 | 20% |
+| Local registration | previous position | 23.4 | 40% |
+| Homography transfer | none | 23.0 | 46% |
+| Local registration | whole-frame homography | 17.1 | 50% |
+| Local registration | ORB ego-motion, true translation magnitude | 5.1 | 59% |
+| Local registration | EgoLite ego-motion | **3.4** | **72%** |
+| Local registration | true camera motion (reference) | 2.1 | 80% |
+
+Paired Wilcoxon tests over the nine sequences against EgoLite give p = 0.004 for the four methods without ego-motion
+separation, 0.039 for both homography rows, 0.027 for the ORB ego-motion and 0.25 for the true camera motion. The
+summary file also holds the window sweep (10-34 px) and the per-sequence medians. The patch is simulated tissue, not a
+preoperative model, and the test does not measure clinical overlay accuracy.
 
 ## Data
 
