@@ -433,7 +433,6 @@ def save_gallery(rows, dest):
     cv2.putText(legend, "true tissue patch", (38, 30), font, 0.8, (25, 25, 25), 2, cv2.LINE_AA)
     cv2.circle(legend, (330, 22), 6, (40, 40, 210), -1, cv2.LINE_AA)
     cv2.putText(legend, "registered model", (346, 30), font, 0.8, (25, 25, 25), 2, cv2.LINE_AA)
-    cv2.putText(legend, "number: sequence, error of this update", (640, 30), font, 0.8, (25, 25, 25), 2, cv2.LINE_AA)
     cv2.imwrite(dest, np.vstack([header] + rows_img + [legend]))
 
 
