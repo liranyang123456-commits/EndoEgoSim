@@ -154,6 +154,15 @@ Six stages, 55,400 iterations in total (`results/egolite/chain/<stage>_args.json
 Seed 0 throughout. `scripts/egolite_pipelines/pipeline_r2.ps1` is the exact command of stage 6 and its evaluations;
 `scripts/run_pairlab_full_chain.py` repeats stages 5 and 6 with per-pair motion masks (label ablation).
 
+## Revision Benchmarks & Ledgers (`egolite-v1.2`)
+
+Release `egolite-v1.2` adds all reproducible scripts (`scripts/rev_*.py`) and JSON result ledgers (`results/revision_vrih/*.json`) for the revised manuscript:
+
+* **Source-disjoint real-video subsets (`r1_5_disjoint_lineage_audit.json`, `scripts/rev_audit_disjoint_lineage.py`)**: specimen-disjoint SCARED datasets 2-3 (8 sequences) and mesh/mould-disjoint C3VD subsets under Protocols A and B.
+* **Same-domain PoseNet, retrained module/loss ablations, and single-stage 3-seed training (`r1_3_4_6_7_retrained_ablations.json`, `r1_4_seeds_and_stages_real.json`, `r1_6_r2_3_table6_expanded.json`)**: 13-M ResNet-18 PoseNet trained on the exact 2:1:1 synthetic + R2S mixture, matched stage-6 retrained controls (including in vivo StereoMIS and unseen 124-sequence Hamlyn-R2S), learnable instrument weights, individual loss-term removals, and 3-seed single-stage from-scratch training.
+* **Expanded AR registration on simulated and real in vivo surgery (`r2_2_sim_ar_expanded.json`, `r2_1_stereomis_real_ar_clean.json`, `r2_1_stir_real_ar.json`)**: comparing AF-SfMLearner, EndoDAC, Same-Data PoseNet, ORB, Endo-FASt3r, DROID-SLAM, and EgoLite across 9 EndoEgoSim-Abs sequences (163 updates), 10 in vivo StereoMIS sequences during active camera motion (118 stereo-verified updates), and 20 in vivo porcine STIR 2024 clips with physical IR-fluorescent tissue tattoos.
+* **Monocular depth accuracy, motion-layer IoU, solver grid/occlusion audits, and GFLOPs/operator profiling (`r1_1_label_learning_audit.json`, `r1_2_depth_accuracy.json`, `r1_3_design_choices_audit.json`, `r1_8_flops_and_ops_cpu.json`, `r1_8_latency_and_flops_audit.json`)**: EgoLite requires 153.11 GFLOPs (2,877 ATen ops) per pair vs. 6.52 GFLOPs for 13-M PoseNets and 1,501.49 GFLOPs for Endo-FASt3r.
+
 ## Citation and licence
 
 Manuscript under review; please cite the repository until it is published. Code: MIT (see `LICENSE`). RAFT-large and

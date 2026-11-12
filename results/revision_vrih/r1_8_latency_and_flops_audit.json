@@ -1,0 +1,86 @@
+{
+  "gpu": "NVIDIA GeForce RTX 5090 Laptop GPU",
+  "torch": "2.11.0+cu128",
+  "models": {
+    "EgoLite": {
+      "params_M": 20.87,
+      "aten_ops_per_pair": 2877,
+      "gflops_per_pair": 153.11,
+      "eager_fp32": {
+        "median_ms": 44.61205000188784,
+        "p95_ms": 50.418504996559925,
+        "min_ms": 41.92730000067968
+      },
+      "eager_orig_bf16_context_raft_forced_fp32": {
+        "median_ms": 48.53074999846285,
+        "p95_ms": 56.344020001051824,
+        "min_ms": 43.909500003792346
+      },
+      "eager_true_bf16_raft": {
+        "median_ms": 55.09745000017574,
+        "p95_ms": 61.866055001155466,
+        "min_ms": 50.86060000030557
+      },
+      "raft_only_fp32": {
+        "median_ms": 29.391100000793813,
+        "p95_ms": 32.536390001041575,
+        "min_ms": 26.982600000337698
+      },
+      "raft_only_bf16": {
+        "median_ms": 40.38510000100359,
+        "p95_ms": 47.389715000463184,
+        "min_ms": 34.58499999396736
+      },
+      "eager_true_bf16_raft_6iters": {
+        "median_ms": 40.152300000045216,
+        "p95_ms": 44.1532550019474,
+        "min_ms": 36.52049999800511
+      }
+    },
+    "afsfm": {
+      "params_M": 13.01,
+      "aten_ops_per_pair": 205,
+      "gflops_per_pair": 6.52,
+      "eager_fp32": {
+        "median_ms": 2.5698999997985084,
+        "p95_ms": 3.5840549997374183,
+        "min_ms": 2.289800002472475
+      },
+      "eager_bf16": {
+        "median_ms": 3.685100000438979,
+        "p95_ms": 4.586954999831505,
+        "min_ms": 3.149100004520733
+      }
+    },
+    "endodac": {
+      "params_M": 13.01,
+      "aten_ops_per_pair": 205,
+      "gflops_per_pair": 6.52,
+      "eager_fp32": {
+        "median_ms": 2.7400500039220788,
+        "p95_ms": 4.196570000203792,
+        "min_ms": 2.296899998327717
+      },
+      "eager_bf16": {
+        "median_ms": 3.886750004312489,
+        "p95_ms": 5.300234996684594,
+        "min_ms": 3.2614999945508316
+      }
+    },
+    "Endo-FASt3r": {
+      "params_M": 428.36,
+      "aten_ops_per_pair": 9044,
+      "gflops_per_pair": 1501.49,
+      "eager_fp32": {
+        "median_ms": 130.8692499951576,
+        "p95_ms": 149.17606500384863,
+        "min_ms": 121.07680000190157
+      },
+      "eager_bf16": {
+        "median_ms": 135.69250000000466,
+        "p95_ms": 146.60202499690058,
+        "min_ms": 125.96620000113035
+      }
+    }
+  }
+}
