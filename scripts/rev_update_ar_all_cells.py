@@ -191,7 +191,9 @@ def update_stereomis_ar_with_samedata_posenet() -> None:
         test_start = int(calib_idx[-1]) + 30
 
         sc_ego = float(np.median(gt_steps[calib_idx] / np.maximum(np.linalg.norm(tr_ego[calib_idx + 1, :3, 3] - tr_ego[calib_idx, :3, 3], axis=1), 1e-6)))
-        sc_pn = float(np.median(gt_steps[calib_idx] / np.maximum(np.linalg.norm(tr_pn[calib_idx + 1, :3, 3] - tr_pn[calib_idx, :3, 3], axis=1), 1e-6)))
+        pn_steps = np.linalg.norm(tr_pn[calib_idx + 1, :3, 3] - tr_pn[calib_idx, :3, 3], axis=1)
+        ok_cal = pn_steps > 1e-4
+        sc_pn = float(np.median(gt_steps[calib_idx][ok_cal] / pn_steps[ok_cal])) if ok_cal.sum() >= 5 else 50.0
 
         step_gap = 25
         disp_gap = np.linalg.norm(gt_poses[test_start + step_gap:, :3, 3] - gt_poses[test_start:-step_gap, :3, 3], axis=1)
@@ -254,8 +256,9 @@ def update_stereomis_ar_with_samedata_posenet() -> None:
             e_ego_c.append(ear.px(ear.register_local(gL0, gL1, src, pr_ec[0], Xm, K, pr_ec[1], vis, win_px), truth))
 
             Re_p, te_p = ear.cam_static(tr_pn[t], tr_pn[t + step_gap])
-            uv_pc, z_pc = ear.project_c(K, (Re_p @ Xm.T).T + te_p * sc_pn)
-            pr_pc = (src, (R_id, t_zero)) if np.median(z_pc) < 2 else (uv_pc, (Re_p, te_p * sc_pn))
+            tm_pc = np.clip(te_p * sc_pn, -50.0, 50.0)
+            uv_pc, z_pc = ear.project_c(K, (Re_p @ Xm.T).T + tm_pc)
+            pr_pc = (src, (R_id, t_zero)) if np.median(z_pc) < 2 else (uv_pc, (Re_p, tm_pc))
             e_pn_c.append(ear.px(ear.register_local(gL0, gL1, src, pr_pc[0], Xm, K, pr_pc[1], vis, win_px), truth))
 
             uv_p50, z_p50 = ear.project_c(K, (Re_p @ Xm.T).T + te_p * 50.0)
