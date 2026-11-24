@@ -260,11 +260,14 @@ def main() -> None:
             for j, (m_label, pts_est, err_px) in enumerate(panels):
                 ax = axes[r_idx, c_base + j]
                 ax.imshow(ex["rgb"])
+                H_im, W_im = ex["rgb"].shape[:2]
                 t_pts = ex["truth"]
                 ms_ring = 52 if r_idx == 0 else 72
                 ms_dot = 18 if r_idx == 0 else 28
                 ax.scatter(t_pts[:, 0], t_pts[:, 1], s=ms_ring, facecolors="none", edgecolors="#32ef6a", linewidths=1.4, label="True tissue")
                 ax.scatter(pts_est[:, 0], pts_est[:, 1], s=ms_dot, c="#ff3b3b", marker="o", linewidths=0.4, edgecolors="white", label="Registered")
+                ax.set_xlim(0, W_im)
+                ax.set_ylim(H_im, 0)
                 ax.set_xticks([]); ax.set_yticks([])
                 for sp in ax.spines.values():
                     sp.set_edgecolor("#cccccc"); sp.set_linewidth(0.6)
