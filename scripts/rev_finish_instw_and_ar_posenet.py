@@ -1,4 +1,9 @@
-"""Re-train learnable instrument weight with 1e-2 gate LR + add SameDataPoseNet to Sim-AR Table 10."""
+"""Re-train learnable instrument weight with 1e-2 gate LR + add SameDataPoseNet to Sim-AR Table 10.
+
+NOTE (Reproducibility Provenance): Produces `retrain_instw_fastlr` (`alpha_i -> 0.22`) in
+`r1_3_4_6_7_retrained_ablations.json`. The final seeded (`cv2.setRNGSeed(0)`) `FixedSameDataPoseNet`
+AR entries across Simulated Abs, StereoMIS, and STIR 2024 are produced by `scripts/rev_fix_stage4_ar_seeded.py`.
+"""
 import json
 import os
 import sys
@@ -9,7 +14,10 @@ import numpy as np
 import torch
 from scipy.stats import wilcoxon
 
-sys.path.insert(0, "scripts")
+ROOT = Path(os.environ.get("EGOLITE_ROOT", Path(__file__).resolve().parents[1]))
+os.chdir(ROOT)
+sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT / "scripts"))
 import eval_ar_registration as ear  # noqa: E402
 from rev_run_local_retrained_fast import (  # noqa: E402
     CKPT_ROOT,

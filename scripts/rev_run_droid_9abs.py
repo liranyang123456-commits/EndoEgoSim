@@ -1,12 +1,14 @@
 """Run official DROID-SLAM (monocular) on the 9 EndoEgoSim-Abs AR test sequences in WSL2 with small buffer=128 (~0.9 GB VRAM)."""
 import argparse, glob, json, os, sys
 import cv2, numpy as np, torch
+from pathlib import Path
 from scipy.spatial.transform import Rotation
 
-DROID_ROOT = "/root/DROID-SLAM"
-DROID_CKPT = "/mnt/d/DROID-SLAM/droid.pth"
+ROOT = Path(os.environ.get("EGOLITE_ROOT", Path(__file__).resolve().parents[1]))
+DROID_ROOT = os.environ.get("DROID_SLAM_DIR", "/root/DROID-SLAM")
+DROID_CKPT = os.environ.get("DROID_WEIGHTS", "/root/DROID-SLAM/droid.pth")
 if not os.path.isfile(DROID_CKPT):
-    DROID_CKPT = "/root/DROID-SLAM/droid.pth"
+    DROID_CKPT = os.path.join(DROID_ROOT, "droid.pth")
 
 sys.path.insert(0, os.path.join(DROID_ROOT, "droid_slam"))
 lt_dir = os.path.join(DROID_ROOT, "thirdparty", "lietorch")
@@ -19,8 +21,8 @@ SEQS = [
     "seq_00900344", "seq_00900672", "seq_00900107", "seq_00900185",
     "seq_00900395", "seq_00900147", "seq_00900654", "seq_00900467", "seq_00900248",
 ]
-BASE = "/mnt/d/ego_motiion_Camera/sim_data_abs/test"
-OUT = "/mnt/d/ego_motiion_Camera/results/revision_vrih/droid_abs9"
+BASE = str(ROOT / "sim_data_abs" / "test")
+OUT = str(ROOT / "results" / "revision_vrih" / "droid_abs9")
 os.makedirs(OUT, exist_ok=True)
 
 

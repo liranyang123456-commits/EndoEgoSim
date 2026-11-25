@@ -1,12 +1,14 @@
 """Run official DROID-SLAM (monocular) on the 20 STIR 2024 clips in WSL2."""
 import argparse, glob, json, os, sys
 import cv2, numpy as np, torch
+from pathlib import Path
 from scipy.spatial.transform import Rotation
 
-DROID_ROOT = "/root/DROID-SLAM"
-DROID_CKPT = "/mnt/d/DROID-SLAM/droid.pth"
+ROOT = Path(os.environ.get("EGOLITE_ROOT", Path(__file__).resolve().parents[1]))
+DROID_ROOT = os.environ.get("DROID_SLAM_DIR", "/root/DROID-SLAM")
+DROID_CKPT = os.environ.get("DROID_WEIGHTS", "/root/DROID-SLAM/droid.pth")
 if not os.path.isfile(DROID_CKPT):
-    DROID_CKPT = "/root/DROID-SLAM/droid.pth"
+    DROID_CKPT = os.path.join(DROID_ROOT, "droid.pth")
 
 sys.path.insert(0, os.path.join(DROID_ROOT, "droid_slam"))
 lt_dir = os.path.join(DROID_ROOT, "thirdparty", "lietorch")
@@ -15,9 +17,14 @@ if os.path.isdir(lt_dir):
 
 from droid import Droid  # noqa: E402
 
-LEDGER = "/mnt/d/ego_motiion_Camera/results/revision_vrih/r2_1_stir_real_ar.json"
-STIR_ROOT = "/mnt/e/World_Agent_Enoscopy/datasets/STIR/STIRChallenge_2024"
-OUT = "/mnt/d/ego_motiion_Camera/results/revision_vrih/droid_stir20"
+LEDGER = str(ROOT / "results" / "revision_vrih" / "r2_1_stir_real_ar.json")
+STIR_ROOT = os.environ.get(
+    "EGOLITE_STIR_ROOT",
+    str(ROOT / "data" / "STIRChallenge_2024")
+    if (ROOT / "data" / "STIRChallenge_2024").is_dir()
+    else "data/STIR/STIRChallenge_2024",
+)
+OUT = str(ROOT / "results" / "revision_vrih" / "droid_stir20")
 os.makedirs(OUT, exist_ok=True)
 
 

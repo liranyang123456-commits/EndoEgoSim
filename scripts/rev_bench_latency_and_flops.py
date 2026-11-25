@@ -25,7 +25,7 @@ import numpy as np
 import torch
 from torch.utils.flop_counter import FlopCounterMode
 
-ROOT = Path(r"D:\ego_motiion_Camera")
+ROOT = Path(os.environ.get("EGOLITE_ROOT", Path(__file__).resolve().parents[1]))
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "scripts"))
 

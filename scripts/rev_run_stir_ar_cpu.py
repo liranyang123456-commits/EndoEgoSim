@@ -29,7 +29,7 @@ from scipy.stats import wilcoxon
 cv2.setNumThreads(2)
 torch.set_num_threads(6)
 
-ROOT = Path(r"D:\ego_motiion_Camera")
+ROOT = Path(os.environ.get("EGOLITE_ROOT", Path(__file__).resolve().parents[1]))
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "scripts"))
 
@@ -42,7 +42,10 @@ from endosim.lite.egolite import build_from_args, chain  # noqa: E402
 from endosim.pseudoheight import pseudo_height_label  # noqa: E402
 
 OUT = ROOT / "results" / "revision_vrih"
-STIR_ROOT = Path(r"E:\World_Agent_Enoscopy\datasets\STIR\STIRChallenge_2024")
+STIR_ROOT = Path(
+    os.environ.get("EGOLITE_STIR_ROOT")
+    or (ROOT / "data" / "STIRChallenge_2024" if (ROOT / "data" / "STIRChallenge_2024").is_dir() else r"data/STIR\STIRChallenge_2024")
+)
 
 
 @torch.no_grad()

@@ -22,7 +22,7 @@ from pathlib import Path
 import numpy as np
 from scipy.stats import wilcoxon
 
-ROOT = Path(r"D:\ego_motiion_Camera")
+ROOT = Path(os.environ.get("EGOLITE_ROOT", Path(__file__).resolve().parents[1]))
 OUT = ROOT / "results" / "revision_vrih"
 OUT.mkdir(parents=True, exist_ok=True)
 
@@ -110,7 +110,10 @@ def main():
 
     # Also check raw C3VD folder on E: for any additional ascending sequences!
     raw_c3vd_asc = []
-    c3vd_root = Path(r"E:\World_Agent_Enoscopy\datasets\C3VD")
+    c3vd_root = Path(
+        os.environ.get("EGOLITE_C3VD_RAW_ROOT")
+        or (ROOT / "data" / "C3VD" if (ROOT / "data" / "C3VD").is_dir() else r"data/C3VD")
+    )
     if c3vd_root.is_dir():
         for p in sorted(c3vd_root.rglob("pose.txt")):
             if "ascending" in str(p).lower():

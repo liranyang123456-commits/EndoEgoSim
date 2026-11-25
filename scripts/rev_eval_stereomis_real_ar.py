@@ -30,7 +30,7 @@ from scipy.spatial.transform import Rotation
 from scipy.stats import wilcoxon
 
 cv2.setNumThreads(2)
-ROOT = Path(r"D:\ego_motiion_Camera")
+ROOT = Path(os.environ.get("EGOLITE_ROOT", Path(__file__).resolve().parents[1]))
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "scripts"))
 
@@ -100,7 +100,11 @@ def posenet_chained_motion(tr_p: np.ndarray, t0: int, t1: int) -> tuple[np.ndarr
 
 def main():
     win_px = 18
-    smis_refs = [ln.strip() for ln in (ROOT / "lists/stereomis.txt").read_text().splitlines() if ln.strip()]
+    smis_refs = [
+        str(ROOT / ln.strip().replace("\\", "/").split("ego_motiion_Camera/")[-1].lstrip("/"))
+        if not os.path.isdir(ln.strip()) else ln.strip()
+        for ln in (ROOT / "lists/stereomis.txt").read_text().splitlines() if ln.strip()
+    ]
     est_dirs = {
         "afsfm": ROOT / "results/sota/afsfm_stereomis_full",
         "endodac": ROOT / "results/sota/endodac_stereomis_full",

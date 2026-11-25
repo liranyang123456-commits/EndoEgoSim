@@ -15,7 +15,7 @@ import torch
 cv2.setNumThreads(1)
 torch.set_num_threads(2)
 
-ROOT = Path(r"D:\ego_motiion_Camera")
+ROOT = Path(os.environ.get("EGOLITE_ROOT", Path(__file__).resolve().parents[1]))
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "scripts"))
 
@@ -41,8 +41,18 @@ def load_egolite(rel_ckpt: str) -> torch.nn.Module:
 
 
 def read_list(rel: str) -> list[str]:
-    return [ln.strip() for ln in (ROOT / rel).read_text(encoding="utf-8").splitlines()
-            if ln.strip() and not ln.startswith("#") and os.path.isfile(os.path.join(ln.strip(), "pose_c2w.txt"))]
+    out = []
+    for ln in (ROOT / rel).read_text(encoding="utf-8").splitlines():
+        if not ln.strip() or ln.startswith("#"):
+            continue
+        s = ln.strip()
+        if not os.path.isdir(s):
+            cand = ROOT / s.replace("\\", "/").split("ego_motiion_Camera/")[-1].lstrip("/")
+            if cand.is_dir():
+                s = str(cand)
+        if os.path.isfile(os.path.join(s, "pose_c2w.txt")):
+            out.append(s)
+    return out
 
 
 @torch.no_grad()
@@ -61,7 +71,12 @@ def main():
         "stereomis_11": read_list("lists/stereomis.txt"),
         "c3vd_10": read_list("lists/c3vd_full.txt"),
     }
-    ham = sorted(glob.glob(r"E:\ego_data\sim_data_r2s_ham2\train\seq_*"))
+    _ham_dir = os.environ.get("EGOLITE_HAMLYN_R2S_DIR") or (
+        str(ROOT / "sim_data_r2s_ham2" / "train")
+        if (ROOT / "sim_data_r2s_ham2" / "train").is_dir()
+        else r"sim_data_r2s_ham2\train"
+    )
+    ham = sorted(glob.glob(os.path.join(_ham_dir, "seq_*")))
     ham = [d for d in ham if os.path.isfile(os.path.join(d, "pose_c2w.txt"))]
     if ham:
         cohorts_map["hamlyn_r2s_124"] = ham

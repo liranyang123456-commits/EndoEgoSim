@@ -35,16 +35,28 @@ DEPTH_UNIT_MM = 50.0
 
 
 def read_list(rel: str) -> list[str]:
-    return [
-        ln.strip()
-        for ln in (ROOT / rel).read_text(encoding="utf-8").splitlines()
-        if ln.strip() and not ln.startswith("#") and os.path.isfile(os.path.join(ln.strip(), "pose_c2w.txt"))
-    ]
+    out = []
+    for ln in (ROOT / rel).read_text(encoding="utf-8").splitlines():
+        if not ln.strip() or ln.startswith("#"):
+            continue
+        s = ln.strip()
+        if not os.path.isdir(s):
+            cand = ROOT / s.replace("\\", "/").split("ego_motiion_Camera/")[-1].lstrip("/")
+            if cand.is_dir():
+                s = str(cand)
+        if os.path.isfile(os.path.join(s, "pose_c2w.txt")):
+            out.append(s)
+    return out
 
 
 @torch.no_grad()
 def eval_hamlyn_depth(models: dict[str, torch.nn.Module]) -> dict:
-    ham = sorted(glob.glob(r"E:\ego_data\sim_data_r2s_ham2\train\seq_*"))
+    _ham_dir = os.environ.get("EGOLITE_HAMLYN_R2S_DIR") or (
+        str(ROOT / "sim_data_r2s_ham2" / "train")
+        if (ROOT / "sim_data_r2s_ham2" / "train").is_dir()
+        else r"sim_data_r2s_ham2\train"
+    )
+    ham = sorted(glob.glob(os.path.join(_ham_dir, "seq_*")))
     ham = [d for d in ham if os.path.isfile(os.path.join(d, "pose_c2w.txt"))]
     print(f"[Depth Hamlyn-R2S] Evaluating {len(ham)} unseen sequences ...", flush=True)
     return rdm.eval_depth_sim_cohort(models, ham, sample_pairs=4)

@@ -3,6 +3,9 @@ to include BOTH:
   - `samedata_posenet_13M` (trained on EgoLite's exact synthetic + R2S corpus)
   - `droid` on STIR 2024 (`droid_stir20/*_c2w.txt`)
 so that every cell across Simulated Abs, Real StereoMIS, and Real STIR in Table 9 has 100% complete coverage!
+
+NOTE (Reproducibility Provenance): Run `scripts/rev_fix_stage4_ar_seeded.py` afterwards for the final
+seeded (`cv2.setRNGSeed(0)`) `FixedSameDataPoseNet` (12.5-M) and strictly causal ORB entries in Table 9.
 """
 from __future__ import annotations
 
@@ -20,7 +23,7 @@ from scipy.stats import wilcoxon
 cv2.setNumThreads(2)
 torch.set_num_threads(4)
 
-ROOT = Path(r"D:\ego_motiion_Camera")
+ROOT = Path(os.environ.get("EGOLITE_ROOT", Path(__file__).resolve().parents[1]))
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "scripts"))
 
@@ -34,7 +37,10 @@ from endosim.lite.egolite import build_from_args, chain  # noqa: E402
 from endosim.pseudoheight import pseudo_height_label  # noqa: E402
 
 OUT_DIR = ROOT / "results" / "revision_vrih"
-STIR_ROOT = Path(r"E:\World_Agent_Enoscopy\datasets\STIR\STIRChallenge_2024")
+STIR_ROOT = Path(
+    os.environ.get("EGOLITE_STIR_ROOT")
+    or (ROOT / "data" / "STIRChallenge_2024" if (ROOT / "data" / "STIRChallenge_2024").is_dir() else r"data/STIR\STIRChallenge_2024")
+)
 
 
 @torch.no_grad()
@@ -150,7 +156,11 @@ def update_stir_with_posenet_and_droid() -> None:
 def update_stereomis_ar_with_samedata_posenet() -> None:
     """Re-run StereoMIS AR evaluation adding `samedata_posenet` from `posenet_stereomis_full`."""
     win_px = 18
-    smis_refs = [ln.strip() for ln in (ROOT / "lists/stereomis.txt").read_text().splitlines() if ln.strip()]
+    smis_refs = [
+        str(ROOT / ln.strip().replace("\\", "/").split("ego_motiion_Camera/")[-1].lstrip("/"))
+        if not os.path.isdir(ln.strip()) else ln.strip()
+        for ln in (ROOT / "lists/stereomis.txt").read_text().splitlines() if ln.strip()
+    ]
     pn_dir = OUT_DIR / "posenet_stereomis_full"
     ego_dir = ROOT / "results/sota/egolite_r_v2_stereomis_full"
 

@@ -16,7 +16,7 @@ from torch.utils._python_dispatch import TorchDispatchMode
 from torch.utils.flop_counter import FlopCounterMode
 
 torch.set_num_threads(4)
-ROOT = Path(r"D:\ego_motiion_Camera")
+ROOT = Path(os.environ.get("EGOLITE_ROOT", Path(__file__).resolve().parents[1]))
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "scripts"))
 

@@ -2,11 +2,15 @@
 import json
 import os
 import sys
+from pathlib import Path
 import cv2
 import numpy as np
 from scipy.stats import wilcoxon
 
-sys.path.insert(0, "scripts")
+ROOT = Path(os.environ.get("EGOLITE_ROOT", Path(__file__).resolve().parents[1]))
+os.chdir(ROOT)
+sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT / "scripts"))
 import eval_ar_registration as ear  # noqa: E402
 
 d = json.loads(open("results/revision_vrih/r2_2_sim_ar_expanded.json", encoding="utf-8").read())

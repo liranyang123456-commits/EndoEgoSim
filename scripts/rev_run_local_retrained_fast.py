@@ -1,5 +1,12 @@
 """Local RTX 5090 Runner for All 16 Controlled Retrained Ablations + Same-Data PoseNet + Hamlyn-R2S Baselines!
 
+NOTE (Reproducibility Provenance): Produces the matched stage-6 retrained module and loss-term
+ablations (`retrain_*` and `loss_*` in `r1_3_4_6_7_retrained_ablations.json`, complemented by
+`scripts/rev_complete_remaining_audits.py`). The final non-collapsing 12.5-M same-corpus PoseNet
+(`r1_7_samedata_posenet_fixed.json`) and leak-free 3-seed single-stage runs from generic
+torchvision RAFT-large (`r1_4_single_stage_generic_raft.json`) are produced by
+`scripts/rev_fix_stage1_posenet.py` and `scripts/rev_fix_stage2_single_stage.py`.
+
 Uses < 1.8 GB VRAM (safe alongside any other job on the 24 GB RTX 5090) and precomputes exact
 stride-8 RAFT-large optical flows once in bf16/fp32 so all 15 EgoLite trunk/solver/loss variants
 train & evaluate identically and rapidly on the FULL local datasets (`sim_data/train`, `sim_data_abs/train`,
@@ -27,7 +34,7 @@ from torchvision.models import ResNet18_Weights, resnet18
 cv2.setNumThreads(1)
 torch.set_num_threads(2)
 
-ROOT = Path(r"D:\ego_motiion_Camera")
+ROOT = Path(os.environ.get("EGOLITE_ROOT", Path(__file__).resolve().parents[1]))
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "scripts"))
 
@@ -84,8 +91,18 @@ class SameDataPoseNet(nn.Module):
 
 
 def read_list(rel: str) -> list[str]:
-    return [ln.strip() for ln in (ROOT / rel).read_text(encoding="utf-8").splitlines()
-            if ln.strip() and not ln.startswith("#") and os.path.isfile(os.path.join(ln.strip(), "pose_c2w.txt"))]
+    out = []
+    for ln in (ROOT / rel).read_text(encoding="utf-8").splitlines():
+        if not ln.strip() or ln.startswith("#"):
+            continue
+        s = ln.strip()
+        if not os.path.isdir(s):
+            cand = ROOT / s.replace("\\", "/").split("ego_motiion_Camera/")[-1].lstrip("/")
+            if cand.is_dir():
+                s = str(cand)
+        if os.path.isfile(os.path.join(s, "pose_c2w.txt")):
+            out.append(s)
+    return out
 
 
 @torch.no_grad()
@@ -99,8 +116,10 @@ def precompute_train_batches(n_steps: int = 1500, batch_clips: int = 3, clip_len
     m_flow = build_from_args(ck["args"], pretrained=False).cuda().eval()
     m_flow.load_state_dict(ck["model"])
 
-    # Use pre-packed 320x256 sim_data/train from D:/ego_lite_pack for 5x faster disk reads!
-    s_root = r"D:\ego_lite_pack\sim_data\train" if os.path.isdir(r"D:\ego_lite_pack\sim_data\train") else str(ROOT / "sim_data/train")
+    _env_sim = os.environ.get("EGOLITE_SIM_TRAIN_DIR", "")
+    s_root = _env_sim if (_env_sim and os.path.isdir(_env_sim)) else (
+        r"sim_data\train" if os.path.isdir(r"sim_data\train") else str(ROOT / "sim_data/train")
+    )
     roots = [(s_root, 2.0), (str(ROOT / "sim_data_abs/train"), 1.0), (str(ROOT / "sim_data_r2s/train"), 1.0)]
     ds = SimClips(clip=clip_len, length=n_steps * batch_clips, seed=0, roots=roots, stride_p=(0.7, 0.2, 0.1))
     dl = DataLoader(ds, batch_size=batch_clips, shuffle=False, num_workers=3, drop_last=True, worker_init_fn=worker_init)
@@ -472,7 +491,12 @@ def main():
         "stereomis_11": read_list("lists/stereomis.txt"),
         "c3vd_10": read_list("lists/c3vd_full.txt"),
     }
-    ham = sorted(glob.glob(r"E:\ego_data\sim_data_r2s_ham2\train\seq_*"))
+    _ham_dir = os.environ.get("EGOLITE_HAMLYN_R2S_DIR") or (
+        str(ROOT / "sim_data_r2s_ham2" / "train")
+        if (ROOT / "sim_data_r2s_ham2" / "train").is_dir()
+        else r"sim_data_r2s_ham2\train"
+    )
+    ham = sorted(glob.glob(os.path.join(_ham_dir, "seq_*")))
     ham = [d for d in ham if os.path.isfile(os.path.join(d, "pose_c2w.txt"))]
     if ham:
         cohorts["hamlyn_r2s_124"] = ham

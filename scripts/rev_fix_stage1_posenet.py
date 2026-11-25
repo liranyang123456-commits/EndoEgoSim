@@ -150,11 +150,18 @@ class FixedSameDataPoseNet(nn.Module):
 
 
 def read_list(rel: str) -> list[str]:
-    return [
-        ln.strip()
-        for ln in (ROOT / rel).read_text(encoding="utf-8").splitlines()
-        if ln.strip() and not ln.startswith("#") and os.path.isfile(os.path.join(ln.strip(), "pose_c2w.txt"))
-    ]
+    out = []
+    for ln in (ROOT / rel).read_text(encoding="utf-8").splitlines():
+        if not ln.strip() or ln.startswith("#"):
+            continue
+        s = ln.strip()
+        if not os.path.isdir(s):
+            cand = ROOT / s.replace("\\", "/").split("ego_motiion_Camera/")[-1].lstrip("/")
+            if cand.is_dir():
+                s = str(cand)
+        if os.path.isfile(os.path.join(s, "pose_c2w.txt")):
+            out.append(s)
+    return out
 
 
 @torch.no_grad()
@@ -182,7 +189,7 @@ def quick_val_dev(model: nn.Module, seqs: list[str]) -> tuple[float, float]:
     return float(np.mean(ates)), float(np.median(steps))
 
 
-def train_posenet(out_ckpt: Path, iters: int = 12000, batch: int = 6, clip: int = 8,
+def train_posenet(out_ckpt: Path, iters: int = 10000, batch: int = 6, clip: int = 8,
                   lr: float = 3e-4, seed: int = 0) -> Path:
     out_ckpt.parent.mkdir(parents=True, exist_ok=True)
     torch.manual_seed(seed)
@@ -191,7 +198,10 @@ def train_posenet(out_ckpt: Path, iters: int = 12000, batch: int = 6, clip: int 
     n_par = sum(p.numel() for p in model.parameters()) / 1e6
     print(f"[Train FixedSameDataPoseNet] params={n_par:.2f}M iters={iters} batch={batch}x{clip}", flush=True)
 
-    s_root = r"D:\ego_lite_pack\sim_data\train" if os.path.isdir(r"D:\ego_lite_pack\sim_data\train") else str(ROOT / "sim_data/train")
+    _env_sim = os.environ.get("EGOLITE_SIM_TRAIN_DIR", "")
+    s_root = _env_sim if (_env_sim and os.path.isdir(_env_sim)) else (
+        r"sim_data\train" if os.path.isdir(r"sim_data\train") else str(ROOT / "sim_data/train")
+    )
     roots = [(s_root, 2.0), (str(ROOT / "sim_data_abs/train"), 1.0), (str(ROOT / "sim_data_r2s/train"), 1.0)]
     ds = PoseOnlySimClips(clip=clip, length=iters * batch + 400, seed=seed, roots=roots, stride_p=(0.7, 0.2, 0.1))
     dl = DataLoader(ds, batch_size=batch, shuffle=False, num_workers=6, pin_memory=True,
@@ -265,7 +275,12 @@ def eval_posenet_all(ckpt_p: Path, out_json: Path, full_dir: Path) -> dict:
         "stereomis_11": read_list("lists/stereomis.txt"),
         "c3vd_10": read_list("lists/c3vd_full.txt"),
     }
-    ham = sorted(glob.glob(r"E:\ego_data\sim_data_r2s_ham2\train\seq_*"))
+    _ham_dir = os.environ.get("EGOLITE_HAMLYN_R2S_DIR") or (
+        str(ROOT / "sim_data_r2s_ham2" / "train")
+        if (ROOT / "sim_data_r2s_ham2" / "train").is_dir()
+        else r"sim_data_r2s_ham2\train"
+    )
+    ham = sorted(glob.glob(os.path.join(_ham_dir, "seq_*")))
     ham = [d for d in ham if os.path.isfile(os.path.join(d, "pose_c2w.txt"))]
     if ham:
         cohorts["hamlyn_r2s_124"] = ham
@@ -373,7 +388,7 @@ def eval_posenet_all(ckpt_p: Path, out_json: Path, full_dir: Path) -> dict:
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--iters", type=int, default=12000)
+    ap.add_argument("--iters", type=int, default=10000)
     ap.add_argument("--skip-train", action="store_true")
     args = ap.parse_args()
     out_dir = ROOT / "results" / "revision_vrih"

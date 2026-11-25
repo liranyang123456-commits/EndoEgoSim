@@ -36,7 +36,10 @@ from endosim.pseudoheight import pseudo_height_label  # noqa: E402
 from rev_fix_stage1_posenet import FixedSameDataPoseNet  # noqa: E402
 
 OUT_DIR = ROOT / "results" / "revision_vrih"
-STIR_ROOT = Path(r"E:\World_Agent_Enoscopy\datasets\STIR\STIRChallenge_2024")
+STIR_ROOT = Path(
+    os.environ.get("EGOLITE_STIR_ROOT")
+    or (ROOT / "data" / "STIRChallenge_2024" if (ROOT / "data" / "STIRChallenge_2024").is_dir() else r"data/STIR\STIRChallenge_2024")
+)
 
 
 @torch.no_grad()
@@ -144,7 +147,11 @@ def update_stereomis() -> None:
     """Update StereoMIS AR with FixedSameDataPoseNet (causal, fixed50, truescale) & causal ORB."""
     cv2.setRNGSeed(0)
     win_px = 18
-    smis_refs = [ln.strip() for ln in (ROOT / "lists/stereomis.txt").read_text().splitlines() if ln.strip()]
+    smis_refs = [
+        str(ROOT / ln.strip().replace("\\", "/").split("ego_motiion_Camera/")[-1].lstrip("/"))
+        if not os.path.isdir(ln.strip()) else ln.strip()
+        for ln in (ROOT / "lists/stereomis.txt").read_text().splitlines() if ln.strip()
+    ]
     pn_dir = OUT_DIR / "posenet_stereomis_full_fixed"
     ego_dir = ROOT / "results/sota/egolite_r_v2_stereomis_full"
 

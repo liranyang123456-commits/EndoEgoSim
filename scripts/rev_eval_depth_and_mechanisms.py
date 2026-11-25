@@ -1,5 +1,11 @@
 """Comprehensive reproducible audit for VRIH Revision R1.1, R1.2, R1.3, R1.4, R1.6, and R2.3.
 
+NOTE (Reproducibility Provenance): Produces `r1_1_label_learning_audit.json` (Table R1 / S6)
+and `r1_2_depth_accuracy.json` (Table R2 / S5; extended with unseen 124-sequence Hamlyn-R2S
+depth, lossless-PNG Table 6a `r1_6_r2_3_table6_lossless.json`, and lossless Table R3/S3
+`r1_3_design_choices_lossless.json` via `scripts/rev_fix_stage3_lossless_and_calib.py` and
+`scripts/rev_bench_solver_batch1.py`).
+
 Optimized:
 - Sets torch.set_num_threads(2) & cv2.setNumThreads(1) to avoid CPU thread-pool contention.
 - Batches pair forward passes within each sequence (BATCH=2, <0.4 GiB VRAM).
@@ -22,7 +28,7 @@ from scipy.stats import wilcoxon
 cv2.setNumThreads(1)
 torch.set_num_threads(2)
 
-ROOT = Path(r"D:\ego_motiion_Camera")
+ROOT = Path(os.environ.get("EGOLITE_ROOT", Path(__file__).resolve().parents[1]))
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "scripts"))
 
@@ -47,9 +53,17 @@ def load_egolite(ckpt_path: str | Path, device: str = "cuda"):
     return m.to(device).eval()
 
 
+def _resolve_seq(raw: str) -> str:
+    s = raw.strip()
+    if os.path.isdir(s):
+        return s
+    rel = s.replace("\\", "/").split("ego_motiion_Camera/")[-1].lstrip("/")
+    return str(ROOT / rel) if (ROOT / rel).is_dir() else s
+
+
 def read_list(list_rel: str) -> list[str]:
     p = ROOT / list_rel
-    seqs = [ln.strip() for ln in p.read_text(encoding="utf-8").splitlines()
+    seqs = [_resolve_seq(ln) for ln in p.read_text(encoding="utf-8").splitlines()
             if ln.strip() and not ln.startswith("#")]
     return [s for s in seqs if os.path.isfile(os.path.join(s, "pose_c2w.txt"))]
 

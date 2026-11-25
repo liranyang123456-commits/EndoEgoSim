@@ -1,4 +1,10 @@
 """Sign-verified, Reproducible Runner for VRIH R2.1 & R2.2:
+
+NOTE (Reproducibility Provenance): Initial AR benchmark runner; run `scripts/rev_fix_stage4_ar_seeded.py`
+afterwards to evaluate `FixedSameDataPoseNet` and strictly causal ORB under seeded `cv2.setRNGSeed(0)`,
+producing the final Table 9 / Table R9 ledgers (`r2_2_sim_ar_expanded.json`, `r2_1_stereomis_real_ar_clean.json`,
+and `r2_1_stir_real_ar.json`).
+
 1. Real In Vivo StereoMIS Surgical AR Tissue Registration (11 in vivo da Vinci videos with breathing):
    - Reference 3D tissue patches are triangulated at t from rectified stereo disparity (accounting for
      principal-point offset cx_R - cx_L), and target 2D landmarks at t + delta_t are verified by
@@ -31,7 +37,7 @@ from scipy.stats import wilcoxon
 cv2.setNumThreads(2)
 torch.set_num_threads(6)
 
-ROOT = Path(r"D:\ego_motiion_Camera")
+ROOT = Path(os.environ.get("EGOLITE_ROOT", Path(__file__).resolve().parents[1]))
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "scripts"))
 
@@ -131,7 +137,11 @@ def read_stereo_pair_at(cap: cv2.VideoCapture, frame_idx: int, scale: float = 0.
 
 
 def run_real_stereomis_ar(cm: CpuModels, win_px: int = 18) -> dict:
-    smis_refs = [ln.strip() for ln in (ROOT / "lists/stereomis.txt").read_text().splitlines() if ln.strip()]
+    smis_refs = [
+        str(ROOT / ln.strip().replace("\\", "/").split("ego_motiion_Camera/")[-1].lstrip("/"))
+        if not os.path.isdir(ln.strip()) else ln.strip()
+        for ln in (ROOT / "lists/stereomis.txt").read_text().splitlines() if ln.strip()
+    ]
     est_dirs = {
         "afsfm": ROOT / "results/sota/afsfm_stereomis_full",
         "endodac": ROOT / "results/sota/endodac_stereomis_full",

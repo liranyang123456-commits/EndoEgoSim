@@ -26,7 +26,7 @@ from scipy.stats import wilcoxon
 cv2.setNumThreads(2)
 torch.set_num_threads(4)
 
-ROOT = Path(r"D:\ego_motiion_Camera")
+ROOT = Path(os.environ.get("EGOLITE_ROOT", Path(__file__).resolve().parents[1]))
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "scripts"))
 
@@ -42,7 +42,10 @@ from endosim.lite.infer import _intrinsics  # noqa: E402
 from endosim.pseudoheight import pseudo_height_label  # noqa: E402
 
 OUT_DIR = ROOT / "results" / "revision_vrih"
-STIR_ROOT = Path(r"E:\World_Agent_Enoscopy\datasets\STIR\STIRChallenge_2024")
+STIR_ROOT = Path(
+    os.environ.get("EGOLITE_STIR_ROOT")
+    or (ROOT / "data" / "STIRChallenge_2024" if (ROOT / "data" / "STIRChallenge_2024").is_dir() else r"data/STIR\STIRChallenge_2024")
+)
 
 
 def part1_split_losses_and_frozenflow() -> None:
@@ -70,7 +73,12 @@ def _eval_part1(cp_cons: Path, cp_rho: Path, t0: float) -> None:
         "stereomis_11": r_fast.read_list("lists/stereomis.txt"),
         "c3vd_10": r_fast.read_list("lists/c3vd_full.txt"),
     }
-    ham = sorted(glob.glob(r"E:\ego_data\sim_data_r2s_ham2\train\seq_*"))
+    _ham_dir = os.environ.get("EGOLITE_HAMLYN_R2S_DIR") or (
+        str(ROOT / "sim_data_r2s_ham2" / "train")
+        if (ROOT / "sim_data_r2s_ham2" / "train").is_dir()
+        else r"sim_data_r2s_ham2\train"
+    )
+    ham = sorted(glob.glob(os.path.join(_ham_dir, "seq_*")))
     ham = [d for d in ham if os.path.isfile(os.path.join(d, "pose_c2w.txt"))]
     if ham:
         cohorts["hamlyn_r2s_124"] = ham

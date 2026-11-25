@@ -1,5 +1,10 @@
 """Worker-side evaluation script for Shenzhou (GTX 1070 8GB, dedicated GPU).
 
+NOTE (Reproducibility Provenance): This Stage-0 worker evaluated pre-packed JPEG caches.
+For exact lossless-PNG numbers reported in the revised manuscript (Table 6a, Table R3/S3,
+and unseen Hamlyn-R2S depth) and synchronized fp32 batch-1 CUDA-event solver timings, run
+`scripts/rev_fix_stage3_lossless_and_calib.py` and `scripts/rev_bench_solver_batch1.py`.
+
 Runs inside the unpacked `shenzhou_eval` folder where all cohorts are local pre-resized 320x256 sequences.
 Uses batch_size=16 (~42 ms/pair on GTX 1070) and writes the 4 revision JSON ledgers:
   1. r1_2_depth_accuracy.json

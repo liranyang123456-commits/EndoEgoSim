@@ -44,11 +44,18 @@ def geodesic(Ra, Rb):
 
 
 def read_list(rel: str) -> list[str]:
-    return [
-        ln.strip()
-        for ln in (ROOT / rel).read_text(encoding="utf-8").splitlines()
-        if ln.strip() and not ln.startswith("#") and os.path.isfile(os.path.join(ln.strip(), "pose_c2w.txt"))
-    ]
+    out = []
+    for ln in (ROOT / rel).read_text(encoding="utf-8").splitlines():
+        if not ln.strip() or ln.startswith("#"):
+            continue
+        s = ln.strip()
+        if not os.path.isdir(s):
+            cand = ROOT / s.replace("\\", "/").split("ego_motiion_Camera/")[-1].lstrip("/")
+            if cand.is_dir():
+                s = str(cand)
+        if os.path.isfile(os.path.join(s, "pose_c2w.txt")):
+            out.append(s)
+    return out
 
 
 @torch.no_grad()
@@ -59,7 +66,10 @@ def precompute_generic_raft_batches(n_steps: int = 1500, batch_clips: int = 3, c
         return torch.load(cache_file, map_location="cpu", weights_only=False)
     t0 = time.time()
     flow_net = raft_large(weights=Raft_Large_Weights.DEFAULT).cuda().eval()
-    s_root = r"D:\ego_lite_pack\sim_data\train" if os.path.isdir(r"D:\ego_lite_pack\sim_data\train") else str(ROOT / "sim_data/train")
+    _env_sim = os.environ.get("EGOLITE_SIM_TRAIN_DIR", "")
+    s_root = _env_sim if (_env_sim and os.path.isdir(_env_sim)) else (
+        r"sim_data\train" if os.path.isdir(r"sim_data\train") else str(ROOT / "sim_data/train")
+    )
     roots = [(s_root, 2.0), (str(ROOT / "sim_data_abs/train"), 1.0), (str(ROOT / "sim_data_r2s/train"), 1.0)]
     ds = SimClips(clip=clip_len, length=n_steps * batch_clips, seed=101, roots=roots, stride_p=(0.7, 0.2, 0.1))
     dl = DataLoader(ds, batch_size=batch_clips, shuffle=False, num_workers=4, drop_last=True, worker_init_fn=worker_init)
@@ -245,7 +255,12 @@ def evaluate_seeds(ckpts: dict[str, Path]) -> dict:
         "stereomis_11": read_list("lists/stereomis.txt"),
         "c3vd_10": read_list("lists/c3vd_full.txt"),
     }
-    ham = sorted(glob.glob(r"E:\ego_data\sim_data_r2s_ham2\train\seq_*"))
+    _ham_dir = os.environ.get("EGOLITE_HAMLYN_R2S_DIR") or (
+        str(ROOT / "sim_data_r2s_ham2" / "train")
+        if (ROOT / "sim_data_r2s_ham2" / "train").is_dir()
+        else r"sim_data_r2s_ham2\train"
+    )
+    ham = sorted(glob.glob(os.path.join(_ham_dir, "seq_*")))
     ham = [d for d in ham if os.path.isfile(os.path.join(d, "pose_c2w.txt"))]
     if ham:
         cohorts["hamlyn_r2s_124"] = ham

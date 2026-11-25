@@ -22,7 +22,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import torch
 
-ROOT = Path(r"D:\ego_motiion_Camera")
+ROOT = Path(os.environ.get("EGOLITE_ROOT", Path(__file__).resolve().parents[1]))
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "scripts"))
 
@@ -35,12 +35,19 @@ from endosim.lite.data import H_IN, W_IN  # noqa: E402
 from endosim.lite.egolite import build_from_args, chain  # noqa: E402
 from endosim.pseudoheight import pseudo_height_label  # noqa: E402
 
-STIR_ROOT = Path(r"E:\World_Agent_Enoscopy\datasets\STIR\STIRChallenge_2024")
+STIR_ROOT = Path(
+    os.environ.get("EGOLITE_STIR_ROOT")
+    or (ROOT / "data" / "STIRChallenge_2024" if (ROOT / "data" / "STIRChallenge_2024").is_dir() else r"data/STIR\STIRChallenge_2024")
+)
 
 
 def get_stereomis_examples() -> list[dict]:
     """Pick 2 representative StereoMIS active updates where camera shift > 18 px."""
-    smis_refs = [ln.strip() for ln in (ROOT / "lists/stereomis.txt").read_text().splitlines() if ln.strip()]
+    smis_refs = [
+        str(ROOT / ln.strip().replace("\\", "/").split("ego_motiion_Camera/")[-1].lstrip("/"))
+        if not os.path.isdir(ln.strip()) else ln.strip()
+        for ln in (ROOT / "lists/stereomis.txt").read_text().splitlines() if ln.strip()
+    ]
     est_dirs = {
         "afsfm": ROOT / "results/sota/afsfm_stereomis_full",
         "egolite": ROOT / "results/sota/egolite_r_v2_stereomis_full",

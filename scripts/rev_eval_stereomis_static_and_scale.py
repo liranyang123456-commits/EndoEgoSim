@@ -35,12 +35,32 @@ METHODS = {
 }
 
 
+KNOWN_STEREOMIS_FPS = {
+    "stereomis_extracted_StereoMIS_0_0_1_P1": 60.003128,
+    "stereomis_extracted_StereoMIS_0_0_1_P2_0": 52.699617,
+    "stereomis_extracted_StereoMIS_0_0_1_P2_1": 54.317561,
+    "stereomis_extracted_StereoMIS_0_0_1_P2_2": 54.353815,
+    "stereomis_extracted_StereoMIS_0_0_1_P2_3": 54.323916,
+    "stereomis_extracted_StereoMIS_0_0_1_P2_4": 54.426660,
+    "stereomis_extracted_StereoMIS_0_0_1_P2_5": 54.204199,
+    "stereomis_extracted_StereoMIS_0_0_1_P2_6": 26.090665,
+    "stereomis_extracted_StereoMIS_0_0_1_P2_7": 37.033519,
+    "stereomis_extracted_StereoMIS_0_0_1_P2_8": 38.959833,
+    "stereomis_extracted_StereoMIS_0_0_1_P3": 60.003128,
+}
+
+
 def video_fps(seq_dir: str) -> float:
-    idx = json.loads(Path(seq_dir, "color_index.json").read_text(encoding="utf-8"))
-    cap = cv2.VideoCapture(idx["path"])
-    fps = cap.get(cv2.CAP_PROP_FPS)
-    cap.release()
-    return float(fps) if fps and fps > 1.0 else 30.0
+    sid = os.path.basename(str(seq_dir).rstrip("/\\"))
+    idx_p = Path(seq_dir, "color_index.json")
+    if idx_p.is_file():
+        idx = json.loads(idx_p.read_text(encoding="utf-8"))
+        cap = cv2.VideoCapture(idx["path"])
+        fps = cap.get(cv2.CAP_PROP_FPS)
+        cap.release()
+        if fps and fps > 1.0:
+            return float(fps)
+    return float(KNOWN_STEREOMIS_FPS.get(sid, 30.0))
 
 
 def resp_peak(sig_1d: np.ndarray, fs: float, lo: float = 0.05, hi: float = 3.0) -> tuple[float, float]:
@@ -55,7 +75,9 @@ def resp_peak(sig_1d: np.ndarray, fs: float, lo: float = 0.05, hi: float = 3.0) 
 
 def run_all() -> dict:
     seqs = [
-        ln.strip()
+        str(ROOT / ln.strip().replace("\\", "/").split("ego_motiion_Camera/")[-1].lstrip("/"))
+        if not os.path.isdir(ln.strip())
+        else ln.strip()
         for ln in (ROOT / "lists/stereomis.txt").read_text(encoding="utf-8").splitlines()
         if ln.strip() and not ln.startswith("#")
     ]
